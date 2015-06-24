@@ -1,3 +1,5 @@
+![image](./resources/icon.png =250x)
+
 Mug
 ==============
 Mug (short for mugshot), a simple app for visual regression testing
