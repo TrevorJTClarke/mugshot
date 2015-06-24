@@ -1,0 +1,15 @@
+{
+  "name": "mug",
+  "productName": "Mug",
+  "identifier": "com.sum37apps.mug",
+  "description": "Mug (short for mugshot), a simple app for visual regression testing",
+  "version": "0.1.0",
+  "author": "Trevor Clarke <besnoid@gmail.com>",
+  "main": "main.js",
+  "config": {
+    "target": "development"
+  },
+  "dependencies": {
+    "fs-jetpack": "^0.6.4"
+  }
+}
