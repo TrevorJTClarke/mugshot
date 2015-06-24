@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var less = require('gulp-less');
+var sass = require('gulp-sass');
 var esperanto = require('esperanto');
 var map = require('vinyl-map');
 var jetpack = require('fs-jetpack');
@@ -66,13 +66,12 @@ gulp.task('transpile', ['clean'], transpileTask);
 gulp.task('transpile-watch', transpileTask);
 
 
-var lessTask = function () {
-    return gulp.src('app/stylesheets/main.less')
-    .pipe(less())
-    .pipe(gulp.dest(destDir.path('stylesheets')));
-};
-gulp.task('less', ['clean'], lessTask);
-gulp.task('less-watch', lessTask);
+gulp.task('sass', function () {
+    gulp.src('./app/stylesheets/mug.scss')
+        .pipe(sass('mug.css').on('error', sass.logError))
+        .pipe(gulp.dest(destDir.path('stylesheets')));
+});
+
 
 
 gulp.task('finalize', ['clean'], function () {
@@ -103,8 +102,9 @@ gulp.task('finalize', ['clean'], function () {
 gulp.task('watch', function () {
     gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
     gulp.watch(paths.toCopy, ['copy-watch']);
-    gulp.watch('app/**/*.less', ['less-watch']);
+    // gulp.watch('app/**/*.less', ['less-watch']);
+    gulp.watch('app/stylesheets/**/*.scss', ['sass']);
 });
 
 
-gulp.task('build', ['transpile', 'less', 'copy', 'finalize']);
+gulp.task('build', ['transpile', 'sass', 'copy', 'finalize']);
