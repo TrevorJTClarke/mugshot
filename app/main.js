@@ -5,6 +5,7 @@ var BrowserWindow = require('browser-window');
 var env = require('./vendor/electron_boilerplate/env_config');
 var devHelper = require('./vendor/electron_boilerplate/dev_helper');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
+var ipc = require('ipc');
 
 var mainWindow;
 
@@ -12,6 +13,10 @@ var mainWindow;
 var mainWindowState = windowStateKeeper('main', {
     width: 500,
     height: 400
+});
+
+ipc.on('FILE:DROPPED', function(e, arg) {
+  console.log("FILE:DROPPED MAIN Thread",arg); // prints "pong"
 });
 
 app.on('ready', function () {
