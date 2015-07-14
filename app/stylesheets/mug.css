@@ -1,0 +1,40 @@
+/**
+ * Mug Styling
+ */
+/* Colors */
+/* Theme */
+/* Validation */
+html, body {
+  background: #f9f9f9;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+a {
+  text-decoration: none; }
+
+.tester {
+  width: 60%;
+  margin: 0 auto; }
+  .tester label,
+  .tester input {
+    width: 100%; }
+  .tester input {
+    font-size: 21px;
+    padding: 20px 0; }
+
+.btn {
+  background: #46685B;
+  border: 2px solid #46685B;
+  color: #FFFFFF;
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px 0; }

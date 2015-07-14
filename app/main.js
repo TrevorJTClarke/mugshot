@@ -2,7 +2,8 @@
 
 var app = require('app');
 var BrowserWindow = require('browser-window');
-var env = require('./vendor/electron_boilerplate/env_config');
+
+// var env = require('./vendor/electron_boilerplate/env_config');
 var devHelper = require('./vendor/electron_boilerplate/dev_helper');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 var ipc = require('ipc');
@@ -11,39 +12,40 @@ var mainWindow;
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
-    width: 500,
-    height: 400
+  width: 500,
+  height: 400
 });
 
 ipc.on('FILE:DROPPED', function(e, arg) {
-  console.log("FILE:DROPPED MAIN Thread",arg); // prints "pong"
+  console.log('FILE:DROPPED MAIN Thread', arg); // prints "pong"
 });
 
-app.on('ready', function () {
+app.on('ready', function() {
 
-    mainWindow = new BrowserWindow({
-        x: mainWindowState.x,
-        y: mainWindowState.y,
-        width: mainWindowState.width,
-        height: mainWindowState.height
-    });
+  mainWindow = new BrowserWindow({
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height
+  });
 
-    if (mainWindowState.isMaximized) {
-        mainWindow.maximize();
-    }
+  if (mainWindowState.isMaximized) {
+    mainWindow.maximize();
+  }
 
-    mainWindow.loadUrl('file://' + __dirname + '/app.html');
+  mainWindow.loadUrl('file://' + __dirname + '/app.html');
 
-    if (env.name === 'development') {
-        devHelper.setDevMenu();
-        // mainWindow.openDevTools();
-    }
+  // TODO: env isnt loading the settings
+  // if (env.name === 'development') {
+  //     devHelper.setDevMenu();
+  //     // mainWindow.openDevTools();
+  // }
 
-    mainWindow.on('close', function () {
-        mainWindowState.saveState(mainWindow);
-    });
+  mainWindow.on('close', function() {
+    mainWindowState.saveState(mainWindow);
+  });
 });
 
-app.on('window-all-closed', function () {
-    app.quit();
+app.on('window-all-closed', function() {
+  app.quit();
 });

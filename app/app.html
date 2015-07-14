@@ -6,14 +6,11 @@
 
 <link href="./stylesheets/mug.css" rel="stylesheet" type="text/css">
 
-<script src="vendor/electron_boilerplate/env_config.js"></script>
+<!-- <script src="vendor/electron_boilerplate/env_config.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/context_menu.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/external_links.js"></script> -->
+<script src="app.js"></script>
 
-<script src="vendor/require.js"></script>
-<script>
-  requirejs(['app'], function (app) {});
-</script>
 <script>
 var remote = require('remote');
 var ipc = require('ipc');
@@ -36,31 +33,36 @@ var ipc = require('ipc');
 </script>
 </head>
 <body>
-  <div id="holder">
+    <div class="tester">
+      <label for="url">Enter the URL for a website to test</label>
+      <input type="text" name="url" id="url" value="http://getbootstrap.com">
+    </div>
+    <button class="btn btn-test" onclick="clickTest()">Test Website</button>
+  <!-- <div id="holder">
     Drag your app here to run it
-  </div>
+  </div> -->
 <script>
-var holder = document.getElementById('holder');
-holder.ondragover = function () {
-  this.className = 'hover';
-  return false;
-};
-holder.ondragleave = holder.ondragend = function () {
-  this.className = '';
-  return false;
-};
-holder.ondrop = function (e) {
-  this.className = '';
-  e.preventDefault();
-
-  var file = e.dataTransfer.files[0];
-  console.log("file dropped",file.path);
-  ipc.send('FILE:DROPPED', file.path);
-  // require('child_process').execFile(execPath, [file.path], {
-  //   detached: true, stdio: 'ignore'
-  // }).unref();
-  return false;
-};
+// var holder = document.getElementById('holder');
+// holder.ondragover = function () {
+//   this.className = 'hover';
+//   return false;
+// };
+// holder.ondragleave = holder.ondragend = function () {
+//   this.className = '';
+//   return false;
+// };
+// holder.ondrop = function (e) {
+//   this.className = '';
+//   e.preventDefault();
+//
+//   var file = e.dataTransfer.files[0];
+//   console.log("file dropped",file.path);
+//   ipc.send('FILE:DROPPED', file.path);
+//   // require('child_process').execFile(execPath, [file.path], {
+//   //   detached: true, stdio: 'ignore'
+//   // }).unref();
+//   return false;
+// };
 </script>
 </body>
 </html>
