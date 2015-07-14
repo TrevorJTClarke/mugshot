@@ -6,7 +6,8 @@ var gulp  = require('gulp');
 var fs    = require('fs');
 var spawn = require('child_process').spawn;
 var paths = require('../app/core/util/paths');
-var genConfig = require('../app/core/tasks/genConfig');
+// var genConfig = require('../app/core/tasks/genConfig');
+require('require-dir')('../app/core/tasks', { recurse: true });
 
 // var env = require('./vendor/electron_boilerplate/env_config');
 var devHelper = require('./vendor/electron_boilerplate/dev_helper');
@@ -27,8 +28,7 @@ var mainWindowState = windowStateKeeper('main', {
 
 ipc.on('URLTEST', function(e, arg) {
   console.log('URLTEST', arg);
-
-  // genConfig();
+  gulp.run('reference');
 
   // var casperProcess = (process.platform === 'win32' ? 'casperjs.cmd' : 'casperjs');
   // var casperArgs = [__dirname + '/core/capture/genBitmaps.js', '--ssl-protocol=any'];

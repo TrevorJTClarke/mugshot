@@ -32,7 +32,6 @@ paths.captureConfigFileNameDefault  = paths.capture + '/config.default.json';
 paths.activeCaptureConfigPath       = '';
 
 var exist;
-console.log('paths.mugConfigFileName', paths.base + paths.mugConfigFileName);
 fs.exists(paths.base + paths.mugConfigFileName, function(bool) {
   exist = bool;
 
