@@ -1,5 +1,5 @@
 var fs = require('fs');
-var paths = require('paths');
+var paths = require('../util/paths');
 
 var bitmapsReference = paths.bitmapsReference;
 var bitmapsTest = paths.bitmapsTest;
@@ -17,6 +17,7 @@ var compareConfig = {testPairs:[]};
 var casper = require('casper').create({
   // clientScripts: ["jquery.js"] //lets try not to use this it's friggin 2015 already people...
 });
+console.log('genBitmaps');
 
 casper.on('resource.received', function(resource) {
   // casper.echo(resource.url);

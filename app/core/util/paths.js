@@ -1,29 +1,29 @@
-var path = require('path');
 var fs = require('fs');
+var path = require('path');
 
 var paths = {};
 
 // MUG MODULE PATH
-paths.mug                           = __dirname;
+paths.base                          = __dirname + '/../../';
 
 // SERVER PID PATH
-paths.serverPidFile                 = paths.mug + '/server.pid';
+paths.serverPidFile                 = paths.base + '/server.pid';
 
 // BITMAPS PATHS
-paths.screens                       = paths.mug + '/screens';
+paths.screens                       = paths.base + '/screens';
 paths.bitmapsReference              = paths.screens + '/reference';
 paths.bitmapsTest                   = paths.screens + '/current';
 
-// BACKSTOP CONFIG PATH
-paths.mugConfigFileName             = path.join(paths.mug, '../..', 'mug.json');
+// MUG CONFIG PATH
+paths.mugConfigFileName             = 'mug.json';
 
 // COMPARE PATHS
-paths.comparePath                   = paths.mug + '/compare';
+paths.comparePath                   = paths.base + '/compare';
 paths.compareConfigFileName         = paths.comparePath + '/config.json';
 paths.compareReportURL              = 'http://localhost:3737/compare/';
 
 // CAPTURE CONFIG PATHS
-paths.capture                       = paths.mug + '/capture';
+paths.capture                       = paths.base + 'capture';
 paths.captureConfigFileName         = paths.capture + '/config.json';
 paths.captureConfigFileNameCache    = paths.capture + '/.config.json.cache';
 paths.captureConfigFileNameDefault  = paths.capture + '/config.default.json';
@@ -31,13 +31,19 @@ paths.captureConfigFileNameDefault  = paths.capture + '/config.default.json';
 // ACTIVE CAPTURE CONFIG PATH
 paths.activeCaptureConfigPath       = '';
 
-if (!fs.existsSync(paths.mugConfigFileName)) {
-  console.log('\nTo run your own tests create a config here...\n ==> ' + paths.mugConfigFileName);
-  console.log('\nRun `$ gulp genConfig` to generate a config template file in this location.\n');
-  paths.activeCaptureConfigPath = paths.captureConfigFileNameDefault;
-} else {
-  console.log('\nConfig loaded.\n');
-  paths.activeCaptureConfigPath = paths.mugConfigFileName;
-}
+var exist;
+console.log('paths.mugConfigFileName', paths.base + paths.mugConfigFileName);
+fs.exists(paths.base + paths.mugConfigFileName, function(bool) {
+  exist = bool;
+
+  if (!exist) {
+    console.log('\nTo run your own tests create a config here...\n ==> ' + paths.mugConfigFileName);
+    console.log('\nRun `$ gulp genConfig` to generate a config template file in this location.\n');
+    paths.activeCaptureConfigPath = paths.captureConfigFileNameDefault;
+  } else {
+    console.log('\nConfig loaded.\n');
+    paths.activeCaptureConfigPath = paths.mugConfigFileName;
+  }
+});
 
 module.exports = paths;

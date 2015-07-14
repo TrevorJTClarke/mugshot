@@ -6,6 +6,7 @@ var gulp  = require('gulp');
 var fs    = require('fs');
 var spawn = require('child_process').spawn;
 var paths = require('../app/core/util/paths');
+var genConfig = require('../app/core/tasks/genConfig');
 
 // var env = require('./vendor/electron_boilerplate/env_config');
 var devHelper = require('./vendor/electron_boilerplate/dev_helper');
@@ -26,38 +27,36 @@ var mainWindowState = windowStateKeeper('main', {
 
 ipc.on('URLTEST', function(e, arg) {
   console.log('URLTEST', arg);
-  var casperProcess = (process.platform === 'win32' ? 'casperjs.cmd' : 'casperjs');
-  console.log('casperProcess', casperProcess);
-  var casperArgs = [__dirname + '/core/capture/genBitmaps.js', '--ssl-protocol=any'];
-  fs.exists(__dirname + '/screens', function(exists) {
-    console.log('exists', exists);
-  });
 
-  var casperChild = spawn(casperProcess, casperArgs);
-  casperChild.stdout.on('data', function(data) {
-    console.log('CasperJS:', data.toString().slice(0, -1)); // Remove \n
-  });
+  // genConfig();
 
-  casperChild.on('close', function(code) {
-    var success = code === 0; // Will be 1 in the event of failure
-    var result = (success) ? 'Bitmap file generation completed.' : 'Testing script failed with code: ' + code;
-
-    console.log('\n' + result);
-
-    //exit if there was some kind of failure in the casperChild process
-    if (code != 0) {
-      console.log('\nLooks like an error occured. You may want to try running `$ gulp echo`. This will echo the requested test URL output to the console. You can check this output to verify that the file requested is indeed being received in the expected format.');
-      return false;
-    };
-
-    var resultConfig = JSON.parse(fs.readFileSync(paths.compareConfigFileName, 'utf8'));
-    if (genReferenceMode || !resultConfig.testPairs || resultConfig.testPairs.length == 0) {
-      console.log('\nRun `$ gulp test` to generate diff report.\n')
-    } else {
-      gulp.run('report');
-    }
-
-  });
+  // var casperProcess = (process.platform === 'win32' ? 'casperjs.cmd' : 'casperjs');
+  // var casperArgs = [__dirname + '/core/capture/genBitmaps.js', '--ssl-protocol=any'];
+  // var casperChild = spawn(casperProcess, casperArgs);
+  // casperChild.stdout.on('data', function(data) {
+  //   console.log('CasperJS:', data.toString().slice(0, -1)); // Remove \n
+  // });
+  //
+  // casperChild.on('close', function(code) {
+  //   var success = code === 0; // Will be 1 in the event of failure
+  //   var result = (success) ? 'Bitmap file generation completed.' : 'Testing script failed with code: ' + code;
+  //
+  //   console.log('\n' + result);
+  //
+  //   //exit if there was some kind of failure in the casperChild process
+  //   if (code != 0) {
+  //     console.log('\nLooks like an error occured. You may want to try running `$ gulp echo`. This will echo the requested test URL output to the console. You can check this output to verify that the file requested is indeed being received in the expected format.');
+  //     return false;
+  //   };
+  //
+  //   var resultConfig = JSON.parse(fs.readFileSync(paths.compareConfigFileName, 'utf8'));
+  //   if (genReferenceMode || !resultConfig.testPairs || resultConfig.testPairs.length == 0) {
+  //     console.log('\nRun `$ gulp test` to generate diff report.\n')
+  //   } else {
+  //     gulp.run('report');
+  //   }
+  //
+  // });
 });
 
 app.on('ready', function() {
