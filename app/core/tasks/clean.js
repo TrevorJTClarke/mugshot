@@ -7,8 +7,8 @@ var genDefaultCompareConfig = require('../util/genDefaultCompareConfig');
 //CLEAN THE bitmaps_reference DIRECTORY
 gulp.task('clean', function (cb) {
   del([
-    paths.bitmaps_reference + '/**'
+    paths.bitmapsReference + '/**'
   ], cb);
   genDefaultCompareConfig();
-  console.log('bitmaps_reference was cleaned.');
+  console.log('bitmapsReference was cleaned.');
 });

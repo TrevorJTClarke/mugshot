@@ -1,16 +1,17 @@
 var fs = require('fs');
-var path = require('path');
+// var path = require('path');
 
 var paths = {};
+var _dirname = '/Users/trevorclarke/github/mug/app/core/util';
 
 // MUG MODULE PATH
-paths.base                          = __dirname + '/../../';
+paths.base                          = _dirname + '/../../';
 
 // SERVER PID PATH
-paths.serverPidFile                 = paths.base + '/server.pid';
+paths.serverPidFile                 = paths.base + 'server.pid';
 
 // BITMAPS PATHS
-paths.screens                       = paths.base + '/screens';
+paths.screens                       = paths.base + 'screens';
 paths.bitmapsReference              = paths.screens + '/reference';
 paths.bitmapsTest                   = paths.screens + '/current';
 
@@ -18,7 +19,7 @@ paths.bitmapsTest                   = paths.screens + '/current';
 paths.mugConfigFileName             = 'mug.json';
 
 // COMPARE PATHS
-paths.comparePath                   = paths.base + '/compare';
+paths.comparePath                   = paths.base + 'compare';
 paths.compareConfigFileName         = paths.comparePath + '/config.json';
 paths.compareReportURL              = 'http://localhost:3737/compare/';
 
