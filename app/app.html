@@ -42,6 +42,10 @@ var ipc = require('ipc');
     Drag your app here to run it
   </div> -->
 <script>
+function clickTest() {
+  var url = document.getElementById('url').value;
+  ipc.send('URLTEST', url);
+}
 // var holder = document.getElementById('holder');
 // holder.ondragover = function () {
 //   this.className = 'hover';

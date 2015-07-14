@@ -1,9 +1,12 @@
+var ipc = require('ipc');
+
 module.exports = {
 
   // grab test screens
   start: function(url) {
-    console.log('here', url);
+    console.log('url', url);
 
-    // TODO: setup a way for starting the backstopper
+    // send url to back end
+    ipc.send('URL:TEST', url);
   }
 };
