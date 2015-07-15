@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Mug</title>
 
+<link href="./stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="./stylesheets/mug.css" rel="stylesheet" type="text/css">
 
 <!-- <script src="vendor/electron_boilerplate/env_config.js"></script> -->
@@ -13,6 +14,38 @@
 
 </head>
 <body>
-<div class="hi">hey</div>
+
+  <div class="frame">
+    <div class="top-nav">
+      <div class="dni close">&times;</div>
+      <div class="dni minimize">-</div>
+      <div class="dni maximize">+</div>
+    </div>
+    <div class="logo"></div>
+  </div>
+
+  <div class="side-panel">
+
+    <div class="panel-nav">
+      <h3>Title</h3>
+      <button class="btn btn-right">+</button>
+    </div>
+
+    <div class="panel-projects">
+      <ul>
+        <li class="list-item">
+          <h4>Demo</h4>
+          <div class="details">
+            <span class="badge badge-info">37 Passing</span>, <span class="badge badge-danger">3 Failed</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="main-frame">
+    <div>hello world</div>
+  </div>
+
 </body>
 </html>

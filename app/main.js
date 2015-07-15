@@ -6,6 +6,8 @@ var gulp  = require('gulp');
 var fs    = require('fs');
 var spawn = require('child_process').spawn;
 var paths = require('../app/core/util/paths');
+
+// adds gulp tasks available
 require('require-dir')('../app/core/tasks', { recurse: true });
 
 // var env = require('./vendor/electron_boilerplate/env_config');
@@ -38,7 +40,8 @@ app.on('ready', function() {
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
-    height: mainWindowState.height
+    height: mainWindowState.height,
+    frame: false
   });
 
   if (mainWindowState.isMaximized) {
