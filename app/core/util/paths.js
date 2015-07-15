@@ -5,7 +5,7 @@ var paths = {};
 var _dirname = '/Users/trevorclarke/github/mug/app/core/util';
 
 // MUG MODULE PATH
-paths.base                          = _dirname + '/../../';
+paths.base                          = _dirname + '/../';
 
 // SERVER PID PATH
 paths.serverPidFile                 = paths.base + 'server.pid';
