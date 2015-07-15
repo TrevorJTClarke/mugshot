@@ -2,8 +2,10 @@
  * Mug Styling
  */
 @import "config/_colors";
+@import "config/_resets";
 
 @import "elements/_frame";
 @import "elements/_layout";
+@import "elements/_sidepanel";
 
 @import "pages/_base";

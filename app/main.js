@@ -19,20 +19,20 @@ var mainWindow;
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
-  width: 500,
-  height: 400
+  width: 700,
+  height: 700
 });
 
 // ipc.on('FILE:DROPPED', function(e, arg) {
 //   console.log('FILE:DROPPED MAIN Thread', arg); // prints "pong"
 // });
 
-ipc.on('URLTEST', function(e, arg) {
-  console.log('URLTEST', arg);
-
-  // TODO: setup a test button
-  gulp.run('reference');
-});
+// ipc.on('URLTEST', function(e, arg) {
+//   console.log('URLTEST', arg);
+//
+//   // TODO: setup a test button
+//   gulp.run('reference');
+// });
 
 app.on('ready', function() {
 
