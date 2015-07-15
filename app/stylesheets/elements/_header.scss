@@ -1,0 +1,61 @@
+/**
+ * Container Header
+ */
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  height: 50px;
+
+  .details {
+    width: 65%;
+  }
+
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 35%;
+
+    .btn-tab {
+      flex: 1;
+      background: transparent;
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      margin: 0 0 0 -3px;
+
+      &:hover {
+        border-bottom-color: $grey02;
+      }
+      &:active,
+      &:focus {
+        box-shadow: 0 0 0;
+        outline: 0;
+      }
+      &.tab-active {
+        border-bottom-color: $darkmain;
+      }
+    }
+  }
+
+  h1 {
+    color: $main;
+    margin: 0;
+    font: {
+      size: 30px;
+      weight: 300;
+    }
+  }
+
+  h5 {
+    color: $grey04;
+    margin: 8px 0 0;
+    font: {
+      size: 14px;
+      weight: 400;
+    }
+  }
+
+
+}

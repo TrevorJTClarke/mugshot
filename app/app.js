@@ -1,30 +1,3 @@
-var remote = require('remote');
-var ipc = require('ipc');
-
-// Quick Frame Buttons
-function parseFrameButtons() {
-  var buttons = document.querySelectorAll('body [core-frame]');
-  for (var i = 0; i < buttons.length; i++) {
-    var btn = buttons[i];
-
-    btn.addEventListener('click', function(e) {
-      var btnArg = e.currentTarget.attributes['core-frame'].value
-      var window = remote.getCurrentWindow();
-        console.log('btnArg', btnArg, window, window[btnArg]);
-      window[btnArg]();
-    }, false);
-  }
-}
-parseFrameButtons();
-
-
-
-
-
-
-
-
-
 
 // Node modules are required the same way as always.
 // var os = require('os');

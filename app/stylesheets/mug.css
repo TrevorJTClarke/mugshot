@@ -126,6 +126,47 @@
     .panel-nav .btn-right:focus {
       outline: 0; }
 
+/**
+ * Container Header
+ */
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  height: 50px; }
+  .header .details {
+    width: 65%; }
+  .header .tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 35%; }
+    .header .tabs .btn-tab {
+      flex: 1;
+      background: transparent;
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      margin: 0 0 0 -3px; }
+      .header .tabs .btn-tab:hover {
+        border-bottom-color: #f2f0f0; }
+      .header .tabs .btn-tab:active,
+      .header .tabs .btn-tab:focus {
+        box-shadow: 0 0 0;
+        outline: 0; }
+      .header .tabs .btn-tab.tab-active {
+        border-bottom-color: #213435; }
+  .header h1 {
+    color: #46685B;
+    margin: 0;
+    font-size: 30px;
+    font-weight: 300; }
+  .header h5 {
+    color: #a8afb0;
+    margin: 8px 0 0;
+    font-size: 14px;
+    font-weight: 400; }
+
 * {
   box-sizing: border-box; }
 

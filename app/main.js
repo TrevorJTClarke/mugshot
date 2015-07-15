@@ -19,8 +19,8 @@ var mainWindow;
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
-  width: 700,
-  height: 700
+  width: 750,
+  height: 500
 });
 
 // ipc.on('FILE:DROPPED', function(e, arg) {
