@@ -5,6 +5,7 @@ var bitmapsReference = paths.bitmapsReference;
 var bitmapsTest = paths.bitmapsTest;
 var compareConfigFileName = paths.compareConfigFileName;
 var genConfigPath = paths.captureConfigFileName;
+console.log('genBitmaps');
 
 var configJSON = fs.read(genConfigPath);
 var config = JSON.parse(configJSON);
@@ -12,12 +13,11 @@ var config = JSON.parse(configJSON);
 var viewports = config.viewports;
 var scenarios = config.scenarios || config.grabConfigs;
 
-var compareConfig = {testPairs:[]};
+var compareConfig = { testPairs: [] };
 
 var casper = require('casper').create({
   // clientScripts: ["jquery.js"] //lets try not to use this it's friggin 2015 already people...
 });
-console.log('genBitmaps');
 
 casper.on('resource.received', function(resource) {
   // casper.echo(resource.url);

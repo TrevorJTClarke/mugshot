@@ -1,6 +1,6 @@
 var fs = require('fs');
-// var path = require('path');
 
+// var path = require('path');
 var paths = {};
 var _dirname = '/Users/trevorclarke/github/mug/app/core/util';
 

@@ -12,7 +12,7 @@ gulp.task('test', ['init'], function() {
 
   // THIS IS THE BLOCK WHICH SWITCHES US INTO 'GENERATE REFERENCE' MODE.  I'D RATHER SOMETHING MORE EXPLICIT THO. LIKE AN ENV PARAMETER...
   if (!fs.existsSync(paths.bitmapsReference)) {
-    console.log('\nGenerating reference files.\n');
+    console.log('Generating reference files.');
     genReferenceMode = true;
   }
 
@@ -41,6 +41,7 @@ gulp.task('test', ['init'], function() {
   var casperArgs = [__dirname + '/../capture/genBitmaps.js', '--ssl-protocol=any'];//added for https compatibility for older versions of phantom
   var casperProcess = (process.platform === 'win32' ? 'casperjs.cmd' : 'casperjs');
   var casperChild = spawn(casperProcess, casperArgs);
+  console.log('casperArgs', casperArgs);
 
   casperChild.stdout.on('data', function(data) {
     console.log('CasperJS:', data.toString().slice(0, -1));

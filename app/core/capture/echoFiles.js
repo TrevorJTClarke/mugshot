@@ -5,6 +5,7 @@ var bitmapsReference = paths.bitmapsReference;
 var bitmapsTest = paths.bitmapsTest;
 var compareConfigFileName = paths.compareConfigFileName;
 var genConfigPath = paths.captureConfigFileName;
+console.log('genConfigPath', genConfigPath);
 
 var configJSON = fs.read(genConfigPath);
 var config = JSON.parse(configJSON);
