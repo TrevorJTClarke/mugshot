@@ -27,22 +27,37 @@
   padding: 0 12px;
   -webkit-user-select: none;
   -webkit-app-region: drag; }
+  .frame .top-nav svg {
+    display: none; }
+  .frame .top-nav:hover svg {
+    display: block; }
   .frame .logo {
+    cursor: default;
     position: absolute;
-    right: 12px; }
+    right: 12px;
+    top: 0px;
+    font-size: 34px; }
 
 .dni {
   background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.01);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 50%;
   color: rgba(0, 0, 0, 0.6);
+  cursor: default;
   display: inline-block;
   width: 12px;
   height: 12px;
   text-align: center;
   font-size: 10px;
   padding: 2px;
-  margin: 18px 2px; }
+  margin: 18px 2px;
+  position: relative;
+  -webkit-app-region: no-drag; }
+  .dni svg {
+    position: absolute;
+    width: 8px;
+    left: 1px;
+    top: 1px; }
   .dni.exit {
     background: #ff6052; }
   .dni.minimize {

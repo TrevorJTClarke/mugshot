@@ -10,18 +10,57 @@
 <!-- <script src="vendor/electron_boilerplate/env_config.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/context_menu.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/external_links.js"></script> -->
-<script src="app.js"></script>
 
 </head>
 <body>
+  <svg style="display:none;">
+    <symbol id="frame-close" viewBox="0 0 32 32">
+      <path fill="#333333" d="M18.333,16l8.891-8.891c0.645-0.645,0.645-1.689,0-2.333c-0.645-0.645-1.689-0.645-2.333,0L16,13.667L7.109,4.775
+        c-0.645-0.645-1.689-0.645-2.333,0c-0.645,0.644-0.645,1.689,0,2.333L13.667,16l-8.891,8.891c-0.645,0.644-0.645,1.689,0,2.333
+        c0.322,0.322,0.744,0.483,1.167,0.483s0.844-0.161,1.167-0.483L16,18.333l8.891,8.891c0.322,0.322,0.745,0.483,1.167,0.483
+        c0.422,0,0.845-0.161,1.167-0.483c0.645-0.644,0.645-1.689,0-2.333L18.333,16z"/>
+    </symbol>
+    <symbol id="frame-minimize" viewBox="0 0 32 32">
+      <path fill="#333333" d="M27.738,17.65H4.261c-0.742,0-1.345-0.739-1.345-1.65s0.603-1.65,1.345-1.65h23.477c0.743,0,1.345,0.739,1.345,1.65
+        S28.481,17.65,27.738,17.65z"/>
+    </symbol>
+    <symbol id="frame-maximize" viewBox="0 0 32 32">
+      <path fill="#333333" d="M4.525,24.657c0,1.849,0.702,2.805,2.805,2.805h13.517L4.525,10.121V24.657z"/>
+      <path fill="#333333" d="M24.67,4.537H11.153l16.322,17.342V7.343C27.476,5.494,26.774,4.537,24.67,4.537z"/>
+    </symbol>
+  </svg>
+  <path d="M18.333,16l8.891-8.891c0.645-0.645,0.645-1.689,0-2.333c-0.645-0.645-1.689-0.645-2.333,0L16,13.667L7.109,4.775
+    c-0.645-0.645-1.689-0.645-2.333,0c-0.645,0.644-0.645,1.689,0,2.333L13.667,16l-8.891,8.891c-0.645,0.644-0.645,1.689,0,2.333
+    c0.322,0.322,0.744,0.483,1.167,0.483s0.844-0.161,1.167-0.483L16,18.333l8.891,8.891c0.322,0.322,0.745,0.483,1.167,0.483
+    c0.422,0,0.845-0.161,1.167-0.483c0.645-0.644,0.645-1.689,0-2.333L18.333,16z"/>
+  <path d="M27.738,17.65H4.261c-0.742,0-1.345-0.739-1.345-1.65s0.603-1.65,1.345-1.65h23.477c0.743,0,1.345,0.739,1.345,1.65
+    S28.481,17.65,27.738,17.65z"/>
+  <g>
+    <path d="M4.525,24.657c0,1.849,0.702,2.805,2.805,2.805h13.517L4.525,10.121V24.657z"/>
+    <path d="M24.67,4.537H11.153l16.322,17.342V7.343C27.476,5.494,26.774,4.537,24.67,4.537z"/>
+  </g>
+  <!-- <svg id="frame_btns" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="94.875px" height="28.625px" viewBox="0 0 94.875 28.625" style="enable-background:new 0 0 94.875 28.625;" xml:space="preserve">
+  </svg> -->
 
   <div class="frame">
     <div class="top-nav">
-      <div class="dni exit">&times;</div>
-      <div class="dni minimize">-</div>
-      <div class="dni maximize">+</div>
+      <div core-frame="close" class="dni exit">
+        <svg class="frame-close" viewBox="0 0 12 12">
+          <use xlink:href="#frame-close"></use>
+        <svg>
+      </div>
+      <div core-frame="minimize" class="dni minimize">
+        <svg class="frame-minimize" viewBox="0 0 12 12">
+          <use xlink:href="#frame-minimize"></use>
+        <svg>
+      </div>
+      <div core-frame="maximize" class="dni maximize">
+        <svg class="frame-maximize" viewBox="0 0 12 12">
+          <use xlink:href="#frame-maximize"></use>
+        <svg>
+      </div>
     </div>
-    <div class="logo">Œ</div>
+    <div class="logo">☕️</div>
   </div>
 
   <div class="super">
@@ -70,5 +109,6 @@
 
   </div>
 
+<script src="app.js"></script>
 </body>
 </html>
