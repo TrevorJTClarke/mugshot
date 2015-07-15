@@ -44,7 +44,7 @@ gulp.task('test', ['init'], function() {
   console.log('casperArgs', casperArgs);
 
   casperChild.stdout.on('data', function(data) {
-    console.log('CasperJS:', data.toString().slice(0, -1));
+    console.log('MUG:THREAD:', data.toString().slice(0, -1));
   });
 
   casperChild.on('close', function(code) {

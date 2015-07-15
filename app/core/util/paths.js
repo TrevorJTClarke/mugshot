@@ -3,6 +3,7 @@ var fs = require('fs');
 // var path = require('path');
 var paths = {};
 var _dirname = '/Users/trevorclarke/github/mug/app/core/util';
+var _base = '/Users/trevorclarke/github/mug/app/';
 
 // MUG MODULE PATH
 paths.base                          = _dirname + '/../';
@@ -11,7 +12,7 @@ paths.base                          = _dirname + '/../';
 paths.serverPidFile                 = paths.base + 'server.pid';
 
 // BITMAPS PATHS
-paths.screens                       = paths.base + 'screens';
+paths.screens                       = paths.base + '../screens';
 paths.bitmapsReference              = paths.screens + '/reference';
 paths.bitmapsTest                   = paths.screens + '/current';
 
@@ -33,11 +34,10 @@ paths.captureConfigFileNameDefault  = paths.capture + '/config.default.json';
 paths.activeCaptureConfigPath       = '';
 
 var exist;
-fs.exists(paths.base + paths.mugConfigFileName, function(bool) {
+fs.exists(_base + paths.mugConfigFileName, function(bool) {
   exist = bool;
 
   if (!exist) {
-    console.log('\nTo run your own tests create a config here...\n ==> ' + paths.mugConfigFileName);
     console.log('\nRun `$ gulp genConfig` to generate a config template file in this location.\n');
     paths.activeCaptureConfigPath = paths.captureConfigFileNameDefault;
   } else {

@@ -1,5 +1,4 @@
 node_modules
 build/*
 releases/*
-
-app/core/screens/reference/*
+app/screens/reference/*

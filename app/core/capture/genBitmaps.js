@@ -60,13 +60,22 @@ function capturePageSelectors(url, scenarios, viewports, bitmapsReference, bitma
 
   casper.each(scenarios, function(casper, scenario, scenarioIndex) {
 
-    if (scenario.cookiesJsonFile && fs.isFile(scenario.cookiesJsonFile)) {
-      var cookiesJson = fs.read(scenario.cookiesJsonFile);
-      var cookies = JSON.parse(cookiesJson);
+    // if (scenario.cookiesJsonFile && fs.isFile(scenario.cookiesJsonFile)) {
+    //   var cookiesJson = fs.read(scenario.cookiesJsonFile);
+    //   var cookies = JSON.parse(cookiesJson);
+    //   for (var i = 0; i < cookies.length; i++) {
+    //     phantom.addCookie(cookies[i]);
+    //   }
+    // }
+
+    if (scenario.cookies) {
+      var cookies = scenario.cookies;
       for (var i = 0; i < cookies.length; i++) {
-        phantom.addCookie(cookies[i]);
+        var bool = phantom.addCookie(cookies[i]);
+        console.log('CO bool', bool);
       }
     }
+    console.log('HERE', JSON.stringify(phantom.cookies));
 
     casper.each(viewports, function(casper, vp, viewportIndex) {
       this.then(function() {
