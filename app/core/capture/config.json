@@ -1,0 +1,44 @@
+{
+  "viewports": [
+    {
+      "name": "phone",
+      "width": 320,
+      "height": 480
+    },
+    {
+      "name": "tablet_v",
+      "width": 568,
+      "height": 1024
+    },
+    {
+      "name": "tablet_h",
+      "width": 1024,
+      "height": 768
+    }
+  ],
+  "scenarios": [
+    {
+      "label": "http://us.billabong.com/mens",
+      "url": "http://us.billabong.com/mens",
+      "hideSelectors": [],
+      "cookies": [{
+        "name": "newsletter",
+        "value": 1,
+        "domain": "us.billabong.com"
+      }],
+      "removeSelectors": [
+        "#carbonads-container"
+      ],
+      "selectors": [
+        "header",
+        ".hero",
+        "section",
+        "footer",
+        "body"
+      ],
+      "readyEvent": null,
+      "delay": 500,
+      "misMatchThreshold" : 0.1
+    }
+  ]
+}
