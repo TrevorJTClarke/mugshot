@@ -41,7 +41,7 @@ fs.exists(_base + paths.mugConfigFileName, function(bool) {
     console.log('\nRun `$ gulp genConfig` to generate a config template file in this location.\n');
     paths.activeCaptureConfigPath = paths.captureConfigFileNameDefault;
   } else {
-    console.log('\nConfig loaded.\n');
+    console.log('Config loaded.\n');
     paths.activeCaptureConfigPath = paths.mugConfigFileName;
   }
 });

@@ -1,17 +1,19 @@
-// Node modules are required the same way as always.
-var os = require('os');
-var ipc = require('ipc');
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mug</title>
+
+<link href="./stylesheets/mug.css" rel="stylesheet" type="text/css">
+
+<!-- <script src="vendor/electron_boilerplate/env_config.js"></script> -->
+<!-- <script src="vendor/electron_boilerplate/context_menu.js"></script> -->
+<!-- <script src="vendor/electron_boilerplate/external_links.js"></script> -->
+<script src="app.js"></script>
+
+<script>
 var remote = require('remote');
-
-// var envName = window.env.name;
-
-// Browser modules are imported through new ES6 syntax.
-var urlcast = require('./core/urlcast');
-
-function clickTest() {
-  var url = document.getElementById('url').value;
-  ipc.send('URLTEST', url);
-}
+var ipc = require('ipc');
 
 
 /**
@@ -28,17 +30,22 @@ function clickTest() {
 //   e.preventDefault();
 //   menu.popup(remote.getCurrentWindow());
 // }, false);
-
-
-
-
-
-// function clickTest() {
-//   var url = document.getElementById('url').value;
-//   urlcast.start(url);
-//   ipc.send('URL:TEST', url);
-// }
-
+</script>
+</head>
+<body>
+    <div class="tester">
+      <label for="url">Enter the URL for a website to test</label>
+      <input type="text" name="url" id="url" value="http://getbootstrap.com">
+    </div>
+    <button class="btn btn-test" onclick="clickTest()">Test Website</button>
+  <!-- <div id="holder">
+    Drag your app here to run it
+  </div> -->
+<script>
+function clickTest() {
+  var url = document.getElementById('url').value;
+  ipc.send('URLTEST', url);
+}
 // var holder = document.getElementById('holder');
 // holder.ondragover = function () {
 //   this.className = 'hover';
@@ -60,3 +67,6 @@ function clickTest() {
 //   // }).unref();
 //   return false;
 // };
+</script>
+</body>
+</html>
