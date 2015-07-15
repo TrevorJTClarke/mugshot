@@ -1,4 +1,6 @@
-
+* {
+    box-sizing: border-box;
+}
 html, body {
   background: $grey01;
   width: 100%;
@@ -8,36 +10,10 @@ html, body {
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
 
 a {
   text-decoration: none;
-}
-
-.tester {
-  width: 60%;
-  margin: 0 auto;
-
-  label,
-  input {
-    width: 100%;
-  }
-  input {
-    font-size: 21px;
-    padding: 20px 0;
-  }
-}
-
-.btn {
-  background: $main;
-  border: 2px solid $main;
-  color: $white;
-  width: 60%;
-  margin: 0 auto;
-  padding: 20px 0;
 }

@@ -6,6 +6,8 @@ var gulp  = require('gulp');
 var fs    = require('fs');
 var spawn = require('child_process').spawn;
 var paths = require('../app/core/util/paths');
+
+// adds gulp tasks available
 require('require-dir')('../app/core/tasks', { recurse: true });
 
 // var env = require('./vendor/electron_boilerplate/env_config');
@@ -17,20 +19,20 @@ var mainWindow;
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
-  width: 500,
-  height: 400
+  width: 750,
+  height: 500
 });
 
 // ipc.on('FILE:DROPPED', function(e, arg) {
 //   console.log('FILE:DROPPED MAIN Thread', arg); // prints "pong"
 // });
 
-ipc.on('URLTEST', function(e, arg) {
-  console.log('URLTEST', arg);
-
-  // TODO: setup a test button
-  gulp.run('reference');
-});
+// ipc.on('URLTEST', function(e, arg) {
+//   console.log('URLTEST', arg);
+//
+//   // TODO: setup a test button
+//   gulp.run('reference');
+// });
 
 app.on('ready', function() {
 
@@ -38,7 +40,8 @@ app.on('ready', function() {
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
-    height: mainWindowState.height
+    height: mainWindowState.height,
+    frame: false
   });
 
   if (mainWindowState.isMaximized) {
@@ -56,6 +59,7 @@ app.on('ready', function() {
   mainWindow.on('close', function() {
     mainWindowState.saveState(mainWindow);
   });
+
 });
 
 app.on('window-all-closed', function() {

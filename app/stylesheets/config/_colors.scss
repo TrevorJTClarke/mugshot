@@ -19,7 +19,11 @@ $second:      #E1E3AC !default; // yellow
 $darksecond:  #d1d48f !default;
 
 /* Validation */
-$info:        #008FD8 !default;
-$warning:     #D9AB29 !default;
-$success:     #2FAB70 !default;
-$error:       #B03330 !default;
+$info:        #3b4655 !default;
+$infodark:    #2e3846 !default;
+$warning:     #ffcc5a !default;
+$warningdark: #fcb61a !default;
+$success:     #71d375 !default;
+$successdark: #45b04e !default;
+$error:       #ff7362 !default;
+$errordark:   #f73e2f !default;

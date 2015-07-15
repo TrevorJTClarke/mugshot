@@ -1,0 +1,22 @@
+/**
+ * Bootstrap Resets
+ */
+
+.panel {
+
+}
+
+.list-group-item {
+  background: transparent;
+  border: 0px;
+  border-bottom: 1px solid $grey02;
+
+  &:first-child,
+  &:last-child {
+    border-radius: 0;
+  }
+
+  &:last-child {
+    border: 0;
+  }
+}

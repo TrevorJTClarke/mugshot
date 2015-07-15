@@ -4,6 +4,172 @@
 /* Colors */
 /* Theme */
 /* Validation */
+/**
+ * Bootstrap Resets
+ */
+.list-group-item {
+  background: transparent;
+  border: 0px;
+  border-bottom: 1px solid #f2f0f0; }
+  .list-group-item:first-child,
+  .list-group-item:last-child {
+    border-radius: 0; }
+  .list-group-item:last-child {
+    border: 0; }
+
+.frame {
+  background: linear-gradient(to bottom, #f0f0f0, #e9e9e9);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 47px;
+  padding: 0 12px;
+  -webkit-user-select: none;
+  -webkit-app-region: drag; }
+  .frame .top-nav svg {
+    display: none; }
+  .frame .top-nav:hover svg {
+    display: block; }
+  .frame .logo {
+    cursor: default;
+    position: absolute;
+    right: 12px;
+    top: 0px;
+    font-size: 34px; }
+
+.dni {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: default;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  text-align: center;
+  font-size: 10px;
+  padding: 2px;
+  margin: 18px 2px;
+  position: relative;
+  -webkit-app-region: no-drag; }
+  .dni svg {
+    position: absolute;
+    width: 8px;
+    left: 1px;
+    top: 1px; }
+  .dni.exit {
+    background: #ff6052; }
+  .dni.minimize {
+    background: #ffbe06; }
+  .dni.maximize {
+    background: #16cc37; }
+
+.super {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: calc(100vh - 48px); }
+
+.side-panel {
+  background: #FFFFFF;
+  border-right: 1px solid #f2f0f0;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  min-width: 220px;
+  height: auto; }
+
+.main-container {
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  height: auto;
+  padding: 20px;
+  overflow: scroll; }
+
+/**
+ * Side Panel
+ */
+.side-panel {
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
+.panel-nav {
+  background: #FBFBFB;
+  border-bottom: 1px solid #f9f9f9;
+  padding: 10px 15px;
+  min-height: 60px;
+  position: relative; }
+  .panel-nav h3 {
+    display: inline-block;
+    margin: 0;
+    vertical-align: baseline;
+    line-height: 40px;
+    font-size: 21px;
+    font-weight: 300; }
+  .panel-nav .btn-right {
+    background: transparent;
+    border: 1px solid #dfdfdf;
+    color: #a8afb0;
+    font-size: 26px;
+    line-height: 26px;
+    padding: 2px 9px 6px;
+    position: absolute;
+    right: 15px;
+    top: 11px; }
+    .panel-nav .btn-right:hover {
+      border-color: #3b4655;
+      color: #3b4655;
+      outline: 0; }
+    .panel-nav .btn-right:focus {
+      outline: 0; }
+
+/**
+ * Container Header
+ */
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  height: 50px; }
+  .header .details {
+    width: 65%; }
+  .header .tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 35%; }
+    .header .tabs .btn-tab {
+      flex: 1;
+      background: transparent;
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      margin: 0 0 0 -3px; }
+      .header .tabs .btn-tab:hover {
+        border-bottom-color: #f2f0f0; }
+      .header .tabs .btn-tab:active,
+      .header .tabs .btn-tab:focus {
+        box-shadow: 0 0 0;
+        outline: 0; }
+      .header .tabs .btn-tab.tab-active {
+        border-bottom-color: #213435; }
+  .header h1 {
+    color: #46685B;
+    margin: 0;
+    font-size: 30px;
+    font-weight: 300; }
+  .header h5 {
+    color: #a8afb0;
+    margin: 8px 0 0;
+    font-size: 14px;
+    font-weight: 400; }
+
+* {
+  box-sizing: border-box; }
+
 html, body {
   background: #f9f9f9;
   width: 100%;
@@ -12,29 +178,8 @@ html, body {
   padding: 0; }
 
 body {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden; }
 
 a {
   text-decoration: none; }
-
-.tester {
-  width: 60%;
-  margin: 0 auto; }
-  .tester label,
-  .tester input {
-    width: 100%; }
-  .tester input {
-    font-size: 21px;
-    padding: 20px 0; }
-
-.btn {
-  background: #46685B;
-  border: 2px solid #46685B;
-  color: #FFFFFF;
-  width: 60%;
-  margin: 0 auto;
-  padding: 20px 0; }

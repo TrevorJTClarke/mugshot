@@ -1,0 +1,26 @@
+.super {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: calc(100vh - 48px);
+}
+
+.side-panel {
+  background: $white;
+  border-right: 1px solid $grey02;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  min-width: 220px;
+  height: auto;
+}
+
+.main-container {
+  background: $grey01;
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  height: auto;
+  padding: 20px;
+  overflow: scroll;
+}

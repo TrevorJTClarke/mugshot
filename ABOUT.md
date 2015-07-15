@@ -34,3 +34,12 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Run a local repo
     * Choose branches to run between
   * Github Integration
+
+
+
+#### Helpful
+
+gulp=spawn(process.env.SHELL, ['-c', 'cd ' + project.directory + ' && gulp'])
+childProcess.execFileSync(process.env.SHELL, ['-i', '-c', 'launchctl setenv PATH "$PATH"'])
+var gulpPath = path.join(__dirname, '../', 'node_modules', 'gulp', 'bin', 'gulp.js');
+gulp=spawn(gulpPath, {cwd: project.directory});
