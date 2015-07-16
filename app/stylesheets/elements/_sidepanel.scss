@@ -24,25 +24,4 @@
       weight: 300;
     }
   }
-
-  .btn-right {
-    background: transparent;
-    border: 1px solid $grey03;
-    color: $grey04;
-    font-size: 26px;
-    line-height: 26px;
-    padding: 2px 9px 6px;
-    position: absolute;
-    right: 15px;
-    top: 11px;
-
-    &:hover {
-      border-color: $info;
-      color: $info;
-      outline: 0;
-    }
-    &:focus {
-      outline: 0;
-    }
-  }
 }
