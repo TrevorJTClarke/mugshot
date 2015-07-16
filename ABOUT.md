@@ -6,7 +6,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 
   * Projects View
     * Add, View, Remove
-    * Config
+    * Settings
       * Title
       * Setup cookies
       * Setup Selectors
@@ -16,6 +16,8 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * Full page render
     * Runner View
       * Progress Bar
+      * Stats (pass/fail)
+        * Images with click compare
   * Settings View
     * Credentials
     * Project file storage if no S3 Configs

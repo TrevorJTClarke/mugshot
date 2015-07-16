@@ -1,0 +1,106 @@
+/**
+ * Settings Pages
+ */
+.project-settings {
+  margin: 20px 0 0;
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .form-group {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  h3 {
+    font-weight: 300;
+  }
+
+  .setting-item {
+    width: 100%;
+    background: $white;
+    border: 1px solid $grey03;
+    border-radius: 3px;
+    margin: 2px 0 0 0;
+
+    input {
+      background: transparent;
+      border: 0;
+      border-right: 1px solid $grey03;
+      box-shadow: 0 0 0;
+      border-radius: 0;
+    }
+
+    &.setting-title {
+      background: transparent;
+      border:0;
+      border-radius: 0;
+      margin:0;
+    }
+
+    .setting-edit {
+      display: flex;
+    }
+
+    .btn {
+      background: transparent;
+      width: 50%;
+      padding: 6px 0;
+      outline: 0;
+      flex:1;
+    }
+    .btn-trash {
+      color: $error;
+    }
+    .btn-used {
+      color: $grey05;
+      opacity: 0.5;
+
+      &.btn-used-active {
+        color: $successdark;
+        opacity: 1;
+      }
+    }
+  }
+
+  .section-finish {
+    margin: 80px 0 40px;
+  }
+
+  .btn-finish {
+    background: transparent;
+    border: 2px solid $grey03;
+    color: $grey03;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 12px;
+    text-transform: uppercase;
+    padding: 14px 24px;
+
+    &:hover {
+      border-color: $grey05;
+      color: $grey05;
+    }
+
+    &.btn-save {
+      border-color: $success;
+      color: $success;
+
+      &:hover {
+        border-color: $successdark;
+        color: $successdark;
+      }
+    }
+    &.btn-remove {
+      border-color: $error;
+      color: $error;
+
+      &:hover {
+        border-color: $errordark;
+        color: $errordark;
+      }
+    }
+  }
+}
