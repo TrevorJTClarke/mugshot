@@ -1477,7 +1477,8 @@ a {
     border: 1px solid #dfdfdf;
     border-radius: 3px;
     margin: 2px 0 0 0; }
-    .project-settings .setting-item input {
+    .project-settings .setting-item input,
+    .project-settings .setting-item select {
       background: transparent;
       border: 0;
       border-right: 1px solid #dfdfdf;

@@ -1,12 +1,14 @@
 <!doctype html>
 <html ng-app="mugshot">
 <head>
+<base href="">
 <meta charset="utf-8">
 <title>Mug</title>
 
 <link href="stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="stylesheets/mug.css" rel="stylesheet" type="text/css">
 <script src="vendor/angular.min.js"></script>
+<script src="vendor/angular-ui-router.min.js"></script>
 
 <!-- <script src="vendor/electron_boilerplate/env_config.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/context_menu.js"></script> -->
@@ -94,15 +96,15 @@
       </div>
     </div>
 
+    <div ui-view></div>
+
     <!-- <div class="sub-wrapper loader">
       <div class="preloader loading">
         <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span>
       </div>
     </div> -->
 
-    <!-- <i class="octicon octicon-beer"></i> -->
-
-    <div class="sub-wrapper project-settings">
+    <!-- <div class="sub-wrapper project-settings">
 
 
       <h3>General</h3>
@@ -152,25 +154,6 @@
           </button>
         </div>
       </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" placeholder="Tablet, or iPhone_5">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="320">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="480">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
 
       <h3 class="section-title">Page Details</h3>
       <div class="row">
@@ -187,6 +170,37 @@
             <label class="control-label">Diff Threshold (Percentage)</label>
             <input type="text" class="form-control" placeholder="Default: 0.1">
           </div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Selectors <button class="btn btn-right btn-section-header">Add New</button></h3>
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <label for="projectTitle" class="col-sm-2 control-label">Query String</label>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <label for="projectUrl" class="control-label">Type</label>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">&nbsp;</div>
+      </div>
+      <div class="row setting-item">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <input type="text" class="form-control" placeholder="body header .menu_item_1">
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <select class="form-control">
+            <option value="container">Container</option>
+            <option value="hide">Hide</option>
+            <option value="remove">Remove</option>
+          </select>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 setting-edit">
+          <button type="submit" class="btn btn-used btn-used-active">
+            <i class="octicon octicon-check"></i>
+          </button>
+          <button type="submit" class="btn btn-trash">
+            <i class="octicon octicon-trashcan"></i>
+          </button>
         </div>
       </div>
 
@@ -222,25 +236,6 @@
           </button>
         </div>
       </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" placeholder="show_modal">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="true">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="sub.example.com">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
 
       <div class="section-finish col-lg-3 col-md-3 col-sm-3 col-xs-3">
           <button type="submit" class="btn btn-finish btn-save">Save</button>
@@ -256,12 +251,13 @@
         </div>
       </div>
 
-    </div>
+    </div> -->
   </div>
 
   </div>
 
 <script src="core.js"></script>
+<script src="dist/js/templates.js"></script>
 <script src="dist/js/mug.js"></script>
 </body>
 </html>

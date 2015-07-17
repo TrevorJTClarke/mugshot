@@ -1,1 +1,1 @@
-var MUG = angular.module("mugshot", []);
+var MUG = angular.module("mugshot", ['ui.router', 'mugtemplates']);
