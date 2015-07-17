@@ -1219,7 +1219,8 @@ input,
   flex-direction: row;
   align-items: flex-end;
   width: 100%;
-  min-height: 50px; }
+  min-height: 50px;
+  height: 50px; }
   .header .details {
     width: 60%; }
   .header .tabs {

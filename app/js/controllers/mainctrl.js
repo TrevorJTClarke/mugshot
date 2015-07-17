@@ -1,5 +1,5 @@
 MUG.controller('MainCtrl',
-['$rootScope', '$scope', 'Config', '$http',
-function ($rootScope, $scope, Config, $http) {
-  
+['$rootScope', '$scope', '$state', 'Config', '$http',
+function($rootScope, $scope, $state, Config, $http) {
+  // $state.go('projects');
 }]);

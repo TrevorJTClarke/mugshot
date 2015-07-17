@@ -61,13 +61,13 @@ gulp.task('uglify', function() {
     .pipe(gulp.dest('app/dist/js'));
 });
 
-gulp.task('templates', ['clean'], function () {
+gulp.task('templates', ['clean'], function() {
   return gulp.src(paths.templates)
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(ngTemplates({
       filename: 'templates.js',
       module: 'mugtemplates',
-      path: function (path, base) {
+      path: function(path, base) {
         return path.replace(base, '').replace('/templates', '');
       }
     }))
@@ -146,6 +146,7 @@ gulp.task('watch', function() {
   // gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
   // gulp.watch(paths.toCopy, ['copy-watch']);
 
+  gulp.watch('app/templates/*.html', ['templates']);
   gulp.watch('app/js/**/*.js', ['uglify']);
   gulp.watch('app/stylesheets/**/*.scss', ['sass']);
 });

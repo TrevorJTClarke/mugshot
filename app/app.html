@@ -52,207 +52,27 @@
 
   <div class="super">
 
-  <div class="side-panel">
+    <div class="side-panel">
 
-    <div class="panel-nav">
-      <button class="btn btn-right">+</button>
-      <h3>Projects</h3>
-    </div>
-
-    <div class="panel-projects">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <h4 class="list-group-item-heading">Demo 1</h4>
-          <p class="list-group-item-text">
-            <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
-          </p>
-        </li>
-        <li class="list-group-item">
-          <h4 class="list-group-item-heading">Demo 2</h4>
-          <p class="list-group-item-text">
-            <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
-          </p>
-        </li>
-        <li class="list-group-item">
-          <h4 class="list-group-item-heading">Demo 3</h4>
-          <p class="list-group-item-text">
-            <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
-          </p>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="main-container">
-    <div class="header">
-      <div class="details">
-        <h1>Project Title</h1>
-        <h5>https://google.com</h5>
+      <div class="panel-nav">
+        <button class="btn btn-right">+</button>
+        <h3>Projects</h3>
       </div>
-      <div class="tabs">
-        <button class="btn btn-tab" ui-sref="runner">Runner</button>
-        <button class="btn btn-tab">History</button>
-        <button class="btn btn-tab tab-active" ui-sref="main">Settings</button>
+
+      <div class="panel-projects">
+        <ul class="list-group">
+          <!-- <li class="list-group-item" ui-sref="runner"> -->
+          <li class="list-group-item" ui-sref="projects.settings({ id: '1234567' })">
+            <h4 class="list-group-item-heading">Demo 1</h4>
+            <p class="list-group-item-text">
+              <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
+            </p>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <div ui-view></div>
-
-    <!-- <div class="sub-wrapper loader">
-      <div class="preloader loading">
-        <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span>
-      </div>
-    </div> -->
-
-    <!-- <div class="sub-wrapper project-settings">
-
-
-      <h3>General</h3>
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-          <div class="form-group">
-            <label for="projectTitle" class="control-label">Title</label>
-            <input type="text" class="form-control" id="projectTitle" placeholder="Project Title">
-          </div>
-          <div class="form-group">
-            <label for="projectUrl" class="control-label">Url</label>
-            <input type="text" class="form-control" id="projectUrl" placeholder="Project Url">
-            <span id="helpBlock" class="help-block">Example: <em>https://google.com</em> or <em>http://localhost:3000/</em></span>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-title">View Sizes <button class="btn btn-right btn-section-header">Add New</button></h3>
-      <div class="row setting-item setting-title">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <label for="projectTitle" class="col-sm-2 control-label">View Title</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Screen Width</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Screen Height</label>
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
-      </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" placeholder="Tablet, or iPhone_5">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="320">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="480">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used btn-used-active">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
-
-      <h3 class="section-title">Page Details</h3>
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-          <div class="form-group">
-            <label class="control-label">Ready Event (Screens are taken after this event is fired)</label>
-            <input type="text" class="form-control" placeholder="Default: 'onload'">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Delay Amount (In milliseconds)</label>
-            <input type="text" class="form-control" placeholder="Default: 500">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Diff Threshold (Percentage)</label>
-            <input type="text" class="form-control" placeholder="Default: 0.1">
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-title">Selectors <button class="btn btn-right btn-section-header">Add New</button></h3>
-      <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <label for="projectTitle" class="col-sm-2 control-label">Query String</label>
-        </div>
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <label for="projectUrl" class="control-label">Type</label>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">&nbsp;</div>
-      </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" placeholder="body header .menu_item_1">
-        </div>
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <select class="form-control">
-            <option value="container">Container</option>
-            <option value="hide">Hide</option>
-            <option value="remove">Remove</option>
-          </select>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 setting-edit">
-          <button type="submit" class="btn btn-used btn-used-active">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
-
-      <h3 class="section-title">Cookies <button class="btn btn-right btn-section-header">Add New</button></h3>
-      <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <label for="projectTitle" class="col-sm-2 control-label">Cookie Name</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Cookie Value</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Cookie Domain</label>
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
-      </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" placeholder="show_modal">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="true">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" placeholder="sub.example.com">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used btn-used-active">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="section-finish col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <button type="submit" class="btn btn-finish btn-save">Save</button>
-          <button type="submit" class="btn btn-finish btn-cancel">Cancel</button>
-      </div>
-
-      <hr>
-
-      <div class="row">
-        <h5>Would you like to remove this project completely?</h5>
-        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <button type="submit" class="btn btn-finish btn-remove">Delete Project</button>
-        </div>
-      </div>
-
-    </div> -->
-  </div>
+    <div class="main-container" ui-view></div>
 
   </div>
 

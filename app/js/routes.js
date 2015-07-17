@@ -1,11 +1,13 @@
 MUG.config(
-['$stateProvider', '$urlRouterProvider', '$locationProvider',
-function($stateProvider, $urlRouterProvider, $locationProvider) {
-  // removes the stupid /# from url
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
+['$stateProvider', '$urlRouterProvider',
+function($stateProvider, $urlRouterProvider) {
+
+  // Routes
+  // /
+  // /projects
+  // /projects/:id/runner
+  // /projects/:id/history
+  // /projects/:id/settings
 
   $stateProvider
 
@@ -14,11 +16,29 @@ function($stateProvider, $urlRouterProvider, $locationProvider) {
    */
   .state('main', {
     url: '/',
-    templateUrl: 'project-settings.html'
+    templateUrl: 'main.html',
+    controller: 'MainCtrl'
   })
-  .state('runner', {
+
+  /**
+   * Project Routes
+   */
+  .state('projects', {
+    url: '/projects/:id',
+    templateUrl: 'projects.html',
+    controller: 'ProjectSettingsCtrl'
+  })
+  .state('projects.settings', {
+    url: '/settings',
+    templateUrl: 'projects.settings.html'
+  })
+  .state('projects.runner', {
     url: '/runner',
-    templateUrl: 'preloader.html'
+    templateUrl: 'projects.runner.html'
+  })
+  .state('projects.history', {
+    url: '/history',
+    templateUrl: 'projects.history.html'
   })
 
   /**
@@ -36,7 +56,8 @@ function($stateProvider, $urlRouterProvider, $locationProvider) {
 
   // url re-routing
   // $urlRouterProvider
-  // .when('/dumb', '/dumb/thing');
+  //   .when('/projects', '/')
+  //   .when('/projects/', '/');
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
