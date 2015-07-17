@@ -16,6 +16,10 @@ function($stateProvider, $urlRouterProvider, $locationProvider) {
     url: '/',
     templateUrl: 'project-settings.html'
   })
+  .state('runner', {
+    url: '/runner',
+    templateUrl: 'preloader.html'
+  })
 
   /**
    * Static Routes
