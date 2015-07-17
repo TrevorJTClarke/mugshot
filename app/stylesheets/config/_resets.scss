@@ -8,7 +8,7 @@ input,
   box-shadow: 0 0 0;
   border: 1px solid $grey03;
   border-radius: 3px;
-  outline:0;
+  outline:0 !important;
 
   &:focus {
     outline:0;
@@ -36,6 +36,13 @@ input,
   }
 }
 
+.btn {
+  outline:0 !important;
+
+  &:focus {
+    outline:0;
+  }
+}
 
 .btn-right {
   background: transparent;

@@ -1,0 +1,102 @@
+.banner-items {
+  padding: 20px 0;
+}
+
+.banner-item {
+  background: $white;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.05);
+  padding: 10px 10px 5px 45px;
+  margin: 0 0 5px;
+  position: relative;
+
+  .banner-status {
+    background: $info;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    color: $white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2.5em;
+    height: 100%;
+    display: flex;
+
+    i {
+      margin: auto;
+      flex: 1;
+      text-align: center;
+      font-size: 24px;
+    }
+  }
+
+  h5 {
+    margin: 0;
+    text-transform: uppercase;
+    font: {
+      size: 10px;
+      weight: 400;
+    }
+  }
+
+  h2 {
+    margin: 5px 0;
+    font-size: 21px;
+  }
+
+  p {
+    color: rgba(0,0,0,0.5);
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .btn-compare {
+    background: transparent;
+    border: 0;
+    color: $grey06;
+    padding: 14px 0;
+    width: 100%;
+    outline:0;
+
+    i {
+      font-size: 24px;
+    }
+
+    &:hover {
+      color: $grey09;
+    }
+  }
+
+  .meta-status {
+    color: $info;
+    margin: 10px 0 3px;
+  }
+
+  &.banner-success {
+    .banner-status {
+      background: $success;
+    }
+    .meta-status {
+      color: $success;
+    }
+  }
+
+  &.banner-warning {
+    .banner-status {
+      background: $warning;
+    }
+    .meta-status {
+      color: $warning;
+    }
+  }
+
+  &.banner-error {
+    .banner-status {
+      background: $error;
+    }
+    .meta-status {
+      color: $error;
+    }
+  }
+}
