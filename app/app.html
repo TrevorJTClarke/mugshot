@@ -61,11 +61,12 @@
 
       <div class="panel-projects">
         <ul class="list-group">
-          <!-- <li class="list-group-item" ui-sref="runner"> -->
-          <li class="list-group-item" ui-sref="projects.settings({ id: '1234567' })">
-            <h4 class="list-group-item-heading">Demo 1</h4>
+          <li class="list-group-item list-item-active" ui-sref="projects.runner({ id: '1234567' })">
+            <h4 class="list-group-item-heading">Project 1</h4>
             <p class="list-group-item-text">
-              <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
+              <span class="label label-success"><i class="octicon octicon-diff-added"></i> 37</span>
+              <span class="label label-error"><i class="octicon octicon-diff-removed"></i> 3</span>
+              <span class="label"><i class="octicon octicon-eye"></i> 18 Views</span>
             </p>
           </li>
         </ul>

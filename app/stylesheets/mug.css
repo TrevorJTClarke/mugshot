@@ -1203,7 +1203,7 @@ input,
   .tabs .btn-tab {
     flex: 1;
     background: transparent;
-    border-radius: 0;
+    border-radius: 0 0 2px 2px;
     border-bottom: 2px solid transparent; }
     .tabs .btn-tab:hover {
       border-bottom-color: #f2f0f0; }
@@ -1213,6 +1213,24 @@ input,
       outline: 0; }
     .tabs .btn-tab.tab-active {
       border-bottom-color: #213435; }
+
+.label {
+  border: 1px solid #3b4655;
+  background: transparent;
+  border-radius: 4px;
+  color: #3b4655;
+  padding: 0.1em 0.4em 0.2em; }
+  .label i {
+    font-size: 11px; }
+  .label.label-success {
+    border-color: #71d375;
+    color: #71d375; }
+  .label.label-warning {
+    border-color: #ffcc5a;
+    color: #ffcc5a; }
+  .label.label-error {
+    border-color: #ff7362;
+    color: #ff7362; }
 
 /**
  * Side Panel
@@ -1234,6 +1252,14 @@ input,
     line-height: 40px;
     font-size: 21px;
     font-weight: 300; }
+
+.list-group-item {
+  border-right: 2px solid transparent; }
+  .list-group-item .list-group-item-text small {
+    font-size: 12px;
+    opacity: 0.5; }
+  .list-group-item.list-item-active {
+    border-right: 2px solid #46685B; }
 
 /**
  * Container Header

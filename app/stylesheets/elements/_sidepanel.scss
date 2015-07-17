@@ -25,3 +25,19 @@
     }
   }
 }
+
+.list-group-item {
+  border-right: 2px solid transparent;
+
+  .list-group-item-text {
+
+    small {
+      font-size: 12px;
+      opacity: 0.5;
+    }
+  }
+
+  &.list-item-active {
+    border-right: 2px solid $main;
+  }
+}
