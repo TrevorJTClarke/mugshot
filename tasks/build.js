@@ -2,6 +2,9 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
 var esperanto = require('esperanto');
 var map = require('vinyl-map');
 var jetpack = require('fs-jetpack');
@@ -28,11 +31,30 @@ var paths = {
     'app/bower_components/**',
     'app/vendor/**',
     'app/**/*.html'
+  ],
+  frontEnd: [
+    'app/js/app.js',
+    'app/js/controllers/*.js',
+    'app/js/directives/*.js',
+    'app/js/services/*.js',
+    'app/js/filters/*.js'
   ]
 }
 
 // -------------------------------------
-// Tasks
+// Cool Tasks
+// -------------------------------------
+gulp.task('uglify', function() {
+  return gulp.src(paths.frontEnd)
+    .pipe(sourcemaps.init())
+      .pipe(concat('mug.js'))
+      .pipe(uglify())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('app/dist/js'));
+});
+
+// -------------------------------------
+// Epic Tasks
 // -------------------------------------
 
 gulp.task('clean', function(callback) {
@@ -100,13 +122,13 @@ gulp.task('finalize', ['clean'], function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
-  gulp.watch(paths.toCopy, ['copy-watch']);
+  // gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
+  // gulp.watch(paths.toCopy, ['copy-watch']);
 
-  // gulp.watch('app/**/*.less', ['less-watch']);
+  gulp.watch('app/js/**/*.js', ['uglify']);
   gulp.watch('app/stylesheets/**/*.scss', ['sass']);
 });
 
 gulp.task('build', ['transpile', 'sass', 'copy', 'finalize']);
 
-gulp.task('dev', ['sass', 'watch']);
+gulp.task('dev', ['sass', 'uglify', 'watch']);
