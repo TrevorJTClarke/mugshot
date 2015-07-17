@@ -1634,9 +1634,15 @@ a {
         color: #f73e2f; }
 
 /**
- * Settings Pages
+ * History Page
  */
 .project-history {
   margin: 20px 0 0; }
   .project-history .history-tabs {
     width: 60%; }
+
+/**
+ * Runner Page
+ */
+.project-runner {
+  margin: 20px 0 0; }
