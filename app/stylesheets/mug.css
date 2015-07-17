@@ -1200,6 +1200,9 @@ input,
   flex-direction: row;
   align-items: flex-start;
   width: 40%; }
+  .tabs .btn {
+    padding: 6px 0;
+    text-align: center; }
   .tabs .btn-tab {
     flex: 1;
     background: transparent;
@@ -1254,7 +1257,8 @@ input,
     font-weight: 300; }
 
 .list-group-item {
-  border-right: 2px solid transparent; }
+  border-right: 2px solid transparent;
+  cursor: pointer; }
   .list-group-item .list-group-item-text small {
     font-size: 12px;
     opacity: 0.5; }
@@ -1289,6 +1293,16 @@ input,
 /**
  * Preloader
  */
+.loader-title {
+  text-align: center; }
+  .loader-title h2 {
+    margin: 42% 0 0;
+    font-weight: 300; }
+  .loader-title small {
+    display: block;
+    margin: 8px 0 0;
+    font-weight: 500; }
+
 @keyframes preload-show-1 {
   from {
     transform: rotateZ(60deg) rotateY(-90deg) rotateX(0deg);
@@ -1628,10 +1642,16 @@ a {
         color: #45b04e; }
     .project-settings .btn-finish.btn-remove {
       border-color: #ff7362;
-      color: #ff7362; }
+      border-width: 1px;
+      color: #ff7362;
+      font-size: 9px;
+      padding: 3px 10px; }
       .project-settings .btn-finish.btn-remove:hover {
         border-color: #f73e2f;
         color: #f73e2f; }
+  .project-settings .project-remove-title {
+    color: #ff7362;
+    font-size: 12px; }
 
 /**
  * History Page
@@ -1646,3 +1666,33 @@ a {
  */
 .project-runner {
   margin: 20px 0 0; }
+  .project-runner .filter-tabs {
+    margin: 20px 0 0; }
+    .project-runner .filter-tabs .btn {
+      font-size: 11px;
+      text-transform: uppercase; }
+
+.statistics {
+  background: #fefefe;
+  border: 1px solid #f2f0f0;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  width: 100%; }
+  .statistics .stat-item {
+    border-right: 1px solid #f2f0f0;
+    border-bottom: 2px solid #3b4655;
+    border-radius: 0 0 2px 2px;
+    flex: 1;
+    font-size: 28px;
+    font-weight: 300;
+    padding: 10px 0;
+    text-align: center; }
+    .statistics .stat-item:last-of-type {
+      border-right-color: transparent; }
+    .statistics .stat-item.stat-success {
+      border-bottom-color: #71d375; }
+    .statistics .stat-item.stat-warning {
+      border-bottom-color: #ffcc5a; }
+    .statistics .stat-item.stat-error {
+      border-bottom-color: #ff7362; }

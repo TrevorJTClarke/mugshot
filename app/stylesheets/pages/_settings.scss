@@ -96,12 +96,20 @@
     }
     &.btn-remove {
       border-color: $error;
+      border-width: 1px;
       color: $error;
+      font-size: 9px;
+      padding: 3px 10px;
 
       &:hover {
         border-color: $errordark;
         color: $errordark;
       }
     }
+  }
+
+  .project-remove-title {
+    color: $error;
+    font-size: 12px;
   }
 }
