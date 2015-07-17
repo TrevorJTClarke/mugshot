@@ -1,4 +1,5 @@
 var remote = require('remote');
+var window = remote.getCurrentWindow();
 
 /**
  * Quick Frame Buttons
@@ -10,8 +11,7 @@ var remote = require('remote');
     var btn = buttons[i];
 
     btn.addEventListener('click', function(e) {
-      var btnArg = e.currentTarget.attributes['core-frame'].value
-      var window = remote.getCurrentWindow();
+      var btnArg = e.currentTarget.attributes['core-frame'].value;
       window[btnArg]();
     }, false);
   }

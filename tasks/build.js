@@ -2,6 +2,11 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
+var ngTemplates = require('gulp-ng-templates');
+var htmlmin = require('gulp-htmlmin');
 var esperanto = require('esperanto');
 var map = require('vinyl-map');
 var jetpack = require('fs-jetpack');
@@ -28,11 +33,49 @@ var paths = {
     'app/bower_components/**',
     'app/vendor/**',
     'app/**/*.html'
+  ],
+  frontEnd: [
+    'app/js/app.js',
+    'app/js/config.js',
+    'app/js/init.js',
+    'app/js/routes.js',
+    'app/js/controllers/*.js',
+    'app/js/directives/*.js',
+    'app/js/services/*.js',
+    'app/js/filters/*.js'
+  ],
+  templates: [
+    'app/templates/*.html'
   ]
 }
 
 // -------------------------------------
-// Tasks
+// Cool Tasks
+// -------------------------------------
+gulp.task('uglify', function() {
+  return gulp.src(paths.frontEnd)
+    .pipe(sourcemaps.init())
+      .pipe(concat('mug.js'))
+      .pipe(uglify())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('app/dist/js'));
+});
+
+gulp.task('templates', ['clean'], function() {
+  return gulp.src(paths.templates)
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(ngTemplates({
+      filename: 'templates.js',
+      module: 'mugtemplates',
+      path: function(path, base) {
+        return path.replace(base, '').replace('/templates', '');
+      }
+    }))
+    .pipe(gulp.dest('app/dist/js'));
+});
+
+// -------------------------------------
+// Epic Tasks
 // -------------------------------------
 
 gulp.task('clean', function(callback) {
@@ -100,13 +143,14 @@ gulp.task('finalize', ['clean'], function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
-  gulp.watch(paths.toCopy, ['copy-watch']);
+  // gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
+  // gulp.watch(paths.toCopy, ['copy-watch']);
 
-  // gulp.watch('app/**/*.less', ['less-watch']);
+  gulp.watch('app/templates/*.html', ['templates']);
+  gulp.watch('app/js/**/*.js', ['uglify']);
   gulp.watch('app/stylesheets/**/*.scss', ['sass']);
 });
 
 gulp.task('build', ['transpile', 'sass', 'copy', 'finalize']);
 
-gulp.task('dev', ['sass', 'watch']);
+gulp.task('dev', ['sass', 'uglify', 'templates', 'watch']);

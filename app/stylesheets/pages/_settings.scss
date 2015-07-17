@@ -25,7 +25,8 @@
     border-radius: 3px;
     margin: 2px 0 0 0;
 
-    input {
+    input,
+    select {
       background: transparent;
       border: 0;
       border-right: 1px solid $grey03;
@@ -66,7 +67,7 @@
   }
 
   .section-finish {
-    margin: 80px 0 40px;
+    margin: 40px 0 60px;
   }
 
   .btn-finish {

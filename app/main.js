@@ -14,7 +14,6 @@ require('require-dir')('../app/core/tasks', { recurse: true });
 var devHelper = require('./vendor/electron_boilerplate/dev_helper');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 var ipc = require('ipc');
-
 var mainWindow;
 
 // Preserver of the window size and position between app launches.
@@ -53,11 +52,11 @@ app.on('ready', function() {
   }
 
   mainWindow.loadUrl('file://' + __dirname + '/app.html');
+  mainWindow.openDevTools();
 
   // TODO: env isnt loading the settings
   // if (env.name === 'development') {
   //     devHelper.setDevMenu();
-  //     // mainWindow.openDevTools();
   // }
 
   mainWindow.on('close', function() {

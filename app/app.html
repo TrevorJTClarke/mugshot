@@ -1,11 +1,14 @@
 <!doctype html>
-<html>
+<html ng-app="mugshot">
 <head>
+<base href="">
 <meta charset="utf-8">
 <title>Mug</title>
 
-<link href="./stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="./stylesheets/mug.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/mug.css" rel="stylesheet" type="text/css">
+<script src="vendor/angular.min.js"></script>
+<script src="vendor/angular-ui-router.min.js"></script>
 
 <!-- <script src="vendor/electron_boilerplate/env_config.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/context_menu.js"></script> -->
@@ -49,200 +52,32 @@
 
   <div class="super">
 
-  <div class="side-panel">
+    <div class="side-panel">
 
-    <div class="panel-nav">
-      <button class="btn btn-right">+</button>
-      <h3>Projects</h3>
-    </div>
-
-    <div class="panel-projects">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <h4 class="list-group-item-heading">Demo 1</h4>
-          <p class="list-group-item-text">
-            <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
-          </p>
-        </li>
-        <li class="list-group-item">
-          <h4 class="list-group-item-heading">Demo 2</h4>
-          <p class="list-group-item-text">
-            <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
-          </p>
-        </li>
-        <li class="list-group-item">
-          <h4 class="list-group-item-heading">Demo 3</h4>
-          <p class="list-group-item-text">
-            <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
-          </p>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="main-container">
-    <div class="header">
-      <div class="details">
-        <h1>Project Title</h1>
-        <h5>https://google.com</h5>
+      <div class="panel-nav">
+        <button class="btn btn-right">+</button>
+        <h3>Projects</h3>
       </div>
-      <div class="tabs">
-        <button class="btn btn-tab">Runner</button>
-        <button class="btn btn-tab">History</button>
-        <button class="btn btn-tab tab-active">Settings</button>
+
+      <div class="panel-projects">
+        <ul class="list-group">
+          <!-- <li class="list-group-item" ui-sref="runner"> -->
+          <li class="list-group-item" ui-sref="projects.settings({ id: '1234567' })">
+            <h4 class="list-group-item-heading">Demo 1</h4>
+            <p class="list-group-item-text">
+              <!-- <span class="label label-info">37 Passing</span> <span class="label label-danger">3 Failed</span> -->
+            </p>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <!-- <div class="sub-wrapper loader">
-      <div class="preloader loading">
-        <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span>
-      </div>
-    </div> -->
-
-    <!-- <i class="octicon octicon-beer"></i> -->
-
-    <div class="sub-wrapper project-settings">
-
-
-      <h3>General</h3>
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-          <div class="form-group">
-            <label for="projectTitle" class="control-label">Title</label>
-            <input type="text" class="form-control" id="projectTitle" placeholder="Project Title">
-          </div>
-          <div class="form-group">
-            <label for="projectUrl" class="control-label">Url</label>
-            <input type="text" class="form-control" id="projectUrl" placeholder="Project Url">
-            <span id="helpBlock" class="help-block">Example: <em>https://google.com</em> or <em>http://localhost:3000/</em></span>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-title">View Sizes <button class="btn btn-right btn-section-header">Add New</button></h3>
-      <div class="row setting-item setting-title">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <label for="projectTitle" class="col-sm-2 control-label">View Title</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Screen Width</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Screen Height</label>
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
-      </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" id="projectTitle" placeholder="Tablet, or iPhone_5">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="320">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="480">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used btn-used-active">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" id="projectTitle" placeholder="Tablet, or iPhone_5">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="320">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="480">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used btn-used-active">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" id="projectTitle" placeholder="Tablet, or iPhone_5">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="320">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="480">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
-
-      <h3 class="section-title">Cookies <button class="btn btn-right btn-section-header">Add New</button></h3>
-      <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <label for="projectTitle" class="col-sm-2 control-label">Cookie Name</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Cookie Value</label>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <label for="projectUrl" class="control-label">Cookie Domain</label>
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
-      </div>
-      <div class="row setting-item">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-          <input type="text" class="form-control" id="projectTitle" placeholder="show_modal">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="true">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <input type="text" class="form-control" id="projectUrl" placeholder="sub.example.com">
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-          <button type="submit" class="btn btn-used btn-used-active">
-            <i class="octicon octicon-check"></i>
-          </button>
-          <button type="submit" class="btn btn-trash">
-            <i class="octicon octicon-trashcan"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="section-finish col-lg-3 col-md-3 col-sm-3 col-xs-3">
-          <button type="submit" class="btn btn-finish btn-save">Save</button>
-          <button type="submit" class="btn btn-finish btn-cancel">Cancel</button>
-      </div>
-
-      <hr>
-
-      <div class="row">
-        <h5>Would you like to remove this project completely?</h5>
-        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <button type="submit" class="btn btn-finish btn-remove">Delete Project</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
+    <div class="main-container" ui-view></div>
 
   </div>
 
 <script src="core.js"></script>
-<script src="app.js"></script>
+<script src="dist/js/templates.js"></script>
+<script src="dist/js/mug.js"></script>
 </body>
 </html>

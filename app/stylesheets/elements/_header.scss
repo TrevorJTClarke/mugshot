@@ -7,35 +7,14 @@
   align-items: flex-end;
   width: 100%;
   min-height: 50px;
+  height: 50px;
 
   .details {
     width: 60%;
   }
 
   .tabs {
-    display: flex;
-    flex-direction: row;
     align-items: flex-end;
-    width: 40%;
-
-    .btn-tab {
-      flex: 1;
-      background: transparent;
-      border-radius: 0;
-      border-bottom: 2px solid transparent;
-
-      &:hover {
-        border-bottom-color: $grey02;
-      }
-      &:active,
-      &:focus {
-        box-shadow: 0 0 0;
-        outline: 0;
-      }
-      &.tab-active {
-        border-bottom-color: $darkmain;
-      }
-    }
   }
 
   h1 {

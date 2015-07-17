@@ -9,9 +9,12 @@
         "elements/_fonts",
         "elements/_frame",
         "elements/_layout",
+        "elements/_tabs",
         "elements/_sidepanel",
         "elements/_header",
-        "elements/_preloader";
+        "elements/_preloader",
+        "elements/_banner_items";
 
 @import "pages/_base",
-        "pages/settings";
+        "pages/_settings",
+        "pages/_history";
