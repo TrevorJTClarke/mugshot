@@ -1216,6 +1216,11 @@ input,
       outline: 0; }
     .tabs .btn-tab.tab-active {
       border-bottom-color: #213435; }
+  .tabs.filter-tabs {
+    margin: 20px 0 0; }
+    .tabs.filter-tabs .btn {
+      font-size: 11px;
+      text-transform: uppercase; }
 
 .label {
   border: 1px solid #3b4655;
@@ -1666,11 +1671,6 @@ a {
  */
 .project-runner {
   margin: 20px 0 0; }
-  .project-runner .filter-tabs {
-    margin: 20px 0 0; }
-    .project-runner .filter-tabs .btn {
-      font-size: 11px;
-      text-transform: uppercase; }
 
 .statistics {
   background: #fefefe;
