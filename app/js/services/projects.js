@@ -46,17 +46,14 @@ function($q) {
       title: options.title,
       timestamp: options.timestamp,
       viewports: [],
-      scenarios: [{
-        label: null,
+      selectors: [],
+      cookies: [],
+      meta: {
         url: null,
-        hideSelectors: null,
-        removeSelectors: null,
-        selectors: null,
-        cookies: null,
         readyEvent: null,
         delay: null,
         misMatchThreshold: null
-      }]
+      }
     };
   }
 
@@ -132,6 +129,40 @@ function($q) {
 
           // return the listing data, so we can update the sidepanel
           dfd.resolve(projectData);
+        });
+      });
+
+      return dfd.promise;
+    },
+
+    // Removes a single project by ID
+    remove: function(id) {
+      var dfd = $q.defer();
+      var allProjects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
+
+      // Update the listing data
+      allProjects.map(function(obj, idx) {
+        if (obj.id === id) {
+          allProjects.splice(idx, 1);
+        }
+      });
+
+      // Remove the project file
+      fs.unlink(projectFilesPath + id + '.json', function(err) {
+        if (err) {
+          dfd.reject(err);
+          return;
+        }
+
+        // update the listing data
+        fs.writeFile(projectsPath, JSON.stringify(allProjects), function(err) {
+          if (err) {
+            dfd.reject(err);
+            return;
+          }
+
+          // return
+          dfd.resolve();
         });
       });
 

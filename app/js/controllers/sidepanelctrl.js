@@ -26,6 +26,17 @@ function($rootScope, $scope, $state, Projects) {
     });
   });
 
+  // update the projects list
+  $rootScope.$on('SIDEPANEL:REMOVE', function(e, args) {
+    if (!args || !args.id) { return; }
+
+    $scope.projects.map(function(obj, idx) {
+      if (obj.id === args.id) {
+        $scope.projects.splice(idx, 1);
+      }
+    });
+  });
+
   $scope.goToProject = function(id) {
     var type = 'settings';
 

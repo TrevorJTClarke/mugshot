@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
       <label for="projectUrl" class="control-label">Url</label>
-      <input type="text" class="form-control" id="projectUrl" placeholder="Project Url">
+      <input type="text" class="form-control" ng-model="project.meta.url" id="projectUrl" placeholder="Project Url">
       <span id="helpBlock" class="help-block">Example: <em>https://google.com</em> or <em>http://localhost:3000/</em></span>
     </div>
   </div>
@@ -19,15 +19,15 @@
   <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <div class="form-group">
       <label class="control-label">Ready Event (Screens are taken after this event is fired)</label>
-      <input type="text" class="form-control" placeholder="Default: 'onload'">
+      <input type="text" class="form-control" ng-model="project.meta.readyEvent" placeholder="Default: 'onload'">
     </div>
     <div class="form-group">
       <label class="control-label">Delay Amount (In milliseconds)</label>
-      <input type="text" class="form-control" placeholder="Default: 500">
+      <input type="text" class="form-control" ng-model="project.meta.delay" placeholder="Default: 500">
     </div>
     <div class="form-group">
       <label class="control-label">Diff Threshold (Percentage)</label>
-      <input type="text" class="form-control" placeholder="Default: 0.1">
+      <input type="text" class="form-control" ng-model="project.meta.misMatchThreshold" placeholder="Default: 0.1">
     </div>
   </div>
 </div>

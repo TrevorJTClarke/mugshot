@@ -1,6 +1,6 @@
 MUG.controller('ProjectSettingsCtrl',
-['$rootScope', '$scope', 'Projects',
-function($rootScope, $scope, Projects) {
+['$rootScope', '$scope', '$state', 'Projects',
+function($rootScope, $scope, $state, Projects) {
   $scope.master = {};
   angular.copy($rootScope.project, $scope.master);
 
@@ -25,11 +25,22 @@ function($rootScope, $scope, Projects) {
     }
   };
 
+  // delete the project, and remove from project lists, then redirect to main
   $scope.deleteProject = function() {
     var sure = confirm('Are you sure you want to delete this project?');
     if (sure) {
-      // TODO: setup delet of project file and remove from project lists
-      console.log('TODO: DELETE FN');
+      var projectID = $rootScope.project.id;
+
+      Projects.remove(projectID)
+        .then(function(res) {
+          $rootScope.$emit('SIDEPANEL:REMOVE', { id: projectID });
+          $state.go('main');
+          $rootScope.project = {};
+        },
+
+        function(err) {
+          console.log('err', err);
+        });
     }
   }
 
