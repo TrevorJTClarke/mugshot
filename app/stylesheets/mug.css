@@ -1785,6 +1785,25 @@ body {
 a {
   text-decoration: none; }
 
+.main-static {
+  text-align: center;
+  margin: auto; }
+  .main-static .main-icon {
+    font-size: 1500%;
+    color: #dfdfdf; }
+  .main-static .static-title {
+    font-size: 24px;
+    font-weight: 500; }
+  .main-static .btn-create {
+    background: transparent;
+    border: 2px solid #46685B;
+    color: #46685B;
+    width: 200px;
+    margin: 20px auto; }
+    .main-static .btn-create:hover {
+      border-color: #213435;
+      color: #213435; }
+
 /**
  * Settings Pages
  */
