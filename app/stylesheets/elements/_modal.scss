@@ -1,27 +1,156 @@
 .modal {
+  background: rgba(0,0,0,0.8);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: -99;
+  display: none;
 
-
+  &.modal-open {
+    top: 47px;
+    right: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .modal-header {
+  background: $grey09;
+  color: $white;
+  padding: 12px 15px;
 
-  i {}
+  .closer {
+    color: $white;
+    cursor: pointer;
+    position: absolute;
+    padding: 10px 15px;
+    right: 0px;
+    top: 0px;
 
-  .closer {}
+    i {
+      font-size: 24px;
+    }
+  }
 }
 
 .modal-viewer {
+  color: $grey03;
+  flex: 3;
+  width: 100%;
+  height: 50%;
 
   .viewer-image {
+    height: 100%;
+    flex: 3;
 
-    .quickview {}
+    .viewer-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
   }
 
   .viewer-meta {
+    flex: 1;
+    width: 80%;
+    margin: auto;
 
-    .meta-title {}
-    .meta-subtitle {}
+    .meta-title {
+      font: {
+        size: 18px;
+        weight: 400;
+      }
+    }
+    .meta-subtitle {
+      color: $grey04;
+      font: {
+        size: 12px;
+        weight: 500;
+      }
+    }
+
+    .meta-options {
+      float: right;
+    }
+  }
+
+  .btn-option {
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    border-radius: 2px;
+
+    &:hover,
+    &:focus {
+      border-bottom: 2px solid $grey03;
+      color: $white;
+    }
+
+    &.btn-active {
+      border-bottom: 2px solid $white;
+      color: $white;
+    }
   }
 }
 
-.modal-footer {}
+.modal-footer {
+  background: $grey09;
+  width: 100%;
+  position: relative;
+
+  .modal-action {
+    background: $grey09;
+    color: $grey02;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding: 0 15px;
+    top:0;
+    height: 100%;
+    z-index: 99;
+
+    i {
+      margin: auto;
+      font-size: 24px;
+    }
+
+    &.modal-action-left {
+      left: 0;
+    }
+    &.modal-action-right {
+      right: 0;
+    }
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .modal-carousel-wrap {
+    position: relative;
+    width: 100%;
+    padding: 10px 40px;
+    overflow: scroll;
+    z-index: 9;
+  }
+
+  .modal-carousel {
+    width: 2000px;
+    margin:0;
+    padding:0;
+
+    .carousel-thumb {
+      cursor: pointer;
+      display: inline-block;
+      list-style: none;
+      height: 100px;
+      width: auto;
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+}
