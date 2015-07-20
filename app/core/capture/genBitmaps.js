@@ -75,7 +75,6 @@ function capturePageSelectors(url, scenarios, viewports, bitmapsReference, bitma
         console.log('CO bool', bool);
       }
     }
-    console.log('HERE', JSON.stringify(phantom.cookies));
 
     casper.each(viewports, function(casper, vp, viewportIndex) {
       this.then(function() {

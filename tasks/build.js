@@ -36,13 +36,13 @@ var paths = {
   ],
   frontEnd: [
     'app/js/app.js',
-    'app/js/config.js',
-    'app/js/init.js',
-    'app/js/routes.js',
-    'app/js/controllers/*.js',
     'app/js/directives/*.js',
     'app/js/services/*.js',
-    'app/js/filters/*.js'
+    'app/js/filters/*.js',
+    'app/js/controllers/*.js',
+    'app/js/config.js',
+    'app/js/routes.js',
+    'app/js/init.js'
   ],
   templates: [
     'app/templates/*.html'

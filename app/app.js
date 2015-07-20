@@ -29,10 +29,6 @@
 //   menu.popup(remote.getCurrentWindow());
 // }, false);
 
-
-
-
-
 // function clickTest() {
 //   var url = document.getElementById('url').value;
 //   urlcast.start(url);
