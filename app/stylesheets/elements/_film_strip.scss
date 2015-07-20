@@ -1,0 +1,61 @@
+.film-strip-wrap {
+  background: $grey06;
+  border: 0px;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  padding: 10px 10px 10px 45px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  z-index: 9;
+
+  &:after {
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+    content: '\f04e';
+    color: $white;
+    position: absolute;
+    padding: 30px 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font: normal normal normal 32px/1 octicons;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 220ms ease-in-out;
+  }
+
+  &:hover:after {
+    opacity: 1;
+  }
+}
+
+.film-strip {
+  width: 9999px;
+  margin:0;
+  padding:0;
+}
+
+.film-thumb {
+  border-radius: 2px;
+  display: inline-block;
+  list-style: none;
+  height: 70px;
+  width: auto;
+  margin: 0 10px 0 0;
+  position: relative;
+
+  img {
+    height: 100%;
+  }
+}

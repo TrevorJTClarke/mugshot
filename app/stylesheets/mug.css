@@ -1561,6 +1561,59 @@ input,
   .banner-item.banner-error .meta-status {
     color: #ff7362; }
 
+.film-strip-wrap {
+  background: #505859;
+  border: 0px;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  padding: 10px 10px 10px 45px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  z-index: 9; }
+  .film-strip-wrap:after {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    content: '\f04e';
+    color: #FFFFFF;
+    position: absolute;
+    padding: 30px 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font: normal normal normal 32px/1 octicons;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 220ms ease-in-out; }
+  .film-strip-wrap:hover:after {
+    opacity: 1; }
+
+.film-strip {
+  width: 9999px;
+  margin: 0;
+  padding: 0; }
+
+.film-thumb {
+  border-radius: 2px;
+  display: inline-block;
+  list-style: none;
+  height: 70px;
+  width: auto;
+  margin: 0 10px 0 0;
+  position: relative; }
+  .film-thumb img {
+    height: 100%; }
+
 .modal {
   background: rgba(0, 0, 0, 0.8);
   position: fixed;
@@ -1593,10 +1646,11 @@ input,
   color: #dfdfdf;
   flex: 3;
   width: 100%;
-  height: 50%; }
+  height: calc(100% - 180px); }
   .modal-viewer .viewer-image {
+    flex: 3;
     height: 100%;
-    flex: 3; }
+    padding: 10px 0; }
     .modal-viewer .viewer-image .viewer-preview {
       width: 100%;
       height: 100%;
@@ -1605,7 +1659,8 @@ input,
   .modal-viewer .viewer-meta {
     flex: 1;
     width: 80%;
-    margin: auto; }
+    margin: auto;
+    position: relative; }
     .modal-viewer .viewer-meta .meta-title {
       font-size: 18px;
       font-weight: 400; }
@@ -1614,7 +1669,9 @@ input,
       font-size: 12px;
       font-weight: 500; }
     .modal-viewer .viewer-meta .meta-options {
-      float: right; }
+      position: absolute;
+      right: 0;
+      bottom: 0; }
   .modal-viewer .btn-option {
     background: transparent;
     border-bottom: 2px solid transparent;
@@ -1662,13 +1719,31 @@ input,
     margin: 0;
     padding: 0; }
     .modal-footer .modal-carousel .carousel-thumb {
+      border: 2px solid transparent;
+      border-radius: 2px;
       cursor: pointer;
       display: inline-block;
       list-style: none;
-      height: 100px;
-      width: auto; }
+      height: 70px;
+      width: auto;
+      margin: 0 10px 0 0;
+      position: relative; }
       .modal-footer .modal-carousel .carousel-thumb img {
         height: 100%; }
+      .modal-footer .modal-carousel .carousel-thumb i {
+        position: absolute;
+        right: -4px;
+        top: -2px; }
+        .modal-footer .modal-carousel .carousel-thumb i.thumb-success {
+          color: #71d375; }
+        .modal-footer .modal-carousel .carousel-thumb i.thumb-warning {
+          color: #ffcc5a; }
+        .modal-footer .modal-carousel .carousel-thumb i.thumb-error {
+          color: #ff7362; }
+      .modal-footer .modal-carousel .carousel-thumb:hover {
+        border-color: #3D7B80; }
+      .modal-footer .modal-carousel .carousel-thumb.active {
+        border-color: #77B1A9; }
 
 * {
   box-sizing: border-box; }
