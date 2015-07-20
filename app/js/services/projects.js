@@ -100,7 +100,7 @@ function($q) {
       return JSON.parse(fs.readFileSync(projectFilesPath + id + '.json', 'utf8'));
     },
 
-    // TODO: save to file and lists, return list data
+    // save to file and lists, return list data
     save: function(projectData) {
       var dfd = $q.defer();
       var allProjects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));

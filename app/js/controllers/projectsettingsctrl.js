@@ -9,7 +9,11 @@ function($rootScope, $scope, $state, Projects) {
   $scope.save = function() {
     Projects.save($rootScope.project)
       .then(function(res) {
+        // Update the sidebar with changes
         $rootScope.$emit('SIDEPANEL:UPDATE', res);
+
+        // Update the revert model
+        angular.copy($rootScope.project, $scope.master);
       },
 
       function(err) {
@@ -21,6 +25,7 @@ function($rootScope, $scope, $state, Projects) {
   $scope.cancelSave = function() {
     var sure = confirm('Are you sure you want to clear all your changes?');
     if (sure) {
+      // put revert model into the project model
       angular.copy($scope.master, $rootScope.project);
     }
   };
