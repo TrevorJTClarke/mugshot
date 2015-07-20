@@ -1,8 +1,15 @@
 MUG.controller('ProjectSettingsCtrl',
 ['$rootScope', '$scope', '$state', 'Projects',
 function($rootScope, $scope, $state, Projects) {
+  $scope.selectorTypes = ['container', 'hide', 'remove'];
+
+  // TODO: save project upon changes to viewports/cookies??
   $scope.master = {};
   angular.copy($rootScope.project, $scope.master);
+
+  function addNewType(type, data) {
+    $rootScope.project[type].push(data);
+  }
 
   // TODO: setup validations
   // save the current project
@@ -48,5 +55,43 @@ function($rootScope, $scope, $state, Projects) {
         });
     }
   }
+
+  // Adds a new viewport item
+  $scope.addViewport = function() {
+    var newViewport = {
+      active: false,
+      name: null,
+      width: null,
+      height: null
+    };
+
+    addNewType('viewports', newViewport);
+  };
+
+  // Adds a new selector item
+  $scope.addSelector = function() {
+    var newSelector = {
+      active: false,
+      type: null,
+      query: null
+    };
+
+    addNewType('selectors', newSelector);
+  };
+
+  // Adds a new cookie item
+  $scope.addCookie = function() {
+    var newCookie = {
+      active: false,
+      name: null,
+      value: null,
+      path: null
+    };
+
+    addNewType('cookies', newCookie);
+  };
+
+  // TODO: setup FN for activate a cookie/view/select
+  // TODO: setup FN for removing a cookie/view/select
 
 }]);

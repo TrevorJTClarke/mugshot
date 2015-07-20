@@ -45,18 +45,18 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
 </div>
-<div class="row setting-item">
+<div class="row setting-item" ng-repeat="viewport in project.viewports">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-    <input type="text" class="form-control" placeholder="Tablet, or iPhone_5">
+    <input type="text" class="form-control" ng-model="viewport.name" placeholder="Tablet, or iPhone_5">
   </div>
   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    <input type="text" class="form-control" placeholder="320">
+    <input type="text" class="form-control" ng-model="viewport.width" placeholder="320">
   </div>
   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    <input type="text" class="form-control" placeholder="480">
+    <input type="text" class="form-control" ng-model="viewport.height" placeholder="480">
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-    <button type="submit" class="btn btn-used btn-used-active">
+    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': viewport.active == true }">
       <i class="octicon octicon-check"></i>
     </button>
     <button type="submit" class="btn btn-trash">
@@ -75,19 +75,15 @@
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">&nbsp;</div>
 </div>
-<div class="row setting-item">
+<div class="row setting-item" ng-repeat="selector in project.selectors">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-    <input type="text" class="form-control" placeholder="body header .menu_item_1">
+    <input type="text" class="form-control" ng-model="selector.query" placeholder="body header .menu_item_1">
   </div>
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-    <select class="form-control">
-      <option value="container">Container</option>
-      <option value="hide">Hide</option>
-      <option value="remove">Remove</option>
-    </select>
+    <select class="form-control" ng-model="selector.type" ng-options="option for option in selectorTypes"></select>
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 setting-edit">
-    <button type="submit" class="btn btn-used btn-used-active">
+    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': selector.active == true }">
       <i class="octicon octicon-check"></i>
     </button>
     <button type="submit" class="btn btn-trash">
@@ -109,18 +105,18 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
 </div>
-<div class="row setting-item">
+<div class="row setting-item" ng-repeat="cookie in project.cookies">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-    <input type="text" class="form-control" placeholder="show_modal">
+    <input type="text" class="form-control" ng-model="cookie.name" placeholder="show_modal">
   </div>
   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    <input type="text" class="form-control" placeholder="true">
+    <input type="text" class="form-control" ng-model="cookie.value" placeholder="true">
   </div>
   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    <input type="text" class="form-control" placeholder="sub.example.com">
+    <input type="text" class="form-control" ng-model="cookie.path" placeholder="sub.example.com">
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-    <button type="submit" class="btn btn-used btn-used-active">
+    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': cookie.active == true }">
       <i class="octicon octicon-check"></i>
     </button>
     <button type="submit" class="btn btn-trash">
