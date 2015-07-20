@@ -51,20 +51,45 @@
     font-size: 13px;
   }
 
-  .btn-compare {
-    background: transparent;
-    border: 0;
-    color: $grey06;
-    padding: 14px 0;
+  .banner-preview {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
     width: 100%;
-    outline:0;
+    height: 57px;
 
-    i {
-      font-size: 24px;
+    &:after {
+      background: rgba(0,0,0,0.3);
+      content: '\f04e';
+      color: $white;
+      position: absolute;
+      padding: 15px 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      font: normal normal normal 32px/1 octicons;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      opacity: 0;
+      transition: opacity 220ms ease-in-out;
     }
 
-    &:hover {
-      color: $grey09;
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    &:hover:after {
+      opacity: 1;
     }
   }
 

@@ -1534,17 +1534,40 @@ input,
     color: rgba(0, 0, 0, 0.5);
     margin: 0;
     font-size: 13px; }
-  .banner-item .btn-compare {
-    background: transparent;
-    border: 0;
-    color: #505859;
-    padding: 14px 0;
+  .banner-item .banner-preview {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
     width: 100%;
-    outline: 0; }
-    .banner-item .btn-compare i {
-      font-size: 24px; }
-    .banner-item .btn-compare:hover {
-      color: #0b0d0d; }
+    height: 57px; }
+    .banner-item .banner-preview:after {
+      background: rgba(0, 0, 0, 0.3);
+      content: '\f04e';
+      color: #FFFFFF;
+      position: absolute;
+      padding: 15px 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      font: normal normal normal 32px/1 octicons;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      opacity: 0;
+      transition: opacity 220ms ease-in-out; }
+    .banner-item .banner-preview img {
+      width: 100%;
+      height: auto; }
+    .banner-item .banner-preview:hover:after {
+      opacity: 1; }
   .banner-item .meta-status {
     color: #3b4655;
     margin: 10px 0 3px; }
