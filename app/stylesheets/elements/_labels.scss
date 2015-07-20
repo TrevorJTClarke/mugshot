@@ -1,0 +1,26 @@
+.label {
+  border: 1px solid $info;
+  background: transparent;
+  border-radius: 4px;
+  color: $info;
+  padding: .1em .4em .2em;
+
+  i {
+    font-size: 11px;
+  }
+
+  &.label-success {
+    border-color: $success;
+    color: $success;
+  }
+
+  &.label-warning {
+    border-color: $warning;
+    color: $warning;
+  }
+
+  &.label-error {
+    border-color: $error;
+    color: $error;
+  }
+}

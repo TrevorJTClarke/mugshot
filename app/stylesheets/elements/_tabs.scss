@@ -4,10 +4,15 @@
   align-items: flex-start;
   width: 40%;
 
+  .btn {
+    padding: 6px 0;
+    text-align: center;
+  }
+
   .btn-tab {
     flex: 1;
     background: transparent;
-    border-radius: 0;
+    border-radius: 0 0 2px 2px;
     border-bottom: 2px solid transparent;
 
     &:hover {
@@ -20,6 +25,15 @@
     }
     &.tab-active {
       border-bottom-color: $darkmain;
+    }
+  }
+
+  &.filter-tabs {
+    margin: 20px 0 0;
+
+    .btn {
+      font-size: 11px;
+      text-transform: uppercase;
     }
   }
 }

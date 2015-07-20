@@ -45,3 +45,11 @@ gulp=spawn(process.env.SHELL, ['-c', 'cd ' + project.directory + ' && gulp'])
 childProcess.execFileSync(process.env.SHELL, ['-i', '-c', 'launchctl setenv PATH "$PATH"'])
 var gulpPath = path.join(__dirname, '../', 'node_modules', 'gulp', 'bin', 'gulp.js');
 gulp=spawn(gulpPath, {cwd: project.directory});
+
+
+.image-thumb {
+    width: 580px;
+    height: 500px;
+    object-fit: contain;
+    object-position: center;
+}

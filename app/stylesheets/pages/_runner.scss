@@ -1,0 +1,44 @@
+/**
+ * Runner Page
+ */
+.project-runner {
+  margin: 20px 0 0;
+}
+
+.statistics {
+  background: darken($white,0.5%);
+  border: 1px solid $grey02;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  .stat-item {
+    border-right: 1px solid $grey02;
+    border-bottom: 2px solid $info;
+    border-radius:0 0 2px 2px;
+    flex: 1;
+    font: {
+      size: 28px;
+      weight: 300;
+    }
+    padding: 10px 0;
+    text-align: center;
+
+    &:last-of-type {
+      border-right-color: transparent;
+    }
+
+    &.stat-success {
+      border-bottom-color: $success;
+    }
+
+    &.stat-warning {
+      border-bottom-color: $warning;
+    }
+
+    &.stat-error {
+      border-bottom-color: $error;
+    }
+  }
+}
