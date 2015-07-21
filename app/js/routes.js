@@ -16,8 +16,7 @@ function($stateProvider, $urlRouterProvider) {
    */
   .state('main', {
     url: '/',
-    templateUrl: 'main.html',
-    controller: 'MainCtrl'
+    templateUrl: 'main.html'
   })
 
   /**
@@ -26,19 +25,22 @@ function($stateProvider, $urlRouterProvider) {
   .state('projects', {
     url: '/projects/:id',
     templateUrl: 'projects.html',
-    controller: 'ProjectSettingsCtrl'
+    controller: 'ProjectCtrl'
   })
   .state('projects.settings', {
     url: '/settings',
-    templateUrl: 'projects.settings.html'
+    templateUrl: 'projects.settings.html',
+    controller: 'ProjectSettingsCtrl'
   })
   .state('projects.runner', {
     url: '/runner',
-    templateUrl: 'projects.runner.html'
+    templateUrl: 'projects.runner.html',
+    controller: 'ProjectRunnerCtrl'
   })
   .state('projects.history', {
     url: '/history',
-    templateUrl: 'projects.history.html'
+    templateUrl: 'projects.history.html',
+    controller: 'ProjectHistoryCtrl'
   })
 
   /**

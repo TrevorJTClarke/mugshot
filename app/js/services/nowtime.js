@@ -1,6 +1,6 @@
 MUG.factory('nowTime',
 ['$timeout',
-function ($timeout) {
+function($timeout) {
   var nowTime = Date.now();
   var updateTime = function() {
     $timeout(function() {
@@ -8,6 +8,7 @@ function ($timeout) {
       updateTime();
     }, 1000);
   };
+
   updateTime();
   return {
     getTime: function() {

@@ -50,23 +50,27 @@
     <div class="logo">☕️</div>
   </div>
 
-  <div class="super">
+  <div class="super" ng-controller="MainCtrl">
 
-    <div class="side-panel">
+    <div ng-controller="SidePanelCtrl" class="side-panel">
 
       <div class="panel-nav">
-        <button class="btn btn-right">+</button>
+        <button class="btn btn-right" ng-click="createNewProject()">+</button>
         <h3>Projects</h3>
       </div>
 
       <div class="panel-projects">
-        <ul class="list-group">
-          <li class="list-group-item list-item-active" ui-sref="projects.runner({ id: '1234567' })">
-            <h4 class="list-group-item-heading">Project 1</h4>
-            <p class="list-group-item-text">
-              <span class="label label-success"><i class="octicon octicon-diff-added"></i> 37</span>
-              <span class="label label-error"><i class="octicon octicon-diff-removed"></i> 3</span>
-              <span class="label"><i class="octicon octicon-eye"></i> 18 Views</span>
+        <ul class="list-group" ng-cloak>
+          <li class="list-group-item" ng-class="{'list-item-active': project.id == currentProjectId }" ng-repeat="project in projects track by $index" ng-click="goToProject(project.id)">
+            <h4 class="list-group-item-heading">{{project.title}}</h4>
+            <p class="list-group-item-text" ng-show="project.totals.success || project.totals.warning || project.totals.error || project.totals.views">
+              <span class="label label-success" ng-if="project.totals.success"><i class="octicon octicon-diff-added"></i> {{project.totals.success}}</span>
+              <span class="label label-warning" ng-if="project.totals.warning"><i class="octicon octicon-diff-ignored"></i> {{project.totals.warning}}</span>
+              <span class="label label-error" ng-if="project.totals.error"><i class="octicon octicon-diff-removed"></i> {{project.totals.error}}</span>
+              <span class="label" ng-if="project.totals.views"><i class="octicon octicon-eye"></i> {{project.totals.views}} Views</span>
+            </p>
+            <p class="list-group-item-text" ng-hide="project.totals.success || project.totals.warning || project.totals.error || project.totals.views">
+              <span class="label"><i class="octicon octicon-checklist"></i> Ready to test!</span>
             </p>
           </li>
         </ul>

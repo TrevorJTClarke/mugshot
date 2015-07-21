@@ -1785,6 +1785,25 @@ body {
 a {
   text-decoration: none; }
 
+.main-static {
+  text-align: center;
+  margin: auto; }
+  .main-static .main-icon {
+    font-size: 1500%;
+    color: #dfdfdf; }
+  .main-static .static-title {
+    font-size: 24px;
+    font-weight: 500; }
+  .main-static .btn-create {
+    background: transparent;
+    border: 2px solid #46685B;
+    color: #46685B;
+    width: 200px;
+    margin: 20px auto; }
+    .main-static .btn-create:hover {
+      border-color: #213435;
+      color: #213435; }
+
 /**
  * Settings Pages
  */
@@ -1798,6 +1817,20 @@ a {
     margin-right: 0; }
   .project-settings h3 {
     font-weight: 300; }
+  .project-settings .setting-item-null {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    width: 100%;
+    margin: 2px 0 0 0;
+    text-align: center;
+    text-transform: uppercase; }
+    .project-settings .setting-item-null p {
+      color: #a8afb0;
+      margin: 0;
+      padding: 10px 0;
+      font-size: 12px;
+      font-weight: 500; }
   .project-settings .setting-item {
     width: 100%;
     background: #FFFFFF;
@@ -1824,14 +1857,13 @@ a {
       padding: 6px 0;
       outline: 0;
       flex: 1; }
-    .project-settings .setting-item .btn-trash {
-      color: #ff7362; }
-    .project-settings .setting-item .btn-used {
-      color: #7f8687;
-      opacity: 0.5; }
-      .project-settings .setting-item .btn-used.btn-used-active {
-        color: #45b04e;
-        opacity: 1; }
+      .project-settings .setting-item .btn.btn-trash {
+        color: #ff7362; }
+      .project-settings .setting-item .btn.btn-used {
+        box-shadow: 0 0 0;
+        color: #dfdfdf; }
+        .project-settings .setting-item .btn.btn-used.btn-used-active {
+          color: #45b04e; }
   .project-settings .section-finish {
     margin: 40px 0 60px; }
   .project-settings .btn-finish {
@@ -1861,6 +1893,13 @@ a {
       .project-settings .btn-finish.btn-remove:hover {
         border-color: #f73e2f;
         color: #f73e2f; }
+    .project-settings .btn-finish.btn-cancel.btn-active {
+      border-color: #373e3e;
+      color: #373e3e; }
+  .project-settings .project-remove {
+    border-top: 1px solid #f2f0f0;
+    margin: 60px 0 20px;
+    padding-top: 20px; }
   .project-settings .project-remove-title {
     color: #ff7362;
     font-size: 12px; }
