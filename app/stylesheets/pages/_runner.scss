@@ -2,8 +2,50 @@
  * Runner Page
  */
 .project-runner {
-  margin: 20px 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 158px);
+
+  .runner-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
+
+.intro-static {
+  text-align: center;
+  margin:auto;
+
+  .intro-icon {
+    font-size: 800%;
+    color: $grey03;
+      margin: 20px 0;
+  }
+
+  .static-title {
+    font: {
+      size: 24px;
+      weight: 500;
+    }
+  }
+
+  .btn-create {
+    background: transparent;
+    border: 2px solid $main;
+    color: $main;
+    width: 200px;
+    margin: 20px auto;
+
+    &:hover {
+      border-color: $darkmain;
+      color: $darkmain;
+    }
+  }
+}
+
 
 .statistics {
   background: darken($white,0.5%);
@@ -40,5 +82,30 @@
     &.stat-error {
       border-bottom-color: $error;
     }
+  }
+}
+
+.runner-loader {
+  width: 275px;
+  margin: auto;
+  position: relative;
+
+  .preloader {
+    top: 40px;
+  }
+}
+
+.loader-title {
+  text-align: center;
+
+  h2 {
+    margin: 100px 0 0;
+    font-weight: 300;
+  }
+
+  small {
+    display: block;
+    margin: 8px 0 0;
+    font-weight: 500;
   }
 }

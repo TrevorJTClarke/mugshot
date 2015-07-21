@@ -4,8 +4,8 @@ function($rootScope, $scope, $stateParams, Projects) {
   $scope.activeFilter = 'All';
   $scope.activeFilterQuery = '';
 
-  // Allow the child views to bind to same scope
-  $scope.historyItems = Projects.getHistoryById($stateParams.id);
+  // grab all the history data
+  $scope.historyItems = Projects.getTypeById($stateParams.id, 'history');
 
   $scope.changeFilter = function(type) {
     $scope.activeFilter = type;

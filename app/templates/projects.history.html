@@ -5,6 +5,9 @@
     <button class="btn btn-tab" ng-click="changeFilter('Desktop')" ng-class="{'tab-active': activeFilter == 'Desktop'}">Desktop</button>
     <button class="btn btn-tab" ng-click="changeFilter('Tablet')" ng-class="{'tab-active': activeFilter == 'Tablet'}">Tablet</button>
     <button class="btn btn-tab" ng-click="changeFilter('Mobile')" ng-class="{'tab-active': activeFilter == 'Mobile'}">Mobile</button>
+    <button class="btn btn-tab" ng-click="changeFilter('passed')" ng-class="{'tab-active': activeFilter == 'passed'}">Passed</button>
+    <button class="btn btn-tab" ng-click="changeFilter('warning')" ng-class="{'tab-active': activeFilter == 'warning'}">Warning</button>
+    <button class="btn btn-tab" ng-click="changeFilter('failed')" ng-class="{'tab-active': activeFilter == 'failed'}">Failed</button>
   </div>
 
   <div class="banner-items" ng-if="historyItems.length > 0">

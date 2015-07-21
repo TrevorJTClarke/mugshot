@@ -95,7 +95,7 @@ function($rootScope, $scope, $state, Projects) {
   $scope.addSelector = function() {
     var newSelector = {
       active: true,
-      type: null,
+      type: 'container',
       query: null
     };
 

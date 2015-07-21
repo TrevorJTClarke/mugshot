@@ -17,34 +17,3 @@ body {
 a {
   text-decoration: none;
 }
-
-
-.main-static {
-  text-align: center;
-  margin:auto;
-
-  .main-icon {
-    font-size: 1500%;
-    color: $grey03;
-  }
-
-  .static-title {
-    font: {
-      size: 24px;
-      weight: 500;
-    }
-  }
-
-  .btn-create {
-    background: transparent;
-    border: 2px solid $main;
-    color: $main;
-    width: 200px;
-    margin: 20px auto;
-
-    &:hover {
-      border-color: $darkmain;
-      color: $darkmain;
-    }
-  }
-}

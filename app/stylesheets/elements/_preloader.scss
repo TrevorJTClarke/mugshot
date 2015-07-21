@@ -1,22 +1,6 @@
 /**
  * Preloader
  */
-.loader-title {
-  text-align: center;
-
-  h2 {
-    margin: 42% 0 0;
-    font-weight: 300;
-  }
-
-  small {
-    display: block;
-    margin: 8px 0 0;
-    font-weight: 500;
-  }
-}
-
-
 @for $i from 1 through 6 {
   @keyframes preload-show-#{$i}{
     from{
