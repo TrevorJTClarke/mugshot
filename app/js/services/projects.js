@@ -57,7 +57,37 @@ function($q) {
     };
   }
 
+  // Grabs JSON file and appropriately handles errors
+  function getJsonFile(path, type) {
+    var file;
+
+    try {
+      file = fs.readFileSync(path, 'utf8');
+    } catch (e) {
+      // couldn't find file
+      if (e.code === 'ENOENT') {
+        return type || {};
+      } else {
+        throw e;
+      }
+    }
+
+    return JSON.parse(file);
+  }
+
   return {
+
+    getAll: function() {
+      return getJsonFile(projectsPath, []);
+    },
+
+    getById: function(id) {
+      return getJsonFile(projectFilesPath + id + '.json');
+    },
+
+    getHistoryById: function(id) {
+      return getJsonFile(projectFilesPath + id + '_history.json', []);
+    },
 
     /**
      * creates a new project, and returns the data in a promise
@@ -90,14 +120,6 @@ function($q) {
       });
 
       return dfd.promise;
-    },
-
-    getAll: function() {
-      return JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
-    },
-
-    getById: function(id) {
-      return JSON.parse(fs.readFileSync(projectFilesPath + id + '.json', 'utf8'));
     },
 
     // save to file and lists, return list data

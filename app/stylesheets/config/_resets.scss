@@ -17,6 +17,34 @@ input,
   }
 }
 
+.select {
+  position: relative;
+
+  select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+  }
+
+  &:after {
+    content: '\f05b';
+    color: $black;
+    position: absolute;
+    top: 8px;
+    right: 7px;
+    font: normal normal normal 16px/1 octicons;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
 .panel {
 
 }

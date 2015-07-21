@@ -8,7 +8,31 @@
     width: 60%;
   }
 
-  // .banner-items {
-  //
-  // }
+  .default-state {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(0,0,0, 0.05);
+    border-radius: 3px;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+
+    p {
+      color: $grey04;
+      margin: 0;
+      padding: 40px 0 20px;
+      font: {
+        size: 12px;
+        weight: 500;
+      }
+    }
+
+    .btn-reference {
+      background: transparent;
+      border: 1px solid $info;
+      color: $info;
+      margin-bottom: 40px;
+      padding: 8px 30px;
+    }
+  }
 }

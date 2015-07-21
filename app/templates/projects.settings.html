@@ -84,7 +84,7 @@
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <input type="text" class="form-control" ng-model="selector.query" placeholder="body header .menu_item_1">
   </div>
-  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 select">
     <select class="form-control" ng-model="selector.type" ng-options="option for option in selectorTypes"></select>
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 setting-edit">
@@ -105,13 +105,13 @@
 <h3 class="section-title">Cookies <button class="btn btn-right btn-section-header" ng-click="addCookie()">Add New</button></h3>
 <div class="row" ng-if="project.cookies.length > 0">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-    <label for="projectTitle" class="col-sm-2 control-label">Cookie Name</label>
+    <label for="projectTitle" class="col-sm-2 control-label">Name</label>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    <label for="projectUrl" class="control-label">Cookie Value</label>
+    <label for="projectUrl" class="control-label">Value</label>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    <label for="projectUrl" class="control-label">Cookie Domain</label>
+    <label for="projectUrl" class="control-label">Domain</label>
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
 </div>
