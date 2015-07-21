@@ -1,0 +1,35 @@
+// History
+// Store in file /projects/fjdsklfjds_history.json
+// Store screens /screens/compare
+// status: passed, warning, failed
+// type: compare, reference
+//
+// Name Naming convention
+// query string + _ + batch
+// Example: bodyheadernav_2
+//
+// Image Path Naming convention
+// query string + _ + viewport + _ + project.id + generate 6 random string + _ + batch
+// Example: bodyheadernav_tablet_fjdsklfjds309fdjkl_2.png
+[{
+  "analysis": 23,
+  "batch": 2,
+  "diff": "0.01",
+  "id": "fjdskl482309fdjkls",
+  "name": "bodyheadernav_2",
+  "source": "/screens/compare/fjdsklfjds/bodyheadernav_tablet_fjdsklfjds309fdjkl_2.png",
+  "status": "passed",
+  "timestamp": 1345483008,
+  "type": "compare",
+  "viewport": "Tablet",
+  "query": "body header .nav"
+},{
+  "batch": 2,
+  "id": "fjdskl482309fdjkls",
+  "name": "bodyheadernav_2",
+  "source": "/screens/reference/fjdsklfjds/bodyheadernav_tablet_fjdsklfjds309fdjkl_2.png",
+  "timestamp": 1345483008,
+  "type": "reference",
+  "viewport": "Tablet",
+  "query": "body header .nav"
+}]

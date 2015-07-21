@@ -1,8 +1,15 @@
 MUG.controller('ProjectHistoryCtrl',
-['$rootScope', '$scope', 'Projects',
-function($rootScope, $scope, Projects) {
+['$rootScope', '$scope', '$stateParams', 'Projects',
+function($rootScope, $scope, $stateParams, Projects) {
+  $scope.activeFilter = 'All';
+  $scope.activeFilterQuery = '';
 
   // Allow the child views to bind to same scope
-  // $rootScope.project = Projects.getById($stateParams.id);
+  $scope.historyItems = Projects.getHistoryById($stateParams.id);
+
+  $scope.changeFilter = function(type) {
+    $scope.activeFilter = type;
+    $scope.activeFilterQuery = (type == 'All') ? '' : type;
+  };
 
 }]);

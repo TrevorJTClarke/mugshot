@@ -21,6 +21,29 @@ input,
     border: 1px solid #dfdfdf;
     box-shadow: 0 0 0; }
 
+.select {
+  position: relative; }
+  .select select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px; }
+  .select:after {
+    content: '\f05b';
+    color: #333333;
+    position: absolute;
+    top: 8px;
+    right: 7px;
+    font: normal normal normal 16px/1 octicons;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+
 .list-group-item {
   background: transparent;
   border: 0px;
@@ -1268,6 +1291,7 @@ input,
     font-size: 12px;
     opacity: 0.5; }
   .list-group-item.list-item-active {
+    background: #FBFBFB;
     border-right: 2px solid #46685B; }
 
 /**
@@ -1911,6 +1935,26 @@ a {
   margin: 20px 0 0; }
   .project-history .history-tabs {
     width: 60%; }
+  .project-history .default-state {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase; }
+    .project-history .default-state p {
+      color: #a8afb0;
+      margin: 0;
+      padding: 40px 0 20px;
+      font-size: 12px;
+      font-weight: 500; }
+    .project-history .default-state .btn-reference {
+      background: transparent;
+      border: 1px solid #3b4655;
+      color: #3b4655;
+      margin-bottom: 40px;
+      padding: 8px 30px; }
 
 /**
  * Runner Page

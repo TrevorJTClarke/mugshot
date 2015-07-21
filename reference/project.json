@@ -1,0 +1,58 @@
+{
+  "cookies": [
+    {
+      "active": false,
+      "name": "newsletter",
+      "path": "us.billabong.com",
+      "value": "true"
+    }
+  ],
+  "id": "7IEVrUlRhKTt",
+  "meta": {
+    "delay": "1200",
+    "misMatchThreshold": "0.01",
+    "readyEvent": "ready",
+    "url": "https://google.coms"
+  },
+  "selectors": [
+    {
+      "active": true,
+      "query": "body header",
+      "type": "hide"
+    }
+  ],
+  "timestamp": 1437432618811,
+  "title": "Project superys",
+  "viewports": [
+    {
+      "active": true,
+      "height": "1224",
+      "name": "Desktop",
+      "width": "1440"
+    },
+    {
+      "active": true,
+      "height": "768",
+      "name": "Tablet Horizontal",
+      "width": "1024"
+    },
+    {
+      "active": true,
+      "height": "1024",
+      "name": "Tablet Vertical",
+      "width": "768"
+    },
+    {
+      "active": true,
+      "height": "480",
+      "name": "Mobile iOS 4",
+      "width": "320"
+    },
+    {
+      "active": true,
+      "height": "960",
+      "name": "Mobile iOS 5s",
+      "width": "640"
+    }
+  ]
+}

@@ -16,6 +16,10 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * Full page render
     * Runner View
       * Progress Bar
+      * Intro
+        * see last run (if any)
+        * start new run
+        * start reference
       * Stats (pass/fail)
         * Images with click compare
   * Comparison View (project level)
@@ -43,7 +47,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Setup tooltips
   * Setup sync/save/progress for top bar
   * Setup alert for top bar
-  * Setup history
+  * Setup History
   * Setup Runner
   * Setup Modal
   * Settings Save Validation

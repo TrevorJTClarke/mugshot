@@ -1,75 +1,47 @@
 <div class="project-history">
 
-  <div class="filter-tabs tabs">
-    <button class="btn btn-tab tab-active">All</button>
-    <button class="btn btn-tab">Desktop</button>
-    <button class="btn btn-tab">Tablet</button>
-    <button class="btn btn-tab">Mobile</button>
+  <div class="filter-tabs tabs" ng-if="historyItems.length > 0">
+    <button class="btn btn-tab" ng-click="changeFilter('All')" ng-class="{'tab-active': activeFilter == 'All'}">All</button>
+    <button class="btn btn-tab" ng-click="changeFilter('Desktop')" ng-class="{'tab-active': activeFilter == 'Desktop'}">Desktop</button>
+    <button class="btn btn-tab" ng-click="changeFilter('Tablet')" ng-class="{'tab-active': activeFilter == 'Tablet'}">Tablet</button>
+    <button class="btn btn-tab" ng-click="changeFilter('Mobile')" ng-class="{'tab-active': activeFilter == 'Mobile'}">Mobile</button>
   </div>
 
-  <div class="banner-items">
+  <div class="banner-items" ng-if="historyItems.length > 0">
 
-    <div class="row banner-item banner-success">
+    <div class="row banner-item" ng-repeat="item in historyItems | filter:activeFilterQuery" ng-class="{'banner-info': item.type == 'reference', 'banner-success': item.status == 'passed', 'banner-warning': item.status == 'warning', 'banner-error': item.status == 'failed'}">
       <div class="banner-status">
-        <i class="octicon octicon-check"></i>
+        <i class="octicon" ng-class="{'octicon-tag': item.type == 'reference', 'octicon-check': item.status == 'passed', 'octicon-alert': item.status == 'warning', 'octicon-stop': item.status == 'failed'}"></i>
       </div>
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-        <h5>Type: <strong>Tablet</strong></h5>
-        <h2>body_tablet_0_1_56</h2>
-        <p>3 days ago (2/4/7 13:41)</p>
+        <h5>Type: <strong>{{item.viewport}}</strong></h5>
+        <h2>{{item.name}}</h2>
+        <p title="{{item.timestamp | date:'MM/dd/yy h:mma'}}">{{item.timestamp | timeAgo}}</p>
       </div>
-      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-        <h5>Diff Threshold: <strong>0.01</strong></h5>
-        <p class="meta-status"><i class="octicon octicon-diff-added"></i> Passed</p>
-        <p>Analysis: <strong>23ms</strong></p>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" ng-if="item.type == 'compare'">
+        <h5>Diff Threshold: <strong>{{item.diff}}</strong></h5>
+        <p class="meta-status"><i class="octicon octicon-diff-added" ng-class="{'octicon-diff-added': item.status == 'passed', 'octicon-diff-ignored': item.status == 'warning', 'octicon-diff-removed': item.status == 'failed'}"></i> {{item.status}}</p>
+        <p>Analysis: <strong>{{item.analysis}}ms</strong></p>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" ng-if="item.type == 'reference'">
+        <h5>ID: <strong>{{item.id}}</strong></h5>
+        <p class="meta-status"><i class="octicon octicon-diff-modified"></i> {{item.type}}</p>
+        <p>Batch: <strong>{{item.batch}}</strong></p>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
         <div class="banner-preview">
-          <img src="screens/reference/0_4_body_0_phone.png">
-        </div>
-      </div>
-    </div>
-    <div class="row banner-item banner-warning">
-      <div class="banner-status">
-        <i class="octicon octicon-alert"></i>
-      </div>
-      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-        <h5>Type: <strong>Tablet</strong></h5>
-        <h2>body_tablet_0_1_56</h2>
-        <p>3 days ago (2/4/7 13:41)</p>
-      </div>
-      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-        <h5>Diff Threshold: <strong>0.01</strong></h5>
-        <p class="meta-status"><i class="octicon octicon-diff-ignored"></i> Warning</p>
-        <p>Analysis: <strong>23ms</strong></p>
-      </div>
-      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-        <div class="banner-preview">
-          <img src="screens/reference/0_4_body_2_tablet_h.png">
-        </div>
-      </div>
-    </div>
-    <div class="row banner-item banner-error">
-      <div class="banner-status">
-        <i class="octicon octicon-issue-opened"></i>
-      </div>
-      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-        <h5>Type: <strong>Tablet</strong></h5>
-        <h2>body_tablet_0_1_56</h2>
-        <p>3 days ago (2/4/7 13:41)</p>
-      </div>
-      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-        <h5>Diff Threshold: <strong>0.01</strong></h5>
-        <p class="meta-status"><i class="octicon octicon-diff-removed"></i> Failed</p>
-        <p>Analysis: <strong>23ms</strong></p>
-      </div>
-      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-        <div class="banner-preview">
-          <img src="screens/reference/0_4_body_0_phone.png">
+          <img ng-src="{{item.source}}" src="images/broken.png">
         </div>
       </div>
     </div>
 
+  </div>
+
+  <div class="row default-state" ng-if="historyItems.length < 1">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <p>No history yet! Click below to get started!</p>
+      <button class="btn btn-reference">Start Runner</button>
+    </div>
   </div>
 
 </div>

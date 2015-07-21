@@ -39,6 +39,7 @@
   }
 
   &.list-item-active {
+    background: #FBFBFB;
     border-right: 2px solid $main;
   }
 }

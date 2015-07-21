@@ -148,7 +148,7 @@ function capturePageSelectors(url, scenarios, viewports, bitmapsReference, bitma
         scenario.selectors.forEach(function(o, i, a) {
           var cleanedSelectorName = o.replace(/[^a-zA-Z\d]/, '');//remove anything that's not a letter or a number
           //var cleanedUrl = scenario.url.replace(/[^a-zA-Z\d]/,'');//remove anything that's not a letter or a number
-          var fileName = scenarioIndex + '_' + i + '_' + cleanedSelectorName + '_' + viewportIndex + '_' + vp.name + '.png';;
+          var fileName = scenarioIndex + '_' + i + '_' + cleanedSelectorName + '_' + viewportIndex + '_' + vp.name + '.png';
 
           var referenceFP = bitmapsReference + '/' + fileName;
           var testFP = bitmapsTest + '/' + screenshotDateTime + '/' + fileName;
