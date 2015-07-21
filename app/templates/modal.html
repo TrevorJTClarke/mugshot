@@ -1,15 +1,16 @@
-<div class="modal modal-openn">
+<div class="modal">
   <div class="modal-header">
-    <i class="octicon octicon-alert"></i>
-    <strong>Warning!</strong> 0.72% Diff Found in <strong>Project 1</strong>
-    <div class="closer"><i class="octicon octicon-x"></i></div>
+    <!-- <i class="octicon octicon-alert"></i> -->
+    <!-- <strong>Warning!</strong> 0.72% Diff Found in <strong>Project 1</strong> -->
+    <strong>{{viewer.title}}</strong>
+    <div class="closer" ng-click="close()"><i class="octicon octicon-x"></i></div>
   </div>
-  <div class="modal-viewer">
+  <div class="modal-viewer" ng-class="{'modal-singleton': !viewer.items }">
     <div class="viewer-image">
-      <img class="viewer-preview" src="screens/reference/0_4_body_0_phone.png">
+      <img class="viewer-preview" ng-src="{{activeItem.source}}" src="images/broken.png">
     </div>
     <div class="viewer-meta">
-      <div class="meta-options">
+      <div class="meta-options" ng-if="viewer.items">
         <button class="btn btn-option">
           <i class="octicon octicon-versions"></i>
         </button>
@@ -20,11 +21,14 @@
           <i class="octicon octicon-screen-full"></i>
         </button>
       </div>
-      <div class="meta-title">bodyheadernav_2</div>
-      <div class="meta-subtitle"><i class="octicon octicon-code"></i> body header .nav</div>
+      <div class="meta-options" ng-if="!viewer.items">
+        <i class="octicon octicon-tag"></i> {{activeItem.timestamp | timeAgo}}
+      </div>
+      <div class="meta-title">{{activeItem.name}}</div>
+      <div class="meta-subtitle" ng-if="activeItem.query"><i class="octicon octicon-code"></i> {{activeItem.query}}</div>
     </div>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer" ng-if="viewer.items">
     <div class="modal-action modal-action-left">
       <i class="octicon octicon-chevron-left"></i>
     </div>
@@ -33,24 +37,11 @@
     </div>
     <div class="modal-carousel-wrap">
       <ul class="modal-carousel">
-        <li class="carousel-thumb active">
-          <i class="octicon octicon-alert thumb-warning"></i>
-          <img src="screens/reference/0_4_body_0_phone.png">
-        </li>
-        <li class="carousel-thumb">
-          <i class="octicon octicon-alert thumb-warning"></i>
-          <img src="screens/reference/0_4_body_2_tablet_h.png">
-        </li>
-        <li class="carousel-thumb">
-          <i class="octicon octicon-stop thumb-error"></i>
-          <img src="screens/reference/0_4_body_1_tablet_v.png">
-        </li>
-        <li class="carousel-thumb">
-          <i class="octicon octicon-check thumb-success"></i>
-          <img src="screens/reference/0_4_body_0_phone.png">
+        <li class="carousel-thumb" ng-repeat="item in viewer.items" ng-class="{ active: activeItem.id == item.id }">
+          <i class="octicon" ng-class="{'octicon-tag': item.type == 'reference', 'octicon-check thumb-success': item.status == 'passed', 'octicon-alert thumb-warning': item.status == 'warning', 'octicon-stop thumb-error': item.status == 'failed'}"></i>
+          <img ng-src="{{item.source}}" src="images/broken.png">
         </li>
       </ul>
     </div>
-    <!-- ul.modal-carousel>li.carousel-thumb*4>img -->
   </div>
 </div>

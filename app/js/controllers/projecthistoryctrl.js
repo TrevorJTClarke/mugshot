@@ -12,4 +12,8 @@ function($rootScope, $scope, $stateParams, Projects) {
     $scope.activeFilterQuery = (type == 'All') ? '' : type;
   };
 
+  $scope.previewItem = function(item) {
+    $rootScope.$emit('MODAL:OPEN', { type: 'preview', item: item, project: $rootScope.project });
+  };
+
 }]);

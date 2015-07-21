@@ -12,57 +12,44 @@ function($timeout, $compile, $rootScope) {
     restrict: 'E',
     replace: true,
     templateUrl: 'modal.html',
-    scope: {
-      // autoPlay: '=',
-      // doesContinue: '@',
-      // slideInterval: '@',
-      // showPager: '@',
-      // pagerClick: '&',
-      // disableScroll: '@',
-      // onSlideChanged: '&',
-      // activeSlide: '=?'
-    },
-    controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
-
-      // $rootScope.$on('slideBox.nextSlide', function() {
-      //   slider.next();
-      // });
-      //
-      // $scope.$on('slideBox.nextSlide', function() {
-      //   slider.next();
-      // });
-      //
-      // $scope.$on('slideBox.prevSlide', function() {
-      //   slider.prev();
-      // });
-      //
-      // $scope.$on('slideBox.setSlide', function(e, index) {
-      //   slider.slide(index);
-      // });
-      //
-      // //Exposed for testing
-      // this.__slider = slider;
-      //
-      // $scope.$on('$destroy', function() {
-      //   slider.kill();
-      // });
-      //
-      // this.slidesCount = function() {
-      //   return slider.slidesCount();
-      // };
-      //
-      // this.onPagerClick = function(index) {
-      //   $scope.pagerClick({index: index});
-      //   slider.slide(index);
-      // };
-      //
-      // $timeout(function() {
-      //   slider.load();
-      // });
-    }],
-
+    scope: {},
     link: function($scope, $element, $attr) {
+      var modalActive = 'modal-open';
+      var modalVisible = 'modal-visible';
 
+      $scope.activeItem = {};
+      $scope.viewer = {
+        items: []
+      };
+
+      $rootScope.$on('MODAL:CLOSE', function(e, args) {
+        $scope.close();
+      });
+
+      $rootScope.$on('MODAL:OPEN', function(e, args) {
+        if (!args || !args.type) { return; }
+
+        // Show a single item
+        if (args.type === 'preview') {
+          $scope.activeItem = args.item;
+          $scope.viewer = args.project || {};
+        }
+
+        // make the modal active with data
+        $element.addClass(modalActive);
+
+        setTimeout(function() {
+          $element.addClass(modalVisible);
+        }, 30);
+      });
+
+      $scope.close = function() {
+        $element.removeClass(modalVisible);
+
+        setTimeout(function() {
+          $element.removeClass(modalActive);
+        }, 230);
+      };
     }
   };
 }]);

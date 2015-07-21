@@ -1667,13 +1667,18 @@ input,
   left: 0;
   bottom: 0;
   z-index: -99;
-  display: none; }
+  display: none;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out; }
   .modal.modal-open {
     top: 47px;
     right: 0;
     z-index: 99999;
     display: flex;
-    flex-direction: column; }
+    flex-direction: column;
+    opacity: 0; }
+  .modal.modal-visible {
+    opacity: 1; }
 
 .modal-header {
   background: #0b0d0d;
@@ -1694,6 +1699,8 @@ input,
   flex: 3;
   width: 100%;
   height: calc(100% - 180px); }
+  .modal-viewer.modal-singleton {
+    height: calc(100% - 90px); }
   .modal-viewer .viewer-image {
     flex: 3;
     height: 100%;
