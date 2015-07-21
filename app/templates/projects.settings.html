@@ -32,8 +32,8 @@
   </div>
 </div>
 
-<h3 class="section-title">View Sizes <button class="btn btn-right btn-section-header">Add New</button></h3>
-<div class="row setting-item setting-title">
+<h3 class="section-title">View Sizes <button class="btn btn-right btn-section-header" ng-click="addViewport()">Add New</button></h3>
+<div class="row setting-item setting-title" ng-if="project.viewports.length > 0">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <label for="projectTitle" class="col-sm-2 control-label">View Title</label>
   </div>
@@ -45,7 +45,7 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
 </div>
-<div class="row setting-item" ng-repeat="viewport in project.viewports">
+<div class="row setting-item" ng-repeat="viewport in project.viewports track by $index">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <input type="text" class="form-control" ng-model="viewport.name" placeholder="Tablet, or iPhone_5">
   </div>
@@ -56,17 +56,22 @@
     <input type="text" class="form-control" ng-model="viewport.height" placeholder="480">
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': viewport.active == true }">
+    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': viewport.active == true }" ng-click="activateType('viewports', $index)">
       <i class="octicon octicon-check"></i>
     </button>
-    <button type="submit" class="btn btn-trash">
+    <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('viewports', $index)">
       <i class="octicon octicon-trashcan"></i>
     </button>
   </div>
 </div>
+<div class="row setting-item-null" ng-if="project.viewports.length < 1">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>No viewports specified yet! Click "Add New" to get started!</p>
+  </div>
+</div>
 
-<h3 class="section-title">Selectors <button class="btn btn-right btn-section-header">Add New</button></h3>
-<div class="row">
+<h3 class="section-title">Selectors <button class="btn btn-right btn-section-header" ng-click="addSelector()">Add New</button></h3>
+<div class="row" ng-if="project.selectors.length > 0">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <label for="projectTitle" class="col-sm-2 control-label">Query String</label>
   </div>
@@ -75,7 +80,7 @@
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">&nbsp;</div>
 </div>
-<div class="row setting-item" ng-repeat="selector in project.selectors">
+<div class="row setting-item" ng-repeat="selector in project.selectors track by $index">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <input type="text" class="form-control" ng-model="selector.query" placeholder="body header .menu_item_1">
   </div>
@@ -83,17 +88,22 @@
     <select class="form-control" ng-model="selector.type" ng-options="option for option in selectorTypes"></select>
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 setting-edit">
-    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': selector.active == true }">
+    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': selector.active == true }" ng-click="activateType('selectors', $index)">
       <i class="octicon octicon-check"></i>
     </button>
-    <button type="submit" class="btn btn-trash">
+    <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('selectors', $index)">
       <i class="octicon octicon-trashcan"></i>
     </button>
   </div>
 </div>
+<div class="row setting-item-null" ng-if="project.selectors.length < 1">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>No selectors specified yet! Click "Add New" to get started!</p>
+  </div>
+</div>
 
-<h3 class="section-title">Cookies <button class="btn btn-right btn-section-header">Add New</button></h3>
-<div class="row">
+<h3 class="section-title">Cookies <button class="btn btn-right btn-section-header" ng-click="addCookie()">Add New</button></h3>
+<div class="row" ng-if="project.cookies.length > 0">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <label for="projectTitle" class="col-sm-2 control-label">Cookie Name</label>
   </div>
@@ -105,7 +115,7 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
 </div>
-<div class="row setting-item" ng-repeat="cookie in project.cookies">
+<div class="row setting-item" ng-repeat="cookie in project.cookies track by $index">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <input type="text" class="form-control" ng-model="cookie.name" placeholder="show_modal">
   </div>
@@ -116,23 +126,28 @@
     <input type="text" class="form-control" ng-model="cookie.path" placeholder="sub.example.com">
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': cookie.active == true }">
+    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': cookie.active == true }" ng-click="activateType('cookies', $index)">
       <i class="octicon octicon-check"></i>
     </button>
-    <button type="submit" class="btn btn-trash">
+    <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('cookies', $index)">
       <i class="octicon octicon-trashcan"></i>
     </button>
   </div>
 </div>
-
-<div class="section-finish col-lg-3 col-md-3 col-sm-3 col-xs-3">
-    <button type="submit" class="btn btn-finish btn-save" ng-click="save()">Save</button>
-    <button type="submit" class="btn btn-finish btn-cancel" ng-click="cancelSave()">Cancel</button>
+<div class="row setting-item-null" ng-if="project.cookies.length < 1">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>No cookies specified yet! Click "Add New" to get started!</p>
+  </div>
 </div>
 
-<hr>
+<!-- <div class="section-finish col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <button type="submit" class="btn btn-finish btn-save" ng-click="save()">Save</button>
+    <button type="submit" class="btn btn-finish btn-cancel" ng-class="{'btn-active': hasChanges == true }" ng-click="cancelSave()">Cancel</button>
+</div> -->
 
-<div class="row">
+<!-- <hr> -->
+
+<div class="row project-remove">
   <h5 class="project-remove-title">Would you like to remove this project completely?</h5>
   <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <button type="submit" class="btn btn-finish btn-remove" ng-click="deleteProject()">Delete Project</button>

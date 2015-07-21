@@ -1,9 +1,10 @@
 MUG.controller('ProjectSettingsCtrl',
 ['$rootScope', '$scope', '$state', 'Projects',
 function($rootScope, $scope, $state, Projects) {
-  $scope.selectorTypes = ['container', 'hide', 'remove'];
+  var saveTimer;
 
-  // TODO: save project upon changes to viewports/cookies??
+  $scope.selectorTypes = ['container', 'hide', 'remove'];
+  $scope.hasChanges = false;
   $scope.master = {};
   angular.copy($rootScope.project, $scope.master);
 
@@ -11,21 +12,41 @@ function($rootScope, $scope, $state, Projects) {
     $rootScope.project[type].push(data);
   }
 
+  // Watch for changes, so we can save
+  $scope.$watch('project', function(nV, oV) {
+    if (nV != oV) {
+      $scope.hasChanges = true;
+
+      // save the file for convenience
+      $scope.save();
+    }
+  }, true);
+
   // TODO: setup validations
   // save the current project
   $scope.save = function() {
-    Projects.save($rootScope.project)
-      .then(function(res) {
-        // Update the sidebar with changes
-        $rootScope.$emit('SIDEPANEL:UPDATE', res);
+    if (saveTimer) {
+      window.clearTimeout(saveTimer);
+    }
 
-        // Update the revert model
-        angular.copy($rootScope.project, $scope.master);
-      },
+    // throttle the saves, since we save on any changes
+    saveTimer = setTimeout(function() {
 
-      function(err) {
-        console.log('err', err);
-      });
+      // Save teh projectoid
+      Projects.save($rootScope.project)
+        .then(function(res) {
+          // Update the sidebar with changes
+          $rootScope.$emit('SIDEPANEL:UPDATE', res);
+
+          // Update the revert model
+          angular.copy($rootScope.project, $scope.master);
+          $scope.hasChanges = false;
+        },
+
+        function(err) {
+          console.log('err', err);
+        });
+    }, 200);
   };
 
   // revert the current project
@@ -34,6 +55,7 @@ function($rootScope, $scope, $state, Projects) {
     if (sure) {
       // put revert model into the project model
       angular.copy($scope.master, $rootScope.project);
+      $scope.hasChanges = false;
     }
   };
 
@@ -48,6 +70,7 @@ function($rootScope, $scope, $state, Projects) {
           $rootScope.$emit('SIDEPANEL:REMOVE', { id: projectID });
           $state.go('main');
           $rootScope.project = {};
+          $scope.hasChanges = false;
         },
 
         function(err) {
@@ -59,7 +82,7 @@ function($rootScope, $scope, $state, Projects) {
   // Adds a new viewport item
   $scope.addViewport = function() {
     var newViewport = {
-      active: false,
+      active: true,
       name: null,
       width: null,
       height: null
@@ -71,7 +94,7 @@ function($rootScope, $scope, $state, Projects) {
   // Adds a new selector item
   $scope.addSelector = function() {
     var newSelector = {
-      active: false,
+      active: true,
       type: null,
       query: null
     };
@@ -82,7 +105,7 @@ function($rootScope, $scope, $state, Projects) {
   // Adds a new cookie item
   $scope.addCookie = function() {
     var newCookie = {
-      active: false,
+      active: true,
       name: null,
       value: null,
       path: null
@@ -91,7 +114,23 @@ function($rootScope, $scope, $state, Projects) {
     addNewType('cookies', newCookie);
   };
 
-  // TODO: setup FN for activate a cookie/view/select
-  // TODO: setup FN for removing a cookie/view/select
+  // TODO:
+  // - fix the active toggle
+
+  // activate a cookie/view/select
+  $scope.activateType = function(type, id) {
+    $rootScope.project[type][id].active = ($rootScope.project[type][id].active === true || $rootScope.project[type][id].active === 'true') ? false : true;
+
+    // save the file for convenience
+    $scope.save();
+  };
+
+  // Remove a cookie/view/select
+  $scope.deleteTypeItem = function(type, id) {
+    $rootScope.project[type].splice(id, 1);
+
+    // save the file for convenience
+    $scope.save();
+  };
 
 }]);

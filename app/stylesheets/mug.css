@@ -1817,6 +1817,20 @@ a {
     margin-right: 0; }
   .project-settings h3 {
     font-weight: 300; }
+  .project-settings .setting-item-null {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    width: 100%;
+    margin: 2px 0 0 0;
+    text-align: center;
+    text-transform: uppercase; }
+    .project-settings .setting-item-null p {
+      color: #a8afb0;
+      margin: 0;
+      padding: 10px 0;
+      font-size: 12px;
+      font-weight: 500; }
   .project-settings .setting-item {
     width: 100%;
     background: #FFFFFF;
@@ -1880,6 +1894,13 @@ a {
       .project-settings .btn-finish.btn-remove:hover {
         border-color: #f73e2f;
         color: #f73e2f; }
+    .project-settings .btn-finish.btn-cancel.btn-active {
+      border-color: #373e3e;
+      color: #373e3e; }
+  .project-settings .project-remove {
+    border-top: 1px solid #f2f0f0;
+    margin: 60px 0 20px;
+    padding-top: 20px; }
   .project-settings .project-remove-title {
     color: #ff7362;
     font-size: 12px; }
