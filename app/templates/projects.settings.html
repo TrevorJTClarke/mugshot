@@ -126,7 +126,7 @@
     <input type="text" class="form-control" ng-model="cookie.path" placeholder="sub.example.com">
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': cookie.active == true }" ng-click="activateType('cookies', $index)">
+    <button class="btn btn-used" ng-class="{'btn-used-active': cookie.active == true, 'btn-used-inactive': cookie.active != true }" ng-click="activateType('cookies', $index)">
       <i class="octicon octicon-check"></i>
     </button>
     <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('cookies', $index)">

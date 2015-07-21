@@ -1857,14 +1857,13 @@ a {
       padding: 6px 0;
       outline: 0;
       flex: 1; }
-    .project-settings .setting-item .btn-trash {
-      color: #ff7362; }
-    .project-settings .setting-item .btn-used {
-      color: #7f8687;
-      opacity: 0.5; }
-      .project-settings .setting-item .btn-used.btn-used-active {
-        color: #45b04e;
-        opacity: 1; }
+      .project-settings .setting-item .btn.btn-trash {
+        color: #ff7362; }
+      .project-settings .setting-item .btn.btn-used {
+        box-shadow: 0 0 0;
+        color: #dfdfdf; }
+        .project-settings .setting-item .btn.btn-used.btn-used-active {
+          color: #45b04e; }
   .project-settings .section-finish {
     margin: 40px 0 60px; }
   .project-settings .btn-finish {

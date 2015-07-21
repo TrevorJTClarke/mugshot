@@ -114,9 +114,6 @@ function($rootScope, $scope, $state, Projects) {
     addNewType('cookies', newCookie);
   };
 
-  // TODO:
-  // - fix the active toggle
-
   // activate a cookie/view/select
   $scope.activateType = function(type, id) {
     $rootScope.project[type][id].active = ($rootScope.project[type][id].active === true || $rootScope.project[type][id].active === 'true') ? false : true;

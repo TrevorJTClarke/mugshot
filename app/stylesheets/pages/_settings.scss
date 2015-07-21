@@ -71,17 +71,17 @@
       padding: 6px 0;
       outline: 0;
       flex:1;
-    }
-    .btn-trash {
-      color: $error;
-    }
-    .btn-used {
-      color: $grey05;
-      opacity: 0.5;
 
-      &.btn-used-active {
-        color: $successdark;
-        opacity: 1;
+      &.btn-trash {
+        color: $error;
+      }
+      &.btn-used {
+        box-shadow: 0 0 0;
+        color: $grey03;
+
+        &.btn-used-active {
+          color: $successdark;
+        }
       }
     }
   }

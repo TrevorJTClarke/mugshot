@@ -38,6 +38,16 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Github Integration
 
 
+#### TODO:
+
+  * Setup tooltips
+  * Setup sync/save/progress for top bar
+  * Setup alert for top bar
+  * Setup history
+  * Setup Runner
+  * Setup Modal
+  * Settings Save Validation
+
 
 #### Helpful
 
