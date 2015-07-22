@@ -17,22 +17,35 @@ function($timeout, $compile, $rootScope) {
       var modalActive = 'modal-open';
       var modalVisible = 'modal-visible';
 
+      $scope.activeOption = 'overlay';
       $scope.opacityRange = {};
-      $scope.opacityRange = {
-        amount: 0.8,
-        inverse: 0.2,
-        percent: 80
-      };
-      console.log('$scope.opacityRange', $scope.opacityRange);
       $scope.currentIndex = 0;
       $scope.activeItem = {};
       $scope.viewer = {
         items: []
       };
+      $scope.opacityRange = {
+        amount: 0.8,
+        inverse: 0.2,
+        percent: '80%'
+      };
 
-      $scope.$watch('opacityRange', function(nv) {
-        console.log('opacityRange', nv);
+      $scope.$watch('opacityRange.amount', function(nv, ov) {
+        if (nv === ov) {return;}
+
+        // update the other values
+        $scope.opacityRange.inverse = (1 - nv).toFixed(2);
+        $scope.opacityRange.percent = Math.round(nv * 100) + '%';
       });
+
+      // Choose the viewer layout
+      $scope.optionMode = function(type) {
+        $scope.activeOption = type;
+
+        // if (type === 'overlay') {
+        // }
+
+      }
 
       $rootScope.$on('MODAL:CLOSE', function(e, args) {
         $scope.close();
@@ -45,6 +58,7 @@ function($timeout, $compile, $rootScope) {
         if (args.type === 'preview') {
           $scope.activeItem = args.item;
           $scope.viewer = args.project || {};
+          $scope.viewer.items = null;
         }
 
         // Show multiple items

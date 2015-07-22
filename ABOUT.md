@@ -52,6 +52,8 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Setup alert for top bar
   * Setup Runner
   * Finish Modal
+    * Setup compare redlines
+    * Compare stats in title
   * Settings Save Validation
 
 

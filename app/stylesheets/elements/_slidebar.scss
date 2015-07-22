@@ -16,7 +16,7 @@ input[type=range]{
     height: 0;
     width: 0;
     border-radius: 4px;
-    margin-top: -16px;
+    margin-top: -22px;
     border-top: 12px solid $grey02;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
@@ -29,7 +29,7 @@ input[type=range]{
       left:-1px;
       top: -3px;
       width: 2px;
-      height: 5px;
+      height: 9px;
     }
   }
   &:focus {

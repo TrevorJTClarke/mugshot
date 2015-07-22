@@ -6,23 +6,29 @@
     <div class="closer" ng-click="close()"><i class="octicon octicon-x"></i></div>
   </div>
   <div class="modal-viewer" ng-class="{'modal-singleton': !viewer.items }">
-    <div class="viewer-image">
-      <img class="viewer-preview" ng-src="{{activeItem.source}}" src="images/broken.png" style="opacity:{{opacityRange.amount}};">
+    <div class="viewer-preview">
+      <div class="viewer-images" ng-class="{'viewer-overlay': activeOption == 'overlay', 'viewer-sides': activeOption == 'sides', 'viewer-singleton': !viewer.items}">
+        <img class="viewer-image" ng-src="{{activeItem.source}}" src="images/broken.png" style="opacity:{{opacityRange.amount}};">
+        <img class="viewer-image" ng-src="screens/compare/body_phone_projectIdRandum_0.png" src="images/broken.png" style="opacity:{{opacityRange.inverse}};">
+        <img class="viewer-image" ng-src="{{activeItem.source}}" src="images/broken.png" ng-if="activeOption != 'overlay'">
+      </div>
     </div>
     <div class="viewer-meta">
       <div class="meta-options" ng-if="viewer.items">
-        <div class="slide-bar">
-          <input type="range" ng-model="opacityRange.amount" min="0" max="1" step="0.02" value="{{opacityRange.amount}}"/>
+        <div class="slide-bar" ng-show="activeOption == 'overlay'">
+          <input type="range" ng-model="opacityRange.amount" min="0" max="1" step="0.02" value="{{opacityRange.amount}}" title="{{opacityRange.percent}}"/>
         </div>
-        <button class="btn btn-option btn-active">
+        <button class="btn btn-option" ng-click="optionMode('overlay')" ng-class="{'btn-active': activeOption == 'overlay'}">
           <i class="octicon octicon-color-mode"></i>
         </button>
-        <button class="btn btn-option">
+        <button class="btn btn-option" ng-click="optionMode('sides')" ng-class="{'btn-active': activeOption == 'sides'}">
           <i class="octicon octicon-three-bars"></i>
         </button>
       </div>
       <div class="meta-options" ng-if="!viewer.items">
-        <i class="octicon octicon-tag"></i> {{activeItem.timestamp | timeAgo}}
+        <div class="label label-default">
+          <i class="octicon octicon-history"></i> {{activeItem.timestamp | timeAgo}}
+        </div>
       </div>
       <div class="meta-title">{{activeItem.name}}</div>
       <div class="meta-subtitle" ng-if="activeItem.query || activeItem.analysis">
