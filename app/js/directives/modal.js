@@ -6,8 +6,8 @@
  * <modal></modal>
  */
 MUG.directive('modal',
-['$timeout', '$compile', '$rootScope',
-function($timeout, $compile, $rootScope) {
+['$timeout', '$compile', '$rootScope', 'Compare',
+function($timeout, $compile, $rootScope, Compare) {
   return {
     restrict: 'E',
     replace: true,
@@ -17,10 +17,15 @@ function($timeout, $compile, $rootScope) {
       var modalActive = 'modal-open';
       var modalVisible = 'modal-visible';
 
-      $scope.activeOption = 'overlay';
+      // $scope.activeOption = 'overlay';
+      $scope.activeOption = 'sides';
       $scope.opacityRange = {};
       $scope.currentIndex = 0;
       $scope.activeItem = {};
+      $scope.compareItem = {
+        b: {},
+        c: {}
+      };
       $scope.viewer = {
         items: []
       };
@@ -38,14 +43,26 @@ function($timeout, $compile, $rootScope) {
         $scope.opacityRange.percent = Math.round(nv * 100) + '%';
       });
 
+      function compareSingle(a) {
+        //TODO:removethis
+        var b = 'screens/compare/body_tablet_projectIdRandum_0.png';
+        // var b = 'screens/compare/body_phone_projectIdRandum_0.png';
+
+        Compare.runSingle(a, b).then(function(res) {
+          console.log('res', res);
+          $scope.compareItem.b.src = b;
+          $scope.compareItem.c = res;
+        },
+
+        function(err) {
+          console.log('err', err);
+        });
+      }
+
       // Choose the viewer layout
       $scope.optionMode = function(type) {
         $scope.activeOption = type;
-
-        // if (type === 'overlay') {
-        // }
-
-      }
+      };
 
       $rootScope.$on('MODAL:CLOSE', function(e, args) {
         $scope.close();
@@ -66,6 +83,8 @@ function($timeout, $compile, $rootScope) {
           $scope.activeItem = args.items[$scope.currentIndex];
           $scope.viewer = args.project || {};
           $scope.viewer.items = args.items;
+
+          compareSingle($scope.activeItem.source);
         }
 
         // make the modal active with data
@@ -103,8 +122,12 @@ function($timeout, $compile, $rootScope) {
 
       // Go directly to an item
       $scope.goToIndex = function(idx) {
+        if ($scope.currentIndex === idx) {return;}
+
         $scope.activeItem = $scope.viewer.items[idx];
         $scope.currentIndex = idx;
+
+        compareSingle($scope.activeItem.source);
       };
 
     }

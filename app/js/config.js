@@ -9,13 +9,12 @@ MUG.constant('Config', {
   },
   Compare: {
     errorColor: {
-      red: 0,
-      green: 255,
+      red: 255,
+      green: 0,
       blue: 255
     },
-    errorType: 'movement',
-    transparency: 0.1,
-    largeImageThreshold: 1200,
-    misMatchThreshold: 1
+    errorType: 'flat',
+    transparency: 1,
+    largeImageThreshold: 0
   }
 });

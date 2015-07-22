@@ -1,11 +1,17 @@
 var fs = require('fs');
+var async = require('async');
 
 MUG.factory('Compare',
 ['$q', 'Config',
 function($q, Config) {
   // Config the main paths
-  var referencePath = __dirname + 'screens/reference/';
-  var comparePath = __dirname + 'screens/compare/';
+  var fileDirPrefix = __dirname + '/';
+  var imagePrefix = 'data:image/png;base64,';
+
+  // async helper
+  function readAsync(file, callback) {
+    fs.readFile(fileDirPrefix + file, 'base64', callback);
+  }
 
   function compareSingle(a, b) {
     var dfd = $q.defer();
@@ -14,15 +20,27 @@ function($q, Config) {
     // Apply Main Compare Config
     resemble.outputSettings(Config.Compare);
 
-    // Run the compare function, return the diff data
-    resemble(a)
-      .compareTo(b)
-      .onComplete(function(diffData) {
-        output.report = JSON.stringify(diffData);
-        output.src = diffData.getImageDataUrl();
+    // Open both files, before we are ready to process
+    async.map([a, b], readAsync, function(err, results) {
+      var aData = imagePrefix + results[0];
+      var bData = imagePrefix + results[1];
 
-        dfd.resolve(output);
-      });
+      // Handles errors
+      if (err) {
+        dfd.reject(err);
+      }
+
+      // Run the compare function, return the diff data
+      resemble(aData)
+        .compareTo(bData)
+        .ignoreColors()
+        .onComplete(function(diffData) {
+          output.report = diffData;
+          output.src = diffData.getImageDataUrl();
+
+          dfd.resolve(output);
+        });
+    });
 
     return dfd.promise;
   };
