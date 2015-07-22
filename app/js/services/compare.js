@@ -4,9 +4,10 @@ var async = require('async');
 MUG.factory('Compare',
 ['$q', 'Config',
 function($q, Config) {
-  // Config the main paths
+  // Config vars
   var fileDirPrefix = __dirname + '/';
   var imagePrefix = 'data:image/png;base64,';
+  var statusTypes = ['passed', 'warning', 'failed'];
 
   // async helper
   function readAsync(file, callback) {
@@ -50,6 +51,33 @@ function($q, Config) {
     /**
      * Compares two images and returns all data with an image of changes
      */
-    runSingle: compareSingle
+    runSingle: compareSingle,
+
+    /**
+     * returns the type of pass/warn/fail status
+     */
+    getStatus: function(data) {
+      var misMatchValue = parseFloat(data.misMatchPercentage);
+
+      // lowest tolerance
+      if (misMatchValue < 0.1) {
+
+        // Warn that dimensions are difference
+        if (data.isSameDimensions === false) {
+          return statusTypes[1];
+        } else {
+          return statusTypes[0];
+        }
+      }
+
+      // warning tolerance
+      if (misMatchValue > 0.1 && misMatchValue < 2) {
+        return statusTypes[1];
+      }
+
+      // error tolerance reached
+      return statusTypes[2];
+    }
+
   };
 }]);

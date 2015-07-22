@@ -35,11 +35,11 @@
         <div class="label label-success" ng-if="activeItem.analysis">
           <i class="octicon octicon-clock"></i> {{activeItem.analysis}}ms
         </div>
-        <div class="label label-default" ng-if="activeItem.query">
-          <i class="octicon octicon-code"></i> {{activeItem.query}}
-        </div>
         <div class="label label-default" ng-if="activeItem.status" ng-class="{'label-success': activeItem.status == 'passed', 'label-warning': activeItem.status == 'warning', 'label-error': activeItem.status == 'failed'}">
           <i class="octicon" ng-class="{'octicon-diff-added': activeItem.status == 'passed', 'octicon-diff-ignored': activeItem.status == 'warning', 'octicon-diff-removed': activeItem.status == 'failed'}"></i> {{activeItem.status}}
+        </div>
+        <div class="label label-default" ng-if="activeItem.query">
+          <i class="octicon octicon-code"></i> {{activeItem.query}}
         </div>
       </div>
     </div>

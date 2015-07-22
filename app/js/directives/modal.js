@@ -46,12 +46,19 @@ function($timeout, $compile, $rootScope, Compare) {
       function compareSingle(a) {
         //TODO:removethis
         var b = 'screens/compare/body_tablet_projectIdRandum_0.png';
+
         // var b = 'screens/compare/body_phone_projectIdRandum_0.png';
 
         Compare.runSingle(a, b).then(function(res) {
           console.log('res', res);
+
+          // update view with processed image
           $scope.compareItem.b.src = b;
           $scope.compareItem.c = res;
+
+          // update the activeItem with the processed values
+          $scope.activeItem.analysis = res.report.analysisTime;
+          $scope.activeItem.status = Compare.getStatus(res.report);
         },
 
         function(err) {
@@ -70,6 +77,9 @@ function($timeout, $compile, $rootScope, Compare) {
 
       $rootScope.$on('MODAL:OPEN', function(e, args) {
         if (!args || !args.type) { return; }
+
+        // Make sure to reset current Index
+        $scope.currentIndex = 0;
 
         // Show a single item
         if (args.type === 'preview') {
