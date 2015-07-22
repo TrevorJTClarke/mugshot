@@ -13,10 +13,15 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   };
 
   // Set the active data based on currentBatch
-  $scope.activeData = $rootScope.project.batchHistory[$scope.currentBatch];
+  $scope.activeData = ($rootScope.project && $rootScope.project.batchHistory) ? $rootScope.project.batchHistory[$scope.currentBatch] : null;
 
   // Puts data into sorted sections
   function processBatch(allData) {
+    if (!allData || allData.length < 1) {
+      $scope.hasReference = false;
+      return [];
+    }
+
     var formatted = [{ type: 'success', items: []}, { type: 'warning', items: []}, { type: 'error', items: []}];
 
     function placeItem(item) {
@@ -55,7 +60,6 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   //   * start new run
   //   * start reference
   // * Stats (pass/fail)
-  //   * Images with click compare
 
   $scope.changeFilter = function(type) {
     $scope.activeFilter = type;

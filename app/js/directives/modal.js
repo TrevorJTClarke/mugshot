@@ -94,6 +94,7 @@ function($timeout, $compile, $rootScope, Compare) {
           $scope.viewer = args.project || {};
           $scope.viewer.items = args.items;
 
+          // TODO: remove!
           compareSingle($scope.activeItem.source);
         }
 
@@ -128,6 +129,9 @@ function($timeout, $compile, $rootScope, Compare) {
 
         $scope.activeItem = $scope.viewer.items[nextIdx];
         $scope.currentIndex = nextIdx;
+
+        // TODO: remove!
+        compareSingle($scope.activeItem.source);
       };
 
       // Go directly to an item
@@ -137,6 +141,7 @@ function($timeout, $compile, $rootScope, Compare) {
         $scope.activeItem = $scope.viewer.items[idx];
         $scope.currentIndex = idx;
 
+        // TODO: remove!
         compareSingle($scope.activeItem.source);
       };
 

@@ -136,10 +136,17 @@
     border-top: 1px solid $grey02;
     margin: 60px 0 20px;
     padding-top: 20px;
+
+    .btn-remove {
+      margin: 0 auto;
+      display: block;
+    }
   }
 
   .project-remove-title {
     color: $error;
     font-size: 12px;
+    text-align: center;
+    width: 100%;
   }
 }

@@ -14,6 +14,7 @@ function($q, Config) {
     fs.readFile(fileDirPrefix + file, 'base64', callback);
   }
 
+  // TODO: let the backend process handle this!
   function compareSingle(a, b) {
     var dfd = $q.defer();
     var output = {};

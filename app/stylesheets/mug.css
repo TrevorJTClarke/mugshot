@@ -1992,9 +1992,14 @@ a {
     border-top: 1px solid #f2f0f0;
     margin: 60px 0 20px;
     padding-top: 20px; }
+    .project-settings .project-remove .btn-remove {
+      margin: 0 auto;
+      display: block; }
   .project-settings .project-remove-title {
     color: #ff7362;
-    font-size: 12px; }
+    font-size: 12px;
+    text-align: center;
+    width: 100%; }
 
 /**
  * History Page
