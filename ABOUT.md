@@ -37,9 +37,12 @@ This app is focussed on delivering a simple UI to visual regression testing.
 
 #### Wishlist
 
+  * Github Integration
   * Run a local repo
     * Choose branches to run between
-  * Github Integration
+  * Submit Jira ticket
+  * Local no-server testing
+  * Record User Actions
 
 
 #### TODO:
@@ -47,9 +50,8 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Setup tooltips
   * Setup sync/save/progress for top bar
   * Setup alert for top bar
-  * Setup History
   * Setup Runner
-  * Setup Modal
+  * Finish Modal
   * Settings Save Validation
 
 

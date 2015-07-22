@@ -7,37 +7,47 @@
   </div>
   <div class="modal-viewer" ng-class="{'modal-singleton': !viewer.items }">
     <div class="viewer-image">
-      <img class="viewer-preview" ng-src="{{activeItem.source}}" src="images/broken.png">
+      <img class="viewer-preview" ng-src="{{activeItem.source}}" src="images/broken.png" style="opacity:{{opacityRange.amount}};">
     </div>
     <div class="viewer-meta">
       <div class="meta-options" ng-if="viewer.items">
-        <button class="btn btn-option">
-          <i class="octicon octicon-versions"></i>
-        </button>
-        <button class="btn btn-option">
+        <div class="slide-bar">
+          <input type="range" ng-model="opacityRange.amount" min="0" max="1" step="0.02" value="{{opacityRange.amount}}"/>
+        </div>
+        <button class="btn btn-option btn-active">
           <i class="octicon octicon-color-mode"></i>
         </button>
-        <button class="btn btn-option btn-active">
-          <i class="octicon octicon-screen-full"></i>
+        <button class="btn btn-option">
+          <i class="octicon octicon-three-bars"></i>
         </button>
       </div>
       <div class="meta-options" ng-if="!viewer.items">
         <i class="octicon octicon-tag"></i> {{activeItem.timestamp | timeAgo}}
       </div>
       <div class="meta-title">{{activeItem.name}}</div>
-      <div class="meta-subtitle" ng-if="activeItem.query"><i class="octicon octicon-code"></i> {{activeItem.query}}</div>
+      <div class="meta-subtitle" ng-if="activeItem.query || activeItem.analysis">
+        <div class="label label-success" ng-if="activeItem.analysis">
+          <i class="octicon octicon-clock"></i> {{activeItem.analysis}}ms
+        </div>
+        <div class="label label-default" ng-if="activeItem.query">
+          <i class="octicon octicon-code"></i> {{activeItem.query}}
+        </div>
+        <div class="label label-default" ng-if="activeItem.status" ng-class="{'label-success': activeItem.status == 'passed', 'label-warning': activeItem.status == 'warning', 'label-error': activeItem.status == 'failed'}">
+          <i class="octicon" ng-class="{'octicon-diff-added': activeItem.status == 'passed', 'octicon-diff-ignored': activeItem.status == 'warning', 'octicon-diff-removed': activeItem.status == 'failed'}"></i> {{activeItem.status}}
+        </div>
+      </div>
     </div>
   </div>
   <div class="modal-footer" ng-if="viewer.items">
-    <div class="modal-action modal-action-left">
+    <div class="modal-action modal-action-left" ng-if="viewer.items.length > 1" ng-click="modalActionNav('left')">
       <i class="octicon octicon-chevron-left"></i>
     </div>
-    <div class="modal-action modal-action-right">
+    <div class="modal-action modal-action-right" ng-if="viewer.items.length > 1" ng-click="modalActionNav('right')">
       <i class="octicon octicon-chevron-right"></i>
     </div>
     <div class="modal-carousel-wrap">
       <ul class="modal-carousel">
-        <li class="carousel-thumb" ng-repeat="item in viewer.items" ng-class="{ active: activeItem.id == item.id }">
+        <li class="carousel-thumb" ng-repeat="item in viewer.items" ng-class="{ active: activeItem.id == item.id }" ng-click="goToIndex($index)">
           <i class="octicon" ng-class="{'octicon-tag': item.type == 'reference', 'octicon-check thumb-success': item.status == 'passed', 'octicon-alert thumb-warning': item.status == 'warning', 'octicon-stop thumb-error': item.status == 'failed'}"></i>
           <img ng-src="{{item.source}}" src="images/broken.png">
         </li>

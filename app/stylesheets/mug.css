@@ -1250,9 +1250,13 @@ input,
   background: transparent;
   border-radius: 4px;
   color: #3b4655;
-  padding: 0.1em 0.4em 0.2em; }
+  padding: 0.1em 0.4em 0.2em;
+  margin-right: 4px; }
   .label i {
     font-size: 11px; }
+  .label.label-default {
+    border-color: #a8afb0;
+    color: #a8afb0; }
   .label.label-success {
     border-color: #71d375;
     color: #71d375; }
@@ -1651,6 +1655,40 @@ input,
   .film-thumb img {
     height: 100%; }
 
+input[type=range] {
+  -webkit-appearance: none;
+  border: none;
+  margin: 30px 0 0; }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 2px;
+    background: #f2f0f0;
+    border: none;
+    border-radius: 2px; }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 0;
+    width: 0;
+    border-radius: 4px;
+    margin-top: -16px;
+    border-top: 12px solid #f2f0f0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    position: relative; }
+    input[type=range]::-webkit-slider-thumb:after {
+      background: #f2f0f0;
+      position: absolute;
+      content: '';
+      left: -1px;
+      top: -3px;
+      width: 2px;
+      height: 5px; }
+  input[type=range]:focus {
+    outline: none; }
+    input[type=range]:focus::-webkit-slider-runnable-track {
+      background: #FFFFFF; }
+
 .modal {
   background: rgba(0, 0, 0, 0.8);
   position: fixed;
@@ -1715,14 +1753,24 @@ input,
     .modal-viewer .viewer-meta .meta-options {
       position: absolute;
       right: 0;
-      bottom: 0; }
+      bottom: 0;
+      display: flex;
+      flex-direction: row; }
+      .modal-viewer .viewer-meta .meta-options .slide-bar {
+        display: inline-block;
+        margin: 0 20px 0 0;
+        padding: 4px 0 0;
+        position: relative;
+        width: 200px;
+        height: 35px;
+        align-self: baseline; }
   .modal-viewer .btn-option {
     background: transparent;
     border-bottom: 2px solid transparent;
     border-radius: 2px; }
     .modal-viewer .btn-option:hover,
     .modal-viewer .btn-option:focus {
-      border-bottom: 2px solid #dfdfdf;
+      border-bottom: 2px solid #505859;
       color: #FFFFFF; }
     .modal-viewer .btn-option.btn-active {
       border-bottom: 2px solid #FFFFFF;
@@ -1759,7 +1807,7 @@ input,
     overflow: scroll;
     z-index: 9; }
   .modal-footer .modal-carousel {
-    width: 2000px;
+    width: 100%;
     margin: 0;
     padding: 0; }
     .modal-footer .modal-carousel .carousel-thumb {
