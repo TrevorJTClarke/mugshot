@@ -8,8 +8,6 @@
   width: 50%;
   height: 46px;
   overflow: hidden;
-  -webkit-user-select: none;
-  -webkit-app-region: no-drag;
 }
 
 .alert {
@@ -22,6 +20,8 @@
   opacity: 0;
   transform: translate3d(0,0,0);
   transition: opacity 160ms cubic-bezier(.56,.39,.73,1.24), top 160ms cubic-bezier(.56,.39,.73,1.24);
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
 
   &.has-icon {
     padding-left: 35px;

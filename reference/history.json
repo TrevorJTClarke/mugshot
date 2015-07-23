@@ -5,31 +5,47 @@
 // type: compare, reference
 //
 // Name Naming convention
-// query string + _ + batch
+// query string (strip extra chars) + _ + batch
 // Example: bodyheadernav_2
-//
-// Image Path Naming convention
-// query string + _ + viewport + _ + project.id + generate 6 random string + _ + batch
-// Example: bodyheadernav_tablet_fjdsklfjds309fdjkl_2.png
-[{
-  "analysis": 23,
-  "batch": 2,
-  "diff": "0.01",
-  "id": "fjdskl482309fdjkls",
-  "name": "bodyheadernav_2",
-  "source": "/screens/compare/fjdsklfjds/bodyheadernav_tablet_fjdsklfjds309fdjkl_2.png",
+/*
+ * Image Path Naming convention
+ * query string (strip extra chars) + _ + viewport dimensions + _ + batch
+ *
+ * Example Image Paths
+ * /reference/:projectId/bodyheadernav_1024-768_0.png
+ * /compare/:projectId/bodyheadernav_1024-768_1.png
+ * /compare/:projectId/bodyheadernav_1024-768_1_diff.png
+ *
+ */
+[{ // COMPARE
+  "meta": {
+    "browser": "webkit",
+    "os": "MAC_10.10",
+    "userAgent": "mobile"
+  },
+  "name": "bodyheadernav_1",
+  "referenceBatch": 0,
+  "report": {
+    "analysis": 23,
+    "diff": "0.37"
+  },
+  "source": "bodyheadernav_1024-768_1", //PNG
   "status": "passed",
-  "timestamp": 1345483008,
+  "timestamp": 1437681326835,
   "type": "compare",
   "viewport": "Tablet",
   "query": "body header .nav"
-},{
-  "batch": 2,
-  "id": "fjdskl482309fdjkls",
-  "name": "bodyheadernav_2",
-  "source": "/screens/reference/fjdsklfjds/bodyheadernav_tablet_fjdsklfjds309fdjkl_2.png",
-  "timestamp": 1345483008,
+},{ // REFERENCE
+  "batch": 0,
+  "name": "bodyheadernav_0",
+  "source": "bodyheadernav_1024-768_0.png",
+  "timestamp": 1437681326800,
   "type": "reference",
   "viewport": "Tablet",
-  "query": "body header .nav"
+  "query": "body header .nav",
+  "meta": {
+    "browser": "webkit",
+    "os": "MAC_10.10",
+    "userAgent": "mobile"
+  }
 }]

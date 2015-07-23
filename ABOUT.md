@@ -49,14 +49,17 @@ This app is focussed on delivering a simple UI to visual regression testing.
 
 #### TODO:
 
-  * Setup tooltips
-  * Setup sync/save/progress for top bar
-  * Setup alert for top bar
-  * Setup Runner
-    * dynamic image sets
-  * Finish Modal
-    * Compare stats in title
-  * Settings Save Validation
+  * Backend
+    * setup resemble.js https://www.npmjs.com/package/node-resemble-js
+    * Setup better screen naming/folder structure
+
+  * UI
+    * Setup tooltips
+    * Setup Runner
+      * dynamic image sets
+    * Finish Modal
+      * Compare stats in title
+    * Settings Save Validation
 
 
 #### Helpful
