@@ -29,30 +29,13 @@
       "height": "1224",
       "name": "Desktop",
       "width": "1440"
-    },
-    {
-      "active": true,
-      "height": "768",
-      "name": "Tablet Horizontal",
-      "width": "1024"
-    },
-    {
-      "active": true,
-      "height": "1024",
-      "name": "Tablet Vertical",
-      "width": "768"
-    },
-    {
-      "active": true,
-      "height": "480",
-      "name": "Mobile iOS 4",
-      "width": "320"
-    },
-    {
-      "active": true,
-      "height": "960",
-      "name": "Mobile iOS 5s",
-      "width": "640"
     }
-  ]
+  ],
+  "currentBatch": 0,
+  "currentReference": 0,
+  "batchHistory": [{
+    "error": null,
+    "success": null,
+    "warning": null
+  }]
 }

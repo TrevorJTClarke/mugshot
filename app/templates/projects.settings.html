@@ -56,7 +56,7 @@
     <input type="text" class="form-control" ng-model="viewport.height" placeholder="480">
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': viewport.active == true }" ng-click="activateType('viewports', $index)">
+    <button type="submit" class="btn btn-used" title="{{(viewport.active)?'Is Active':'Is Not Active'}}" ng-class="{'btn-used-active': viewport.active == true }" ng-click="activateType('viewports', $index)">
       <i class="octicon octicon-check"></i>
     </button>
     <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('viewports', $index)">
@@ -88,7 +88,7 @@
     <select class="form-control" ng-model="selector.type" ng-options="option for option in selectorTypes"></select>
   </div>
   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 setting-edit">
-    <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': selector.active == true }" ng-click="activateType('selectors', $index)">
+    <button type="submit" class="btn btn-used" title="{{(selector.active)?'Is Active':'Is Not Active'}}" ng-class="{'btn-used-active': selector.active == true }" ng-click="activateType('selectors', $index)">
       <i class="octicon octicon-check"></i>
     </button>
     <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('selectors', $index)">
@@ -126,7 +126,7 @@
     <input type="text" class="form-control" ng-model="cookie.path" placeholder="sub.example.com">
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
-    <button class="btn btn-used" ng-class="{'btn-used-active': cookie.active == true, 'btn-used-inactive': cookie.active != true }" ng-click="activateType('cookies', $index)">
+    <button class="btn btn-used" title="{{(cookie.active)?'Is Active':'Is Not Active'}}" ng-class="{'btn-used-active': cookie.active == true, 'btn-used-inactive': cookie.active != true }" ng-click="activateType('cookies', $index)">
       <i class="octicon octicon-check"></i>
     </button>
     <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('cookies', $index)">

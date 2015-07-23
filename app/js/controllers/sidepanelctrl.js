@@ -38,7 +38,9 @@ function($rootScope, $scope, $state, Projects) {
   });
 
   $scope.goToProject = function(id) {
-    var type = 'settings';
+    // TODO: fix this
+    // var type = 'settings';
+    var type = 'runner';
 
     // TODO: setup to figure out if we need to go to settings, otherwise go to runner
     $state.go('projects.' + type, { id: id });

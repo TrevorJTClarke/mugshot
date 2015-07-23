@@ -85,8 +85,8 @@ function($q) {
       return getJsonFile(projectFilesPath + id + '.json');
     },
 
-    getHistoryById: function(id) {
-      return getJsonFile(projectFilesPath + id + '_history.json', []);
+    getTypeById: function(id, type) {
+      return getJsonFile(projectFilesPath + id + '_' + type + '.json', []);
     },
 
     /**

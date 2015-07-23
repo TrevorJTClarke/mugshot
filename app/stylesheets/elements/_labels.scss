@@ -4,9 +4,15 @@
   border-radius: 4px;
   color: $info;
   padding: .1em .4em .2em;
+  margin-right: 4px;
 
   i {
     font-size: 11px;
+  }
+
+  &.label-default {
+    border-color: $grey04;
+    color: $grey04;
   }
 
   &.label-success {

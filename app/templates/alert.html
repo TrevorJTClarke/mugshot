@@ -1,0 +1,9 @@
+<div class="alert alert-{{alert.type}}" ng-class="{'has-icon': alert.icon, 'has-action': alert.action}">
+  <div class="alert-icon" ng-if="alert.icon">
+    <i class="octicon octicon-{{alert.icon}}"></i>
+  </div>
+  <div class="alert-title">{{alert.title}}</div>
+  <div class="alert-action" ng-if="alert.action" ng-click="alert.action(this)">
+    <i class="octicon octicon-x"></i>
+  </div>
+</div>

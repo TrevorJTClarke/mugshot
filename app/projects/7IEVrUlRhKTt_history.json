@@ -1,4 +1,52 @@
 [{
+  "analysis": 37,
+  "batch": 1,
+  "diff": "0.02",
+  "id": "ksjf81",
+  "name": "body",
+  "source": "screens/reference/body_phone_projectIdRandum_0.png",
+  "status": "passed",
+  "timestamp": 1437504263870,
+  "type": "compare",
+  "viewport": "Mobile",
+  "query": "body"
+},{
+  "analysis": 13,
+  "batch": 1,
+  "diff": "0.05",
+  "id": "ksjf82",
+  "name": "body",
+  "source": "screens/reference/body_tablet_projectIdRandum_0.png",
+  "status": "warning",
+  "timestamp": 1437504263870,
+  "type": "compare",
+  "viewport": "Tablet",
+  "query": "body"
+},{
+  "analysis": 28,
+  "batch": 1,
+  "diff": "0.08",
+  "id": "ksjf83",
+  "name": "body",
+  "source": "screens/reference/body_tablet_projectIdRandum2_0.png",
+  "status": "failed",
+  "timestamp": 1437504263870,
+  "type": "compare",
+  "viewport": "Tablet",
+  "query": "body"
+},{
+  "analysis": 17,
+  "batch": 1,
+  "diff": "0.01",
+  "id": "ksjf84",
+  "name": "footer",
+  "source": "screens/reference/footer_phone_projectIdRandum_0.png",
+  "status": "passed",
+  "timestamp": 1437504263870,
+  "type": "compare",
+  "viewport": "Tablet",
+  "query": "footer"
+},{
   "batch": 0,
   "id": "ksjf81",
   "name": "body",

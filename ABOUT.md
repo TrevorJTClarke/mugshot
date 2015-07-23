@@ -22,6 +22,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
         * start reference
       * Stats (pass/fail)
         * Images with click compare
+      * Checkout history
   * Comparison View (project level)
     * Score pass/fail
     * Image Side by Side Comparison
@@ -37,20 +38,28 @@ This app is focussed on delivering a simple UI to visual regression testing.
 
 #### Wishlist
 
-  * Run a local repo
-    * Choose branches to run between
+  * AWS S3 Integration
   * Github Integration
+    * Project/User sharing (Auth + Sessions)
+    * Run a repo
+      * Choose branches to run between
+  * Submit Jira ticket
+  * Local no-server testing
+  * Record User Actions
 
 
 #### TODO:
 
-  * Setup tooltips
-  * Setup sync/save/progress for top bar
-  * Setup alert for top bar
-  * Setup History
-  * Setup Runner
-  * Setup Modal
-  * Settings Save Validation
+  * Backend
+    * setup resemble.js https://www.npmjs.com/package/node-resemble-js
+
+  * UI
+    * Setup tooltips
+    * Setup Runner
+      * dynamic image sets
+    * Finish Modal
+      * Compare stats in title
+    * Settings Save Validation
 
 
 #### Helpful

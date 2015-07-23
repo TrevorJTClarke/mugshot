@@ -47,20 +47,13 @@
   height: calc(100% - 180px);
 
   &.modal-singleton {
-    height: calc(100% - 90px);
+    height: calc(100% - 95px);
   }
 
-  .viewer-image {
+  .viewer-preview {
     flex: 3;
     height: 100%;
     padding: 10px 0;
-
-    .viewer-preview {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
   }
 
   .viewer-meta {
@@ -87,6 +80,18 @@
       position: absolute;
       right:0;
       bottom:0;
+      display: flex;
+      flex-direction: row;
+
+      .slide-bar {
+        display: inline-block;
+        margin: 0 20px 0 0;
+        padding: 4px 0 0;
+        position: relative;
+        width: 200px;
+        height: 35px;
+        align-self: baseline;
+      }
     }
   }
 
@@ -97,13 +102,61 @@
 
     &:hover,
     &:focus {
-      border-bottom: 2px solid $grey03;
+      border-bottom: 2px solid $grey06;
       color: $white;
     }
 
     &.btn-active {
       border-bottom: 2px solid $white;
       color: $white;
+    }
+  }
+}
+
+.viewer-preview {
+
+  .viewer-images {
+    width: 100%;
+    height: 100%;
+
+    .viewer-image {
+      object-fit: contain;
+      object-position: center;
+    }
+
+    &.viewer-overlay {
+      position: relative;
+
+      .viewer-image {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.viewer-sides {
+      display: flex;
+      flex-direction: row;
+      align-content: space-around;
+      padding: 0 40px;
+
+      .viewer-image {
+        flex: 1;
+        opacity: 1 !important;
+        padding: 0 4px;
+      }
+    }
+
+    &.viewer-singleton {
+
+      .viewer-image {
+        display: none;
+        &:first-child {
+          display: block;
+          opacity: 1 !important;
+        }
+      }
     }
   }
 }
@@ -151,7 +204,7 @@
   }
 
   .modal-carousel {
-    width: 2000px;
+    width: 100%;
     margin:0;
     padding:0;
 
