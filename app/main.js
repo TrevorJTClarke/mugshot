@@ -11,6 +11,7 @@ var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 // adds gulp tasks available
 require('require-dir')(paths.core, { recurse: true });
 
+// TODO: assess these
 // var env = require('./vendor/electron_boilerplate/env_config');
 var devHelper = require('./vendor/electron_boilerplate/dev_helper');
 

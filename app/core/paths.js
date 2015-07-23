@@ -29,7 +29,7 @@ function pathsModule(_dirname) {
   };
 
   paths.getProjectConfig = function(projectId) {
-    return paths.projects + '/' + projectId;
+    return paths.projects + '/' + projectId + '.json';
   }
 
   return paths;
