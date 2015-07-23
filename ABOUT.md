@@ -22,6 +22,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
         * start reference
       * Stats (pass/fail)
         * Images with click compare
+      * Checkout history
   * Comparison View (project level)
     * Score pass/fail
     * Image Side by Side Comparison
@@ -51,7 +52,6 @@ This app is focussed on delivering a simple UI to visual regression testing.
 
   * Backend
     * setup resemble.js https://www.npmjs.com/package/node-resemble-js
-    * Setup better screen naming/folder structure
 
   * UI
     * Setup tooltips
