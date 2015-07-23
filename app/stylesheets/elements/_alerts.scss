@@ -1,6 +1,17 @@
 /**
  * Alerts
  */
+.alert-parent {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 46px;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
+}
+
 .alert {
   background: grey;
   border-radius: 3px;

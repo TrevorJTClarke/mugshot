@@ -14,4 +14,10 @@ function($rootScope, $scope, $state, Config, Projects) {
     });
   };
 
+  $rootScope.$emit('ALERT:FIRE', {  title: 'Hey there, Im an alert!!', dur: 5, type: 'success' });
+
+  setTimeout(function() {
+    $rootScope.$emit('ALERT:FIRE', {  title: 'Hey there, Im an error!!', dur: 5, type: 'error', icon: 'stop' });
+  }, 3000);
+
 }]);
