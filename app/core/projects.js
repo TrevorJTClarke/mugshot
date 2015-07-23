@@ -8,7 +8,6 @@ function projects() {
   this.getById = function(projectId) {
     var file;
     var projectPath = paths.getProjectConfig(projectId);
-    console.log('projectPath', projectPath);
 
     try {
       file = fs.readFileSync(projectPath, 'utf8');

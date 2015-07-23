@@ -12,6 +12,9 @@ var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 // adds gulp tasks available
 require('require-dir')(paths.core, { recurse: true }); //paths.core
 
+// Store the __dirname so the CHILDPROCESS can use
+fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname }));
+
 // TODO: assess these
 // var env = require('./vendor/electron_boilerplate/env_config');
 // var devHelper = require('./vendor/electron_boilerplate/dev_helper');
