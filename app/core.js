@@ -1,4 +1,5 @@
 var remote = require('remote');
+var ipc = require('ipc');
 var window = remote.getCurrentWindow();
 
 /**
@@ -16,3 +17,7 @@ var window = remote.getCurrentWindow();
     }, false);
   }
 })();
+
+setTimeout(function() {
+  ipc.send('RUNNER:FIRE', { type: 'reference' });
+}, 300);

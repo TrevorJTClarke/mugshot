@@ -1,1 +1,73 @@
-{"id":"7IEVrUlRhKTt","title":"Production  Site","timestamp":1437432618811,"currentBatch":1,"currentReference":0,"batchHistory":[{"error":null,"success":null,"warning":null},{"error":1,"success":2,"warning":1}],"viewports":[{"active":true,"name":"Desktop","width":"1440","height":"1224"},{"active":true,"name":"Tablet Horizontal","width":"1024","height":"768"},{"active":true,"name":"Tablet Vertical","width":"768","height":"1024"},{"active":true,"name":"Mobile iOS 4","width":"320","height":"480"},{"active":true,"name":"Mobile iOS 5s","width":"640","height":"960"}],"selectors":[{"active":true,"type":"container","query":"body header"}],"cookies":[{"active":true,"name":"newsletter","value":"true","path":"us.billabong.com"}],"meta":{"url":"https://productionsite.com/","readyEvent":"","delay":"1200","misMatchThreshold":"0.01"}}
+{
+  "batchHistory": [
+    {
+      "error": null,
+      "success": null,
+      "warning": null
+    },
+    {
+      "error": 1,
+      "success": 2,
+      "warning": 1
+    }
+  ],
+  "cookies": [
+    {
+      "active": true,
+      "name": "newsletter",
+      "path": "us.billabong.com",
+      "value": "true"
+    }
+  ],
+  "currentBatch": 1,
+  "currentReference": 0,
+  "id": "7IEVrUlRhKTt",
+  "items": null,
+  "meta": {
+    "delay": "1200",
+    "misMatchThreshold": "0.01",
+    "readyEvent": "",
+    "url": "https://productionsite.com/"
+  },
+  "selectors": [
+    {
+      "active": true,
+      "query": "body header",
+      "type": "container"
+    }
+  ],
+  "timestamp": 1437432618811,
+  "title": "Production  Site",
+  "viewports": [
+    {
+      "active": true,
+      "height": "1224",
+      "name": "Desktop",
+      "width": "1440"
+    },
+    {
+      "active": true,
+      "height": "768",
+      "name": "Tablet Horizontal",
+      "width": "1024"
+    },
+    {
+      "active": true,
+      "height": "1024",
+      "name": "Tablet Vertical",
+      "width": "768"
+    },
+    {
+      "active": true,
+      "height": "480",
+      "name": "Mobile iOS 4",
+      "width": "320"
+    },
+    {
+      "active": true,
+      "height": "960",
+      "name": "Mobile iOS 5s",
+      "width": "640"
+    }
+  ]
+}

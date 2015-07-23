@@ -52,6 +52,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 
   * Backend
     * setup resemble.js https://www.npmjs.com/package/node-resemble-js
+    * Setup reference Screenshots and storage
 
   * UI
     * Setup tooltips

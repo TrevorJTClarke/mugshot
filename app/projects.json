@@ -1,1 +1,35 @@
-[{"id":"1KNspdPuCeJm","title":"Staging Site","timestamp":1437584873758,"totals":{"success":null,"warning":null,"error":null,"views":0}},{"id":"iHTtjKROyWpp","title":"Development  Site","timestamp":1437584887812,"totals":{"success":null,"warning":null,"error":null,"views":0}},{"id":"7IEVrUlRhKTt","title":"Production  Site","timestamp":1437584903135,"totals":{"success":2,"warning":1,"error":1,"views":8}}]
+[
+  {
+    "id": "1KNspdPuCeJm",
+    "timestamp": 1437584873758,
+    "title": "Staging Site",
+    "totals": {
+      "error": null,
+      "success": null,
+      "views": 0,
+      "warning": null
+    }
+  },
+  {
+    "id": "iHTtjKROyWpp",
+    "timestamp": 1437584887812,
+    "title": "Development  Site",
+    "totals": {
+      "error": null,
+      "success": null,
+      "views": 0,
+      "warning": null
+    }
+  },
+  {
+    "id": "7IEVrUlRhKTt",
+    "timestamp": 1437686677663,
+    "title": "Production  Site",
+    "totals": {
+      "error": 1,
+      "success": 2,
+      "views": 8,
+      "warning": 1
+    }
+  }
+]
