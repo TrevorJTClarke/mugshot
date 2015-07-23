@@ -6,14 +6,15 @@ var ipc = require('ipc');
 var gulp  = require('gulp');
 var BrowserWindow = require('browser-window');
 var paths = require('../app/core/paths')(__dirname);
+var screener = require('../app/core/screencap');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 
 // adds gulp tasks available
-require('require-dir')(paths.core, { recurse: true });
+require('require-dir')(paths.core, { recurse: true }); //paths.core
 
 // TODO: assess these
 // var env = require('./vendor/electron_boilerplate/env_config');
-var devHelper = require('./vendor/electron_boilerplate/dev_helper');
+// var devHelper = require('./vendor/electron_boilerplate/dev_helper');
 
 // silly global vars...
 var mainWindow;
@@ -30,9 +31,10 @@ ipc.on('RUNNER:FIRE', function(e, args) {
 
   console.log('RUNNER:FIRE', args);
 
-  // TODO:
   // Immediately invoke task
-  // gulp.run(args.type);
+  if (args.type === 'reference') {
+    screener.createReference(args.projectId);
+  }
 });
 
 /**

@@ -13,9 +13,10 @@ function pathsModule(_dirname) {
   paths.compare         = paths.screens + 'compare';
 
   // ETC PATHS
-  paths.appConfig       = paths.base + 'config/mugConfig.json';
+  paths.appConfig       = paths.base + '../config/mugConfig.json';
+  paths.activeProject   = paths.base + '../config/activeProject.json';
   paths.core            = paths.base + 'core';
-  paths.projects        = paths.base + 'projects';
+  paths.projects        = paths.base + '../projects';
   paths.projectsConfig  = paths.base + 'projects.json';
 
   /**
