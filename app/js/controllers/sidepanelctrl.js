@@ -38,6 +38,7 @@ function($rootScope, $scope, $state, Projects) {
   });
 
   $scope.goToProject = function(id) {
+    // TODO: fix this
     // var type = 'settings';
     var type = 'runner';
 
