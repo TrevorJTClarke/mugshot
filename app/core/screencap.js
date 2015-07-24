@@ -60,6 +60,8 @@ function screenCap() {
     // update batchHistory
     // update timestamp
     // update currentReference
+    // clean up activeProject
+    // clean up dirConfig
   };
 
   return this;

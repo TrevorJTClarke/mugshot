@@ -20,4 +20,4 @@ var window = remote.getCurrentWindow();
 
 setTimeout(function() {
   ipc.send('RUNNER:FIRE', { type: 'reference', projectId: '7IEVrUlRhKTt' });
-}, 1000);
+}, 300);

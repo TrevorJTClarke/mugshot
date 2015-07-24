@@ -36,18 +36,6 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * See all images per project
 
 
-#### Wishlist
-
-  * AWS S3 Integration
-  * Github Integration
-    * Project/User sharing (Auth + Sessions)
-    * Run a repo
-      * Choose branches to run between
-  * Submit Jira ticket
-  * Local no-server testing
-  * Record User Actions
-
-
 #### TODO:
 
   * Backend
@@ -61,6 +49,18 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * Finish Modal
       * Compare stats in title
     * Settings Save Validation
+
+
+#### Wishlist
+
+  * AWS S3 Integration
+  * Github Integration
+    * Project/User sharing (Auth + Sessions)
+    * Run a repo
+      * Choose branches to run between
+  * Submit Jira ticket
+  * Local no-server testing
+  * Record User Actions
 
 
 #### Helpful
