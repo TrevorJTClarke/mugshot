@@ -47,6 +47,11 @@ function screenCap() {
         return false;
       }
 
+      // try closing the process, and move on
+      casperChild.stdin.pause();
+      casperChild.kill();
+
+      // final process
       _this.captureEnd(projectData);
     });
   };

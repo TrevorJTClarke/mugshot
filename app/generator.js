@@ -2,6 +2,7 @@ var fs = require('fs');
 var dir = require('./core/dirConfig');
 var paths = require('./core/paths')(dir.dirname);
 var config = require('./config/activeProject');
+var system = require('system');
 var casper = require('casper').create({
   // Options here
   // http://casperjs.readthedocs.org/en/latest/modules/casper.html#index-1
@@ -10,6 +11,7 @@ var casper = require('casper').create({
 function Generator() {
 
   this.activeSelectors = [];
+  this.captureHistory = [];
 
   /*
    * Image Path Naming convention
@@ -22,9 +24,30 @@ function Generator() {
    *
    */
   this.getNamingConvention = function(query, width, height, batch) {
-    var charName = query.replace(/[^a-zA-Z\d]/, '');
+    var charName = query.replace(/[^a-zA-Z\d]/g, '');
+    batch = batch || 0;
 
     return charName + '_' + width + '-' + height + '_' + batch + '.png';
+  };
+
+  /**
+   * Historical Meta Data
+   */
+  this.captureMetaData = function(name, query, width, height, batch) {
+    var shortName = name.split('_')[0];
+    var viewport = 'Tablet'; // TODO: finishs
+
+    // format the data for storing
+    return {
+      batch: batch || 0,
+      name: shortName,
+      source: name,
+      timestamp: (+new Date),
+      type: dir.type,
+      viewport: viewport,
+      query: query,
+      meta: system.os
+    };
   };
 
   // Sets all active cookies into phantom
@@ -39,7 +62,6 @@ function Generator() {
           value: cookies[i].value,
           domain: cookies[i].path
         });
-        console.log('co', bool);
       }
     }
   };
@@ -149,7 +171,7 @@ function Generator() {
 
       // start the final process inside this viewport
       this.then(function() {
-        this.echo('Screenshot ' + config.id + ' (' + w + 'x' + h + ')', 'info');
+        this.echo('Screenshots ' + config.id + ' (' + w + 'x' + h + ')', 'info');
 
         // quick selector setup
         _this.setSelectors();
@@ -161,8 +183,11 @@ function Generator() {
             var name = _this.getNamingConvention(query, w, h, config.currentBatch);
             var filePath = paths[dir.type] + '/' + config.id + '/' + name;
 
-            // TODO: store the meta data of the image
+            // store the meta data of the image
+            var fileData = _this.captureMetaData(name, query, w, h, config.currentBatch);
+
             // can cache this update locally, then save at the end of processing
+            _this.captureHistory.unshift(fileData);
 
             casper.captureSelector(filePath, query);
           });
@@ -179,18 +204,39 @@ function Generator() {
 // Setup the Generator!
 var G = new Generator();
 
-// // TODO:
-// function complete() {
-//   var configData = JSON.stringify(compareConfig, null, 2);
-//   fs.write(compareConfigFileName, configData, 'w');
-//   console.log('Comparison config file updated.');
-// }
+function getJsonFile(path, type) {
+  var file;
+
+  try {
+    file = fs.read(path, 'utf8');
+  } catch (e) {
+    // We dont have it, return OKAY
+    return type || {};
+  }
+
+  return JSON.parse(file);
+}
+
+// Store the Historical data captured
+function complete() {
+  var filePath = paths.base + 'projects/' + config.id + '_history.json';
+  console.log('filePath', filePath);
+  var historyData = getJsonFile(filePath, []);
+  console.log('historyData', JSON.stringify(historyData));
+  var updatedHistory = G.captureHistory.concat(historyData);
+  console.log('updatedHistory', JSON.stringify(updatedHistory));
+
+  // save as an individual file
+  fs.write(filePath, JSON.stringify(updatedHistory), 'w');
+  console.log('Updated Project History file.');
+
+}
 
 // Add all config and FNs into casper
 G.run();
 
 // Kick this thing off
 casper.run(function() {
-  // complete();
+  complete();
   this.exit();
 });

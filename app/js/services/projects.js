@@ -114,8 +114,16 @@ function($q) {
             return;
           }
 
-          // redirect user to the settings page
-          dfd.resolve(newProjectData);
+          // save as an individual file
+          fs.writeFile(projectFilesPath + newProjectData.id + '_history.json', JSON.stringify([]), function(err) {
+            if (err) {
+              dfd.reject(err);
+              return;
+            }
+
+            // redirect user to the settings page
+            dfd.resolve(newProjectData);
+          });
         });
       });
 

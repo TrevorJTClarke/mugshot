@@ -19,5 +19,5 @@ var window = remote.getCurrentWindow();
 })();
 
 setTimeout(function() {
-  ipc.send('RUNNER:FIRE', { type: 'reference', projectId: '7IEVrUlRhKTt' });
+  ipc.send('RUNNER:FIRE', { type: 'reference', projectId: 'iHTtjKROyWpp' }); //7IEVrUlRhKTt
 }, 300);
