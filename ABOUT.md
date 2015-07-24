@@ -39,11 +39,10 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * Setup reference meta data
-    * setup childProcess data setup/teardown
     * Setup compare image capture
     * Setup diff image processing
       * setup resemble.js https://www.npmjs.com/package/node-resemble-js
+      * update batchHistory
 
   * UI
     * Setup tooltips

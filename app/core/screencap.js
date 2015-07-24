@@ -12,9 +12,8 @@ function screenCap() {
     var currentProject = projects.getById(projectId);
 
     // quick minor updates
-    currentProject.currentBatch = (currentProject.currentBatch) ? currentProject.currentBatch + 1 : 0;
+    currentProject.currentBatch = (typeof currentProject.currentBatch === undefined) ? 0 : parseInt(currentProject.currentBatch, 10) + 1;
     currentProject.currentReference = currentProject.currentBatch;
-    console.log('currentProject', JSON.stringify(currentProject));
 
     this.captureSetup(currentProject);
   };
@@ -31,6 +30,9 @@ function screenCap() {
 
   this.captureSetup = function(projectData) {
     var _this = this;
+
+    // final minor updates
+    projectData.timestamp = (+new Date);
 
     // Save the current state, so generator can pick up needed data
     fs.writeFile(paths.activeProject.replace('core/config', 'core/../config'), JSON.stringify(projectData), function(err) {
@@ -86,12 +88,19 @@ function screenCap() {
   this.captureEnd = function(data) {
     console.log('captureEnd');
 
-    // TODO:
-    // update batchHistory
-    // update timestamp
-    // update currentReference
-    // clean up activeProject
     // clean up dirConfig
+    fs.writeFile(paths.dirConfig.replace('core/core/', 'core/'), JSON.stringify({ dirname: __dirname, type: '' }));
+
+    // reset the activeProject file
+    fs.writeFile(paths.activeProject.replace('core/config', 'core/../config'), JSON.stringify({}), function(err) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      // update the cli
+      console.log('Cleaned All Temp Files');
+    });
   };
 
   return this;
