@@ -31,14 +31,11 @@ ipc.on('RUNNER:FIRE', function(e, args) {
 
   console.log('RUNNER:FIRE', args);
 
-  // Immediately invoke task
-  if (args.type === 'reference') {
-    // Store the __dirname so the CHILDPROCESS can use
-    fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: 'reference' }));
+  // Store the __dirname so the CHILDPROCESS can use
+  fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: args.type }));
 
-    // start the Screenshot process
-    screener.createReference(args.projectId);
-  }
+  // start the Screenshot process
+  screener.createReference(args.projectId);
 });
 
 /**

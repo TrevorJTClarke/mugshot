@@ -8,19 +8,46 @@ function screenCap() {
   this.captureType = '';
 
   this.createReference = function(projectId) {
-    var _this = this;
-    var currentProject = projects.getById(projectId);
     this.captureType = 'reference';
+    var currentProject = projects.getById(projectId);
+
+    // quick minor updates
+    currentProject.currentBatch = (currentProject.currentBatch) ? currentProject.currentBatch + 1 : 0;
+    currentProject.currentReference = currentProject.currentBatch;
+    console.log('currentProject', JSON.stringify(currentProject));
+
+    this.captureSetup(currentProject);
+  };
+
+  this.createCompare = function(projectId) {
+    this.captureType = 'compare';
+    var currentProject = projects.getById(projectId);
+
+    // quick minor updates
+    currentProject.currentBatch = (currentProject.currentBatch) ? currentProject.currentBatch + 1 : 0;
+
+    this.captureSetup(currentProject);
+  };
+
+  this.captureSetup = function(projectData) {
+    var _this = this;
 
     // Save the current state, so generator can pick up needed data
-    fs.writeFile(paths.activeProject.replace('core/config', 'core/../config'), JSON.stringify(currentProject), function(err) {
+    fs.writeFile(paths.activeProject.replace('core/config', 'core/../config'), JSON.stringify(projectData), function(err) {
       if (err) {
         console.log('\n' + err);
         return false;
       }
 
-      // start the child process
-      _this.captureStart(currentProject);
+      fs.writeFile(paths.projects + '/' + projectData.id + '.json', JSON.stringify(projectData), function(err) {
+        if (err) {
+          console.log('\n' + err);
+          return false;
+        }
+
+        // start the child process
+        _this.captureStart(projectData);
+      });
     });
   };
 

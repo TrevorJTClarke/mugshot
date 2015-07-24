@@ -18,6 +18,7 @@ function($timeout, $compile, $rootScope, Compare) {
       var modalVisible = 'modal-visible';
 
       // $scope.activeOption = 'overlay';
+      $scope.project = angular.copy($rootScope.project);
       $scope.activeOption = 'sides';
       $scope.opacityRange = {};
       $scope.currentIndex = 0;

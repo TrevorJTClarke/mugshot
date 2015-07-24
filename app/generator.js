@@ -220,16 +220,12 @@ function getJsonFile(path, type) {
 // Store the Historical data captured
 function complete() {
   var filePath = paths.base + 'projects/' + config.id + '_history.json';
-  console.log('filePath', filePath);
   var historyData = getJsonFile(filePath, []);
-  console.log('historyData', JSON.stringify(historyData));
   var updatedHistory = G.captureHistory.concat(historyData);
-  console.log('updatedHistory', JSON.stringify(updatedHistory));
 
   // save as an individual file
   fs.write(filePath, JSON.stringify(updatedHistory), 'w');
   console.log('Updated Project History file.');
-
 }
 
 // Add all config and FNs into casper

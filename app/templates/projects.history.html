@@ -27,13 +27,13 @@
         <p>Analysis: <strong>{{item.analysis}}ms</strong></p>
       </div>
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" ng-if="item.type == 'reference'">
-        <h5>ID: <strong>{{item.id}}</strong></h5>
+        <h5>ID: <strong>{{item.query}}</strong></h5>
         <p class="meta-status"><i class="octicon octicon-diff-modified"></i> {{item.type}}</p>
         <p>Batch: <strong>{{item.batch}}</strong></p>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
         <div class="banner-preview" ng-click="previewItem(item)">
-          <img ng-src="{{item.source}}" src="images/broken.png">
+          <img ng-src="screens/{{item.type}}/{{project.id}}/{{item.source}}" src="images/broken.png">
         </div>
       </div>
     </div>
