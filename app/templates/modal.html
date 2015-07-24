@@ -8,7 +8,7 @@
   <div class="modal-viewer" ng-class="{'modal-singleton': !viewer.items }">
     <div class="viewer-preview">
       <div class="viewer-images" ng-class="{'viewer-overlay': activeOption == 'overlay', 'viewer-sides': activeOption == 'sides', 'viewer-singleton': !viewer.items}">
-        <img class="viewer-image" ng-src="{{activeItem.source}}" src="images/broken.png" style="opacity:{{opacityRange.amount}};">
+        <img class="viewer-image"ng-src="screens/{{activeItem.type}}/{{project.id}}/{{activeItem.source}}" src="images/broken.png" style="opacity:{{opacityRange.amount}};">
         <img class="viewer-image" ng-src="{{compareItem.b.src}}" src="images/broken.png" style="opacity:{{opacityRange.inverse}};">
         <img class="viewer-image" ng-src="{{compareItem.c.src}}" src="images/broken.png" ng-if="activeOption != 'overlay'">
       </div>

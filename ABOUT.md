@@ -36,6 +36,23 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * See all images per project
 
 
+#### TODO:
+
+  * Backend
+    * Setup compare image capture
+    * Setup diff image processing
+      * setup resemble.js https://www.npmjs.com/package/node-resemble-js
+      * update batchHistory
+
+  * UI
+    * Setup tooltips
+    * Setup Runner
+      * dynamic image sets
+    * Finish Modal
+      * Compare stats in title
+    * Settings Save Validation
+
+
 #### Wishlist
 
   * AWS S3 Integration
@@ -46,20 +63,6 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Submit Jira ticket
   * Local no-server testing
   * Record User Actions
-
-
-#### TODO:
-
-  * Backend
-    * setup resemble.js https://www.npmjs.com/package/node-resemble-js
-
-  * UI
-    * Setup tooltips
-    * Setup Runner
-      * dynamic image sets
-    * Finish Modal
-      * Compare stats in title
-    * Settings Save Validation
 
 
 #### Helpful
