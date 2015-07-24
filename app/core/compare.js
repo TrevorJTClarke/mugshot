@@ -53,24 +53,42 @@ function compare() {
 
   // TODO:
   // updates the history
-  this.writeSingleHistory = function(item, updateData) {
-    // getDiffImage
-  };
+  this.writeSingleHistory = function(diffData, compare, project) {
+    var historyPath = paths.projects + '/' + project.id + '_history.json';
+    var allHistory = getJsonFile(historyPath, []);
+    var status = this.getStatus(diffData);
 
-  // TODO:
-  // stores the diff file
-  this.writeSingleDiff = function(diffData, compare, project) {
-    var report = {
-      source: diffData.getDiffImage()
-    }
+    allHistory.map(function(item, i) {
+      if (item.source === compare.source) {
+        console.log('item matched', item.name);
+        allHistory[i].timestamp = (+new Date);
+        allHistory[i].status = status;
+        allHistory[i].report = {
+          analysis: diffData.analysisTime,
+          sameSize: diffData.isSameDimensions,
+          diff: diffData.misMatchPercentage
+        };
+      }
+    });
+
+    // Write the updated history to file
+    fs.writeFile(historyPath, JSON.stringify(allHistory), function(err) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      // success
+      console.log('success: ', historyPath);
+    });
   };
 
   // compares a single image with its reference
   this.runSingle = function(compareData, projectData) {
     var _this = this;
-    var output = {};
     var aPath = fileDirPrefix + '../screens/compare/' + projectData.id + '/' + compareData.source;
     var bPath = fileDirPrefix + '../screens/reference/' + projectData.id + '/' + compareData.source.replace(projectData.currentBatch + '.png', projectData.currentReference + '.png');
+    var diffPath = fileDirPrefix + '../screens/compare/' + projectData.id + '/' + compareData.source.replace('.png', '_diff.png');
 
     // Apply Main Compare Config
     resemble.outputSettings(resembleConfig);
@@ -81,7 +99,12 @@ function compare() {
       .onComplete(function(diffData) {
 
         // save this to a file
-        _this.writeSingleDiff(diffData, compareData, projectData);
+        diffData.getDiffImage()
+          .pack()
+          .pipe(fs.createWriteStream(diffPath));
+
+        // update the history
+        _this.writeSingleHistory(diffData, compareData, projectData);
       });
   };
 
