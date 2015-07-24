@@ -6,70 +6,95 @@ var resemble = require('node-resemble-js');
 var statusTypes = ['passed', 'warning', 'failed'];
 var fileDirPrefix = __dirname + '/';
 var imagePrefix = 'data:image/png;base64,';
+var resembleConfig = {
+  errorColor: {
+    red: 255,
+    green: 0,
+    blue: 255
+  },
+  errorType: 'flat',
+  transparency: 1,
+  largeImageThreshold: 0
+};
 
 // async helper
 function readAsync(file, callback) {
   fs.readFile(fileDirPrefix + file, 'base64', callback);
 }
 
+// readfile helper
+function getJsonFile(path, type) {
+  var file;
+
+  try {
+    file = fs.readFileSync(path, 'utf8');
+  } catch (e) {
+    // We dont have it, return OKAY
+    return type || {};
+  }
+
+  return JSON.parse(file);
+}
+
 function compare() {
 
   this.extractCurrentBatch = function(projectId, batchId) {
-    var allHistory = fs.readFile(paths.getProjectConfig(projectId), 'utf8');
+    var allHistory = getJsonFile(paths.projects + '/' + projectId + '_history.json', []);
     var slimHistory = [];
 
-    console.log('paths.getProjectConfig(projectId)', paths.getProjectConfig(projectId));
-  };
-
-  this.runSingle = function(a, b, callback) {
-    var dfd = $q.defer();
-    var output = {};
-
-    // Apply Main Compare Config
-    resemble.outputSettings({
-      errorColor: {
-        red: 255,
-        green: 0,
-        blue: 255
-      },
-      errorType: 'flat',
-      transparency: 1,
-      largeImageThreshold: 0
-    });
-
-    // Open both files, before we are ready to process
-    async.map([a, b], readAsync, function(err, results) {
-      var aData = imagePrefix + results[0];
-      var bData = imagePrefix + results[1];
-
-      // Handles errors
-      if (err) {
-        dfd.reject(err);
+    allHistory.map(function(item, i) {
+      if (item.batch === batchId) {
+        slimHistory.unshift(item);
       }
-
-      // Run the compare function, return the diff data
-      resemble(aData)
-        .compareTo(bData)
-        .ignoreColors()
-        .onComplete(function(diffData) {
-          output.report = diffData;
-          output.src = diffData.getImageDataUrl();
-
-          // TODO: save this to a file
-          dfd.resolve(output);
-        });
     });
 
-    return dfd.promise;
+    return slimHistory;
   };
 
   // TODO:
-  // - open history
-  // - get reference image
-  // - loop through current batch and compare against currentReference
-  this.runBatch = function(projectId, batchId) {
-    var compareBatch = this.extractCurrentBatch(projectId, batchId);
-    console.log('batchId', batchId);
+  // updates the history
+  this.writeSingleHistory = function(item, updateData) {
+    // getDiffImage
+  };
+
+  // TODO:
+  // stores the diff file
+  this.writeSingleDiff = function(diffData, compare, project) {
+    var report = {
+      source: diffData.getDiffImage()
+    }
+  };
+
+  // compares a single image with its reference
+  this.runSingle = function(compareData, projectData) {
+    var _this = this;
+    var output = {};
+    var aPath = fileDirPrefix + '../screens/compare/' + projectData.id + '/' + compareData.source;
+    var bPath = fileDirPrefix + '../screens/reference/' + projectData.id + '/' + compareData.source.replace(projectData.currentBatch + '.png', projectData.currentReference + '.png');
+
+    // Apply Main Compare Config
+    resemble.outputSettings(resembleConfig);
+
+    // Run the compare function, return the diff data
+    resemble(aPath)
+      .compareTo(bPath)
+      .onComplete(function(diffData) {
+
+        // save this to a file
+        _this.writeSingleDiff(diffData, compareData, projectData);
+      });
+  };
+
+  // loop through current batch and compare against currentReference
+  this.runBatch = function(project) {
+    var _this = this;
+    var compareBatch = this.extractCurrentBatch(project.id, project.currentBatch);
+    this.runSingle(compareBatch[0], project);
+
+    // // Run through the current batch
+    // compareBatch.map(function(obj, idx) {
+    //   _this.runSingle(obj, project);
+    // });
   };
 
   this.getStatus = function(data) {

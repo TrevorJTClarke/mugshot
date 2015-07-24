@@ -45,7 +45,7 @@ ipc.on('RUNNER:FIRE', function(e, args) {
 
     if (args.type !== 'reference') {
       console.log('Compare Diff Start', res.currentBatch);
-      compare.runBatch(args.projectId, res.currentBatch);
+      compare.runBatch(res);
     }
   });
 });
