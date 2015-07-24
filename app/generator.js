@@ -2,24 +2,30 @@ var fs = require('fs');
 var dir = require('./core/dirConfig');
 var paths = require('./core/paths')(dir.dirname);
 var config = require('./config/activeProject');
-
 var casper = require('casper').create({
-  // clientScripts: ["jquery.js"] // this could be nice for loading external resources from local
+  // Options here
+  // http://casperjs.readthedocs.org/en/latest/modules/casper.html#index-1
 });
 
 function Generator() {
 
   this.activeSelectors = [];
 
-  // TODO: Process
-  // - loop viewports
-  //    - load url
-  //    - run hide selector
-  //    - run remove selector
-  //    - loop through container selectors
-  //    - store data
-  //
-  console.log('helllooo');
+  /*
+   * Image Path Naming convention
+   * query string (strip extra chars) + _ + viewport dimensions + _ + batch
+   *
+   * Example Image Paths
+   * /reference/:projectId/bodyheadernav_1024-768_0.png
+   * /compare/:projectId/bodyheadernav_1024-768_1.png
+   * /compare/:projectId/bodyheadernav_1024-768_1_diff.png
+   *
+   */
+  this.getNamingConvention = function(query, width, height, batch) {
+    var charName = query.replace(/[^a-zA-Z\d]/, '');
+
+    return charName + '_' + width + '-' + height + '_' + batch + '.png';
+  };
 
   // Sets all active cookies into phantom
   this.setCookies = function() {
@@ -35,6 +41,7 @@ function Generator() {
 
   // Sets all selectors for hidden/remove types
   this.setSelectors = function() {
+    var _this = this;
     if (!config.selectors) { return; }
 
     function evalHideRemove(type, item) {
@@ -52,7 +59,7 @@ function Generator() {
     config.selectors.map(function(obj, idx) {
       if (obj.active) {
         if (obj.type === 'container') {
-          this.activeSelectors.push(obj.query);
+          _this.activeSelectors.push(obj.query);
         } else {
           evalHideRemove(obj.type, obj);
         }
@@ -71,10 +78,11 @@ function Generator() {
     });
 
     return final;
-  }
+  };
 
   // opens the url, waits for events, loops through viewports
   this.run = function() {
+    var _this = this;
     var consoleBuffer = '';
     var scriptTimeout = 20000;
     var activeViewports = this.getViewports();
@@ -93,12 +101,11 @@ function Generator() {
 
     // loop through all viewports
     casper.each(activeViewports, function(casper, vp, vIdx) {
+      var w = parseInt(vp.width, 10) || 1024;
+      var h = parseInt(vp.height, 10) || 768;
 
       // set the browser window dimensions
       this.then(function() {
-        var w = parseInt(vp.width, 10) || 1024;
-        var h = parseInt(vp.height, 10) || 768;
-
         this.viewport(w, h);
       });
 
@@ -135,10 +142,28 @@ function Generator() {
         this.echo('Opened: ' + config.meta.url, 'info');
       });
 
-      // TODO: line up other methods
-      // this.then(function() {
-      //
-      //   this.echo('Screenshots for ' + vp.name + ' (' + vp.width || vp.viewport.width + 'x' + vp.height || vp.viewport.height + ')', 'info');
+      // start the final process inside this viewport
+      this.then(function() {
+        this.echo('Screenshot ' + config.id + ' (' + w + 'x' + h + ')', 'info');
+
+        // quick selector setup
+        _this.setSelectors();
+
+        // Process the active selector containers and Screenshot them!
+        if (_this.activeSelectors.length > 0) {
+          _this.activeSelectors.map(function(query, i) {
+            // get nice name
+            var name = _this.getNamingConvention(query, w, h, config.currentBatch);
+            var filePath = paths[dir.type] + '/' + config.id + '/' + name;
+
+            // TODO: store the meta data of the image
+            // can cache this update locally, then save at the end of processing
+
+            casper.captureSelector(filePath, query);
+          });
+        }
+
+      });
 
     });
   };
@@ -146,4 +171,21 @@ function Generator() {
   return this;
 }
 
-Generator();
+// Setup the Generator!
+var G = new Generator();
+
+// // TODO:
+// function complete() {
+//   var configData = JSON.stringify(compareConfig, null, 2);
+//   fs.write(compareConfigFileName, configData, 'w');
+//   console.log('Comparison config file updated.');
+// }
+
+// Add all config and FNs into casper
+G.run();
+
+// Kick this thing off
+casper.run(function() {
+  // complete();
+  this.exit();
+});

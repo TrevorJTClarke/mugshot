@@ -12,9 +12,6 @@ var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 // adds gulp tasks available
 require('require-dir')(paths.core, { recurse: true }); //paths.core
 
-// Store the __dirname so the CHILDPROCESS can use
-fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname }));
-
 // TODO: assess these
 // var env = require('./vendor/electron_boilerplate/env_config');
 // var devHelper = require('./vendor/electron_boilerplate/dev_helper');
@@ -36,6 +33,10 @@ ipc.on('RUNNER:FIRE', function(e, args) {
 
   // Immediately invoke task
   if (args.type === 'reference') {
+    // Store the __dirname so the CHILDPROCESS can use
+    fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: 'reference' }));
+
+    // start the Screenshot process
     screener.createReference(args.projectId);
   }
 });

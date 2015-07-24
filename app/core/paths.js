@@ -9,7 +9,7 @@ function pathsModule(_dirname) {
   paths.dirname         = _dirname;
 
   // SCREEN PATHS
-  paths.screens         = paths.base + 'screens';
+  paths.screens         = paths.base + 'screens/';
   paths.reference       = paths.screens + 'reference';
   paths.compare         = paths.screens + 'compare';
 
