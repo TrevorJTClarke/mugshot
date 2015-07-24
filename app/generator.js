@@ -34,7 +34,12 @@ function Generator() {
     var cookies = config.cookies;
     for (var i = 0; i < cookies.length; i++) {
       if (cookies[i].active) {
-        var bool = phantom.addCookie(cookies[i]);
+        var bool = phantom.addCookie({
+          name: cookies[i].name,
+          value: cookies[i].value,
+          domain: cookies[i].path
+        });
+        console.log('co', bool);
       }
     }
   };

@@ -39,24 +39,22 @@ function screenCap() {
     casperChild.on('close', function(code) {
       var success = code === 0;
       var result = (success) ? type + ' generation completed.' : type + ' failed with code: ' + code;
-
       console.log('\n' + result);
 
       //exit if there was some kind of failure in the casperChild process
       if (code != 0) {
         console.log('\nLooks like an error occured. Try running `$ gulp echo`.');
         return false;
-      };
+      }
 
       _this.captureEnd(projectData);
     });
   };
 
-  this.captureEnd = function() {
+  this.captureEnd = function(data) {
+    console.log('captureEnd');
 
     // TODO:
-    // capture screens
-    // save in history
     // update batchHistory
     // update timestamp
     // update currentReference
