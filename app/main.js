@@ -7,6 +7,7 @@ var gulp  = require('gulp');
 var BrowserWindow = require('browser-window');
 var paths = require('../app/core/paths')(__dirname);
 var screener = require('../app/core/screencap');
+var compare = require('../app/core/compare');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 
 // adds gulp tasks available
@@ -29,13 +30,24 @@ var mainWindowState = windowStateKeeper('main', {
 ipc.on('RUNNER:FIRE', function(e, args) {
   if (!args || !args.type) { return; }
 
+  var method = (args.type === 'reference') ? 'createReference' : 'createCompare';
   console.log('RUNNER:FIRE', args);
 
   // Store the __dirname so the CHILDPROCESS can use
   fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: args.type }));
 
   // start the Screenshot process
-  screener.createReference(args.projectId);
+  screener[method](args.projectId, function(err, res) {
+    if (err) {
+      console.log('err', err);
+      return;
+    }
+
+    if (args.type !== 'reference') {
+      console.log('Compare Diff Start', res.currentBatch);
+      compare.runBatch(args.projectId, res.currentBatch);
+    }
+  });
 });
 
 /**

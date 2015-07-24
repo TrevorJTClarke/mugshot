@@ -6,9 +6,11 @@ var projects = require('./projects');
 function screenCap() {
 
   this.captureType = '';
+  this.cb = null;
 
-  this.createReference = function(projectId) {
+  this.createReference = function(projectId, cb) {
     this.captureType = 'reference';
+    this.cb = cb;
     var currentProject = projects.getById(projectId);
 
     // quick minor updates
@@ -18,8 +20,9 @@ function screenCap() {
     this.captureSetup(currentProject);
   };
 
-  this.createCompare = function(projectId) {
+  this.createCompare = function(projectId, cb) {
     this.captureType = 'compare';
+    this.cb = cb;
     var currentProject = projects.getById(projectId);
 
     // quick minor updates
@@ -86,6 +89,7 @@ function screenCap() {
   };
 
   this.captureEnd = function(data) {
+    var _this = this;
     console.log('captureEnd');
 
     // clean up dirConfig
@@ -100,6 +104,7 @@ function screenCap() {
 
       // update the cli
       console.log('Cleaned All Temp Files');
+      _this.cb(null, data);
     });
   };
 

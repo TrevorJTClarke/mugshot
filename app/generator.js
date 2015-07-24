@@ -8,6 +8,9 @@ var casper = require('casper').create({
   // http://casperjs.readthedocs.org/en/latest/modules/casper.html#index-1
 });
 
+// viewport map
+var viewportMap = ['Desktop', 'Tablet', 'Mobile'];
+
 function Generator() {
 
   this.activeSelectors = [];
@@ -35,7 +38,14 @@ function Generator() {
    */
   this.captureMetaData = function(name, query, width, height, batch) {
     var shortName = name.split('_')[0];
-    var viewport = 'Tablet'; // TODO: finishs
+    var viewport;
+
+    // set viewport norm, based on width
+    if (width < 768) { viewport = viewportMap[2]; }
+
+    if (width >= 768 && width < 1024) { viewport = viewportMap[1]; }
+
+    if (width >= 1024) { viewport = viewportMap[0]; }
 
     // format the data for storing
     return {
