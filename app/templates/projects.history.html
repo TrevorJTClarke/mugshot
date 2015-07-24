@@ -22,9 +22,9 @@
         <p title="{{item.timestamp | date:'MM/dd/yy h:mma'}}">{{item.timestamp | timeAgo}}</p>
       </div>
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" ng-if="item.type == 'compare'">
-        <h5>Diff Threshold: <strong>{{item.diff}}</strong></h5>
+        <h5>Diff Threshold: <strong>{{item.report.diff}}</strong></h5>
         <p class="meta-status"><i class="octicon octicon-diff-added" ng-class="{'octicon-diff-added': item.status == 'passed', 'octicon-diff-ignored': item.status == 'warning', 'octicon-diff-removed': item.status == 'failed'}"></i> {{item.status}}</p>
-        <p>Analysis: <strong>{{item.analysis}}ms</strong></p>
+        <p>Analysis: <strong>{{item.report.analysis}}ms</strong></p>
       </div>
       <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" ng-if="item.type == 'reference'">
         <h5>ID: <strong>{{item.query}}</strong></h5>
