@@ -44,29 +44,6 @@ function($timeout, $compile, $rootScope, Compare) {
         $scope.opacityRange.percent = Math.round(nv * 100) + '%';
       });
 
-      function compareSingle(a) {
-        //TODO:removethis
-        var b = 'screens/compare/body_tablet_projectIdRandum_0.png';
-
-        // var b = 'screens/compare/body_phone_projectIdRandum_0.png';
-
-        Compare.runSingle(a, b).then(function(res) {
-          console.log('res', res);
-
-          // update view with processed image
-          $scope.compareItem.b.src = b;
-          $scope.compareItem.c = res;
-
-          // update the activeItem with the processed values
-          $scope.activeItem.analysis = res.report.analysisTime;
-          $scope.activeItem.status = Compare.getStatus(res.report);
-        },
-
-        function(err) {
-          console.log('err', err);
-        });
-      }
-
       // Choose the viewer layout
       $scope.optionMode = function(type) {
         $scope.activeOption = type;
@@ -94,9 +71,6 @@ function($timeout, $compile, $rootScope, Compare) {
           $scope.activeItem = args.items[$scope.currentIndex];
           $scope.viewer = args.project || {};
           $scope.viewer.items = args.items;
-
-          // TODO: remove!
-          compareSingle($scope.activeItem.source);
         }
 
         // make the modal active with data
@@ -130,9 +104,6 @@ function($timeout, $compile, $rootScope, Compare) {
 
         $scope.activeItem = $scope.viewer.items[nextIdx];
         $scope.currentIndex = nextIdx;
-
-        // TODO: remove!
-        compareSingle($scope.activeItem.source);
       };
 
       // Go directly to an item
@@ -141,9 +112,6 @@ function($timeout, $compile, $rootScope, Compare) {
 
         $scope.activeItem = $scope.viewer.items[idx];
         $scope.currentIndex = idx;
-
-        // TODO: remove!
-        compareSingle($scope.activeItem.source);
       };
 
     }

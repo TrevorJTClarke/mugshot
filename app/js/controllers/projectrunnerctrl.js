@@ -78,8 +78,9 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
   // TODO: finish
   // Fire off a new test!!
-  $scope.runNewTest = function() {
+  $scope.newCompare = function() {
     $scope.processing = true;
+    ipc.send('RUNNER:FIRE', { type: 'compare', projectId: $rootScope.project.id });
 
     $timeout(function() {
       $scope.progress.percent = 12;
@@ -98,7 +99,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     }, 2000);
   };
 
-  $rootScope.$on('RUNNER:PROGRESS:UPDATE', function(e, args) {
+  $scope.newReference = function() {
+    ipc.send('RUNNER:FIRE', { type: 'reference', projectId: $rootScope.project.id });
+  };
+
+  $rootScope.$on('RUNNER:PROGRESS', function(e, args) {
     if (!args) {return;}
 
     // update the progress!

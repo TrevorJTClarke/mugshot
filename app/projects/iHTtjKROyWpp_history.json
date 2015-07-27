@@ -1,1 +1,1 @@
-[{"batch":2,"name":"sitewrapper","source":"sitewrapper_1440-1224_2.png","timestamp":1437782273761,"type":"compare","viewport":"Desktop","query":".site-wrapper","meta":{"architecture":"32bit","name":"mac","version":"10.10 (Yosemite)"},"status":"passed","report":{"analysis":159,"sameSize":true,"diff":"0.00"}},{"batch":1,"name":"sitewrapper","source":"sitewrapper_1440-1224_1.png","timestamp":1437782249537,"type":"reference","viewport":"Desktop","query":".site-wrapper","meta":{"architecture":"32bit","name":"mac","version":"10.10 (Yosemite)"}}]
+[]

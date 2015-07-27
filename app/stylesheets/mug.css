@@ -2112,6 +2112,8 @@ a {
     height: 100%;
     display: flex;
     flex-direction: column; }
+    .project-runner .runner-section .btn-section-offset {
+      right: 140px; }
 
 .intro-static {
   text-align: center;

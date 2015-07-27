@@ -43,9 +43,9 @@ function Generator() {
     // set viewport norm, based on width
     if (width < 768) { viewport = viewportMap[2]; }
 
-    if (width >= 768 && width < 1024) { viewport = viewportMap[1]; }
+    if (width >= 768 && width <= 1024) { viewport = viewportMap[1]; }
 
-    if (width >= 1024) { viewport = viewportMap[0]; }
+    if (width > 1024) { viewport = viewportMap[0]; }
 
     // format the data for storing
     return {
@@ -80,6 +80,9 @@ function Generator() {
   this.setSelectors = function() {
     var _this = this;
     if (!config.selectors) { return; }
+
+    // reset, so we dont multiply like cray cray
+    this.activeSelectors = [];
 
     function evalHideRemove(type, item) {
       casper.evaluate(function(item) {
@@ -123,6 +126,7 @@ function Generator() {
     var consoleBuffer = '';
     var scriptTimeout = 20000;
     var activeViewports = this.getViewports();
+    this.captureHistory = [];
 
     // Start with cookies first (yep, dessert before dinner)
     this.setCookies();
@@ -188,7 +192,8 @@ function Generator() {
 
         // Process the active selector containers and Screenshot them!
         if (_this.activeSelectors.length > 0) {
-          _this.activeSelectors.map(function(query, i) {
+          _this.activeSelectors.forEach(function(query, i) {
+
             // get nice name
             var name = _this.getNamingConvention(query, w, h, config.currentBatch);
             var filePath = paths[dir.type] + '/' + config.id + '/' + name;

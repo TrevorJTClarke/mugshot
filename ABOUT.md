@@ -41,16 +41,18 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Backend
     * Setup compare image capture
     * Setup diff image processing
-      * setup resemble.js https://www.npmjs.com/package/node-resemble-js
       * update batchHistory
+      * Event emitter progress
+      * finish compare batching
 
   * UI
     * Setup tooltips
-    * Setup Runner
+    * Finish Runner
       * dynamic image sets
     * Finish Modal
       * Compare stats in title
     * Settings Save Validation
+    * Delete project should remove history
 
 
 #### Wishlist

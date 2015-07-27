@@ -2,6 +2,7 @@ var fs    = require('fs');
 var spawn = require('child_process').spawn;
 var paths = require('./paths')(__dirname);
 var projects = require('./projects');
+var BW = require('browser-window');
 
 function screenCap() {
 
@@ -14,7 +15,7 @@ function screenCap() {
     var currentProject = projects.getById(projectId);
 
     // quick minor updates
-    currentProject.currentBatch = (typeof currentProject.currentBatch === undefined) ? 0 : parseInt(currentProject.currentBatch, 10) + 1;
+    currentProject.currentBatch = (typeof currentProject.currentBatch === undefined || currentProject.currentBatch === null) ? 0 : parseInt(currentProject.currentBatch, 10) + 1;
     currentProject.currentReference = currentProject.currentBatch;
 
     this.captureSetup(currentProject);
@@ -64,6 +65,11 @@ function screenCap() {
     var casperProcess = (process.platform === 'win32' ? 'casperjs.cmd' : 'casperjs');
     var casperChild = spawn(casperProcess, casperArgs);
 
+    // window.webContents.send('RUNNER:PROGRESS', { msg: 'starting', percent: 1 });
+    // ipc.send('RUNNER:PROGRESS', { msg: 'starting', percent: 1 });
+    var window = BW.getFocusedWindow();
+    window.webContents.send('RUNNER:PROGRESS', { hi: 'hey'});
+
     casperChild.stdout.on('data', function(data) {
       console.log('CHILDPROCESS: ', data.toString().slice(0, -1));
     });
@@ -90,7 +96,6 @@ function screenCap() {
 
   this.captureEnd = function(data) {
     var _this = this;
-    console.log('captureEnd');
 
     // clean up dirConfig
     fs.writeFile(paths.dirConfig.replace('core/core/', 'core/'), JSON.stringify({ dirname: __dirname, type: '' }));

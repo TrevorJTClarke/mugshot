@@ -9,6 +9,8 @@ var paths = require('../app/core/paths')(__dirname);
 var screener = require('../app/core/screencap');
 var compare = require('../app/core/compare');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
+var EventEmit = require('events').EventEmitter;
+var em = new EventEmit();
 
 // adds gulp tasks available
 require('require-dir')(paths.core, { recurse: true }); //paths.core
@@ -31,7 +33,6 @@ ipc.on('RUNNER:FIRE', function(e, args) {
   if (!args || !args.type) { return; }
 
   var method = (args.type === 'reference') ? 'createReference' : 'createCompare';
-  console.log('RUNNER:FIRE', args);
 
   // Store the __dirname so the CHILDPROCESS can use
   fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: args.type }));
@@ -48,6 +49,10 @@ ipc.on('RUNNER:FIRE', function(e, args) {
       compare.runBatch(res);
     }
   });
+});
+
+ipc.on('RUNNER:PROGRESS', function(e, args) {
+  console.log('RUNNER:PROGRESS args', args);
 });
 
 /**
@@ -82,6 +87,10 @@ app.on('ready', function() {
   mainWindow.on('close', function() {
     mainWindowState.saveState(mainWindow);
   });
+
+  // mainWindow.webContents.on("did-finish-load", function() {
+  // mainWindow.webContents.send('RUNNER:PROGRESS', { hi: 'hey'});
+  // });
 
 });
 
