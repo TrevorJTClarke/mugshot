@@ -6,7 +6,6 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   $scope.processing = false;
   $scope.hasSettings = true; // TODO: make this real
   $scope.hasReference = true; // TODO: make this real
-  $scope.activeFilter = 'All';
   $scope.batchItems = [];
   $scope.activeData = {};
   $scope.currentBatch = $rootScope.project.currentBatch || 0;
@@ -72,9 +71,8 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
   // TODO:
   // * Intro
-  //   * see last run (if any)
   //   * start new run
-  //   * start reference
+  //   * progress on reference
 
   // Fire off the viewer
   $scope.previewBatch = function(items) {
@@ -104,6 +102,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   function runnerComplete() {
     setupCurrentBatch();
     $scope.processing = false;
+    $scope.hasReference = true;
   }
 
   function runnerFailed(reason) {

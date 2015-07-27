@@ -21,6 +21,7 @@ var Progress = function() {
 
   this.reset = function() {
     this.total = 0;
+    this.currentNum = 0;
   };
 
   this.getPercent = function(curNum) {

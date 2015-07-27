@@ -1,6 +1,6 @@
 <div class="project-runner">
 
-  <div class="intro-static" ng-if="!hasSettings || !hasReference">
+  <div class="intro-static" ng-if="!hasSettings || !hasReference && !processing">
     <i class="intro-icon octicon" ng-class="{'octicon-stop': hasSettings == false, 'octicon-microscope': hasReference == false && hasSettings == true}"></i>
     <div class="static-title" ng-if="!hasSettings">Please finish configuring settings!</div>
     <div class="static-title" ng-if="!hasReference && hasSettings">Start testing by creating a reference point.</div>
@@ -8,8 +8,8 @@
     <button class="btn btn-create" ui-sref="projects.settings({ id: project.id })" ng-if="!hasSettings">Change Settings</button>
   </div>
 
-  <div class="runner-section" ng-if="hasSettings && hasReference">
-    <div class="runner-loader" ng-if="processing">
+  <div class="runner-section" ng-if="processing">
+    <div class="runner-loader">
       <div class="preloader loading">
         <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span>
       </div>
@@ -18,25 +18,18 @@
         <small>{{progress.percent | number:0}}% Complete</small>
       </div>
     </div>
-
+  </div>
+  <div class="runner-section" ng-if="hasSettings && hasReference && !processing">
     <div class="runner-results" ng-if="!processing">
       <h3 class="section-title">Results
         <button class="btn btn-right btn-section-header btn-section-offset" ng-click="newCompare()">Run Compare</button>
         <button class="btn btn-right btn-section-header" ng-click="newReference()">New Reference</button>
       </h3>
-
       <div class="statistics" ng-if="activeData.success || activeData.error || activeData.warning">
         <div class="stat-item stat-success">{{activeData.success}} Passed</div>
         <div class="stat-item stat-error">{{activeData.error}} Failed</div>
         <div class="stat-item stat-warning">{{activeData.warning}} Warnings</div>
       </div>
-
-      <!-- <div class="filter-tabs tabs" ng-if="batchItems.length > 0">
-        <button class="btn btn-tab" ng-click="changeFilter('All')" ng-class="{'tab-active': activeFilter == 'All'}">All</button>
-        <button class="btn btn-tab" ng-click="changeFilter('Desktop')" ng-class="{'tab-active': activeFilter == 'Desktop'}">Desktop</button>
-        <button class="btn btn-tab" ng-click="changeFilter('Tablet')" ng-class="{'tab-active': activeFilter == 'Tablet'}">Tablet</button>
-        <button class="btn btn-tab" ng-click="changeFilter('Mobile')" ng-class="{'tab-active': activeFilter == 'Mobile'}">Mobile</button>
-      </div> -->
 
       <div class="banner-items" ng-if="batchItems.length > 0">
         <div class="row banner-item banner-{{batch.type}} film-strip-wrap" ng-repeat="batch in batchItems" ng-click="previewBatch(batch.items)" ng-if="batch.items.length > 0">

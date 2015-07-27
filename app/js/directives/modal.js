@@ -72,6 +72,7 @@ function($timeout, $compile, $rootScope) {
           $scope.activeItem = args.item;
           $scope.viewer = args.project || {};
           $scope.viewer.items = null;
+          $scope.compareItem.a = 'screens/' + $scope.activeItem.type + '/' + $rootScope.project.id + '/' + $scope.activeItem.source;
         }
 
         // Show multiple items
