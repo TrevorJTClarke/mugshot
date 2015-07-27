@@ -1368,6 +1368,12 @@ input,
     background: #FBFBFB;
     border-right: 2px solid #46685B; }
 
+.list-group-item-heading {
+  width: 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 /**
  * Container Header
  */
@@ -1390,6 +1396,10 @@ input,
   .header h5 {
     color: #a8afb0;
     margin: 8px 0 0;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 14px;
     font-weight: 400; }
 
@@ -1617,7 +1627,11 @@ input,
     font-weight: 400; }
   .banner-item h2 {
     margin: 5px 0;
-    font-size: 21px; }
+    font-size: 21px;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .banner-item p {
     color: rgba(0, 0, 0, 0.5);
     margin: 0;

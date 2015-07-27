@@ -43,6 +43,10 @@
   h2 {
     margin: 5px 0;
     font-size: 21px;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   p {

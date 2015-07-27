@@ -107,7 +107,7 @@ function compare() {
           .pack()
           .pipe(fs.createWriteStream(diffPath));
 
-        progress.emit('Saving History Data', 1);
+        progress.emit('Comparing Capture Data', 1);
 
         // update the history
         _this.writeDiffHistory(diffData, compareData, projectData, callback);

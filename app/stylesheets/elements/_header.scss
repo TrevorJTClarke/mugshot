@@ -29,6 +29,10 @@
   h5 {
     color: $grey04;
     margin: 8px 0 0;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font: {
       size: 14px;
       weight: 400;

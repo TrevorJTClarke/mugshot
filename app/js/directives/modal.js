@@ -6,8 +6,8 @@
  * <modal></modal>
  */
 MUG.directive('modal',
-['$timeout', '$compile', '$rootScope', 'Compare',
-function($timeout, $compile, $rootScope, Compare) {
+['$timeout', '$compile', '$rootScope',
+function($timeout, $compile, $rootScope) {
   return {
     restrict: 'E',
     replace: true,
@@ -17,15 +17,15 @@ function($timeout, $compile, $rootScope, Compare) {
       var modalActive = 'modal-open';
       var modalVisible = 'modal-visible';
 
-      // $scope.activeOption = 'overlay';
       $scope.project = angular.copy($rootScope.project);
       $scope.activeOption = 'sides';
       $scope.opacityRange = {};
       $scope.currentIndex = 0;
       $scope.activeItem = {};
       $scope.compareItem = {
-        b: {},
-        c: {}
+        a: '',
+        b: '',
+        c: ''
       };
       $scope.viewer = {
         items: []
@@ -44,6 +44,13 @@ function($timeout, $compile, $rootScope, Compare) {
         $scope.opacityRange.percent = Math.round(nv * 100) + '%';
       });
 
+      // set the active item with correct paths
+      function setActiveItem(data) {
+        $scope.compareItem.a = 'screens/reference/' + $rootScope.project.id + '/' + data.source.replace($rootScope.project.currentBatch + '.png', $rootScope.project.currentReference + '.png');
+        $scope.compareItem.b = 'screens/compare/' + $rootScope.project.id + '/' + data.source;
+        $scope.compareItem.c = 'screens/compare/' + $rootScope.project.id + '/' + data.source.replace('.png', '_diff.png');
+      }
+
       // Choose the viewer layout
       $scope.optionMode = function(type) {
         $scope.activeOption = type;
@@ -58,6 +65,7 @@ function($timeout, $compile, $rootScope, Compare) {
 
         // Make sure to reset current Index
         $scope.currentIndex = 0;
+        $scope.project = angular.copy($rootScope.project);
 
         // Show a single item
         if (args.type === 'preview') {
@@ -71,6 +79,7 @@ function($timeout, $compile, $rootScope, Compare) {
           $scope.activeItem = args.items[$scope.currentIndex];
           $scope.viewer = args.project || {};
           $scope.viewer.items = args.items;
+          setActiveItem($scope.activeItem);
         }
 
         // make the modal active with data
@@ -104,6 +113,7 @@ function($timeout, $compile, $rootScope, Compare) {
 
         $scope.activeItem = $scope.viewer.items[nextIdx];
         $scope.currentIndex = nextIdx;
+        setActiveItem($scope.activeItem);
       };
 
       // Go directly to an item
@@ -112,6 +122,7 @@ function($timeout, $compile, $rootScope, Compare) {
 
         $scope.activeItem = $scope.viewer.items[idx];
         $scope.currentIndex = idx;
+        setActiveItem($scope.activeItem);
       };
 
     }

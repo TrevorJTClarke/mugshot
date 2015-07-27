@@ -24,6 +24,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
       return [];
     }
 
+    // reset just the stats
+    $scope.activeData = {};
+    $scope.activeData.success = 0;
+    $scope.activeData.warning = 0;
+    $scope.activeData.error = 0;
     var formatted = [{ type: 'success', items: []}, { type: 'warning', items: []}, { type: 'error', items: []}];
 
     function placeItem(item) {
@@ -42,6 +47,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
         }
 
         formatted[target].items.unshift(item);
+        $scope.activeData[formatted[target].type] = $scope.activeData[formatted[target].type] + 1;
       }
     }
 
@@ -54,22 +60,21 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     return formatted;
   }
 
+  function setupCurrentBatch() {
+    // grab all the runner test data
+    var historyData = Projects.getTypeById($stateParams.id, 'history');
+
+    // Store the processed data into the batch data
+    $scope.batchItems = processBatch(historyData);
+  }
+
+  setupCurrentBatch();
+
   // TODO:
   // * Intro
   //   * see last run (if any)
   //   * start new run
   //   * start reference
-  // * Stats (pass/fail)
-
-  $scope.changeFilter = function(type) {
-    $scope.activeFilter = type;
-  };
-
-  // grab all the runner test data
-  var historyData = Projects.getTypeById($stateParams.id, 'history');
-
-  // Store the processed data into the batch data
-  $scope.batchItems = processBatch(historyData);
 
   // Fire off the viewer
   $scope.previewBatch = function(items) {
@@ -97,6 +102,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   }
 
   function runnerComplete() {
+    setupCurrentBatch();
     $scope.processing = false;
   }
 

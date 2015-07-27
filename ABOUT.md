@@ -39,11 +39,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * Setup compare image capture
-    * Setup diff image processing
-      * update batchHistory
-      * Event emitter progress
-      * finish compare batching
+    * update batchHistory
 
   * UI
     * Setup tooltips
@@ -51,6 +47,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * dynamic image sets
     * Finish Modal
       * Compare stats in title
+      * fix broken links
     * Settings Save Validation
     * Delete project should remove history
 

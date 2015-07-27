@@ -109,7 +109,6 @@ function screenCap() {
         var evData = data.toString().replace('PROGRESS:', '').split('::');
         var msg = evData[0];
         var amount = parseInt(evData[1], 10);
-        console.log('casperChild', msg, amount);
 
         progress.emit(msg, amount);
       } else {
