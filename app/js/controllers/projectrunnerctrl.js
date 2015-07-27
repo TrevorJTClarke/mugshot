@@ -1,3 +1,5 @@
+var ipc = require('ipc');
+
 MUG.controller('ProjectRunnerCtrl',
 ['$rootScope', '$scope', '$timeout', '$stateParams', 'Projects',
 function($rootScope, $scope, $timeout, $stateParams, Projects) {
@@ -53,8 +55,6 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   }
 
   // TODO:
-  // * Progress Bar
-  //   * Listen to Progress event
   // * Intro
   //   * see last run (if any)
   //   * start new run
@@ -76,38 +76,37 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     $rootScope.$emit('MODAL:OPEN', { type: 'batch', items: items, project: $rootScope.project });
   };
 
-  // TODO: finish
   // Fire off a new test!!
   $scope.newCompare = function() {
     $scope.processing = true;
     ipc.send('RUNNER:FIRE', { type: 'compare', projectId: $rootScope.project.id });
-
-    $timeout(function() {
-      $scope.progress.percent = 12;
-    }, 200);
-
-    $timeout(function() {
-      $scope.progress.percent = 56;
-    }, 700);
-
-    $timeout(function() {
-      $scope.progress.percent = 93;
-    }, 1800);
-
-    $timeout(function() {
-      $scope.processing = false;
-    }, 2000);
   };
 
+  // setup new reference
   $scope.newReference = function() {
+    $scope.processing = true;
     ipc.send('RUNNER:FIRE', { type: 'reference', projectId: $rootScope.project.id });
   };
 
-  $rootScope.$on('RUNNER:PROGRESS', function(e, args) {
-    if (!args) {return;}
+  function runnerEvents(args) {
+    if (!args || !args.msg || !args.percent) {return;}
 
-    // update the progress!
+    // Write the progress to UI
     $scope.progress.percent = parseInt(args.percent, 10);
-  });
+    $scope.progress.title = (args.msg) ? args.msg : $scope.progress.title;
+  }
+
+  function runnerComplete() {
+    $scope.processing = false;
+  }
+
+  function runnerFailed(reason) {
+    console.log('RUNNER:FAILED reason', reason);
+    $scope.processing = false;
+  }
+
+  ipc.on('RUNNER:PROGRESS', runnerEvents);
+  ipc.on('RUNNER:COMPLETE', runnerComplete);
+  ipc.on('RUNNER:FAILED', runnerFailed);
 
 }]);

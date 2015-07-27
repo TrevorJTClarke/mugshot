@@ -139,6 +139,7 @@ function Generator() {
 
     // load er up!
     casper.start();
+    console.log('PROGRESS:Opening Browser Session::1');
 
     // loop through all viewports
     casper.each(activeViewports, function(casper, vp, vIdx) {
@@ -205,6 +206,7 @@ function Generator() {
             _this.captureHistory.unshift(fileData);
 
             casper.captureSelector(filePath, query);
+            console.log('PROGRESS:Capturing Screens::1');
           });
         }
 
@@ -240,7 +242,7 @@ function complete() {
 
   // save as an individual file
   fs.write(filePath, JSON.stringify(updatedHistory), 'w');
-  console.log('Updated Project History file.');
+  console.log('PROGRESS:Updated Project History::1');
 }
 
 // Add all config and FNs into casper

@@ -9,8 +9,6 @@ var paths = require('../app/core/paths')(__dirname);
 var screener = require('../app/core/screencap');
 var compare = require('../app/core/compare');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
-var EventEmit = require('events').EventEmitter;
-var em = new EventEmit();
 
 // adds gulp tasks available
 require('require-dir')(paths.core, { recurse: true }); //paths.core
@@ -46,13 +44,13 @@ ipc.on('RUNNER:FIRE', function(e, args) {
 
     if (args.type !== 'reference') {
       console.log('Compare Diff Start', res.currentBatch);
-      compare.runBatch(res);
+      compare.runBatch(res, function() {
+        mainWindow.webContents.send('RUNNER:COMPLETE');
+      });
+    } else {
+      mainWindow.webContents.send('RUNNER:COMPLETE');
     }
   });
-});
-
-ipc.on('RUNNER:PROGRESS', function(e, args) {
-  console.log('RUNNER:PROGRESS args', args);
 });
 
 /**
@@ -77,6 +75,7 @@ app.on('ready', function() {
   }
 
   mainWindow.loadUrl('file://' + __dirname + '/app.html');
+  mainWindow.openDevTools();
 
   // TODO: env isnt loading the settings
   // if (env.name === 'development') {
@@ -87,10 +86,6 @@ app.on('ready', function() {
   mainWindow.on('close', function() {
     mainWindowState.saveState(mainWindow);
   });
-
-  // mainWindow.webContents.on("did-finish-load", function() {
-  // mainWindow.webContents.send('RUNNER:PROGRESS', { hi: 'hey'});
-  // });
 
 });
 

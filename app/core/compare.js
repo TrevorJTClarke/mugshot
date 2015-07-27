@@ -1,9 +1,10 @@
 var fs = require('fs');
-var ipc = require('ipc');
+var BW = require('browser-window');
 var $q = require('q');
 var async = require('async');
 var paths = require('./paths')(__dirname);
 var resemble = require('node-resemble-js');
+var progress = require('./progress');
 var statusTypes = ['passed', 'warning', 'failed'];
 var fileDirPrefix = __dirname + '/';
 var imagePrefix = 'data:image/png;base64,';
@@ -106,13 +107,15 @@ function compare() {
           .pack()
           .pipe(fs.createWriteStream(diffPath));
 
+        progress.emit('Saving History Data', 1);
+
         // update the history
         _this.writeDiffHistory(diffData, compareData, projectData, callback);
       });
   };
 
   // loop through current batch and compare against currentReference
-  this.runBatch = function(project) {
+  this.runBatch = function(project, done) {
     var _this = this;
     var compareBatch = this.extractCurrentBatch(project.id, project.currentBatch);
 
@@ -126,10 +129,15 @@ function compare() {
 
     function(err) {
       if (err) {
+        BW.getFocusedWindow().webContents.send('RUNNER:FAILED');
         console.log('err', err);
       }
 
       console.log('Finished Batch');
+
+      if (done) {
+        done();
+      }
     });
   };
 

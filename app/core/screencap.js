@@ -2,7 +2,7 @@ var fs    = require('fs');
 var spawn = require('child_process').spawn;
 var paths = require('./paths')(__dirname);
 var projects = require('./projects');
-var BW = require('browser-window');
+var progress = require('./progress');
 
 function screenCap() {
 
@@ -57,6 +57,40 @@ function screenCap() {
     });
   };
 
+  // Finds the total amount of progress events needed, so we can calculate percent
+  this.setupProgress = function(project) {
+    var type = this.captureType;
+    var multiplier = 1;
+    var viewports = project.viewports.length;
+    var selectors = [];
+    var containers;
+
+    function getSelectors() {
+      project.selectors.map(function(obj, idx) {
+        if (obj.active) {
+          if (obj.type === 'container') {
+            selectors.push(obj.query);
+          }
+        }
+      });
+    }
+
+    getSelectors();
+    containers = selectors.length;
+
+    // Formula:
+    // viewports * containers ( * 2 if comparing ) + 3 (start/save/finish)
+    //
+    // Example:
+    // 5 * 6 * 2 + 3 = 63
+    if (type === 'compare') {
+      multiplier = 2;
+    }
+
+    var totalEvents = (viewports * containers * multiplier) + 3;
+    progress.add(totalEvents, true);
+  };
+
   this.captureStart = function(projectData) {
     var _this = this;
     var type = this.captureType;
@@ -65,13 +99,22 @@ function screenCap() {
     var casperProcess = (process.platform === 'win32' ? 'casperjs.cmd' : 'casperjs');
     var casperChild = spawn(casperProcess, casperArgs);
 
-    // window.webContents.send('RUNNER:PROGRESS', { msg: 'starting', percent: 1 });
-    // ipc.send('RUNNER:PROGRESS', { msg: 'starting', percent: 1 });
-    var window = BW.getFocusedWindow();
-    window.webContents.send('RUNNER:PROGRESS', { hi: 'hey'});
+    // start off the progress
+    this.setupProgress(projectData);
+
+    progress.emit('Starting ' + _this.captureType + ' capture', 1);
 
     casperChild.stdout.on('data', function(data) {
-      console.log('CHILDPROCESS: ', data.toString().slice(0, -1));
+      if (data && data.toString() && data.toString().search('PROGRESS') > -1) {
+        var evData = data.toString().replace('PROGRESS:', '').split('::');
+        var msg = evData[0];
+        var amount = parseInt(evData[1], 10);
+        console.log('casperChild', msg, amount);
+
+        progress.emit(msg, amount);
+      } else {
+        console.log('CHILDPROCESS: ', data.toString().slice(0, -1));
+      }
     });
 
     casperChild.on('close', function(code) {
@@ -81,6 +124,7 @@ function screenCap() {
 
       //exit if there was some kind of failure in the casperChild process
       if (code != 0) {
+        BW.getFocusedWindow().webContents.send('RUNNER:FAILED', { msg: 'An Error Occurred', percent: 100 });
         console.log('\nLooks like an error occured. Try running `$ gulp echo`.');
         return false;
       }
