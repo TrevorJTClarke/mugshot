@@ -130,4 +130,16 @@ function($rootScope, $scope, $state, Projects) {
     $scope.save();
   };
 
+  // Removes all history data
+  $scope.clearHistory = function() {
+    Projects.clearHistory($rootScope.project)
+      .then(function(res) {
+        $rootScope.$broadcast('ALERT:FIRE', { title: "Cleared All History!", dur: 5, type: "success", icon: "history" });
+      }
+
+      , function(err) {
+        $rootScope.$broadcast('ALERT:FIRE', { title: "Error Occurred! Please try again.", dur: 5, type: "error", icon: "stop" });
+      });
+  };
+
 }]);

@@ -12,11 +12,11 @@ var resembleConfig = {
   errorColor: {
     red: 255,
     green: 0,
-    blue: 255
+    blue: 255,
   },
   errorType: 'flat',
   transparency: 1,
-  largeImageThreshold: 0
+  largeImageThreshold: 0,
 };
 
 // async helper
@@ -41,6 +41,8 @@ function getJsonFile(path, type) {
 function compare() {
 
   this.loadedHistory = [];
+  this.batchStats = [];
+  this.currentBatch = 0;
 
   this.extractCurrentBatch = function(projectId, batchId) {
     var allHistory = getJsonFile(paths.projects + '/' + projectId + '_history.json', []);
@@ -55,8 +57,49 @@ function compare() {
     return slimHistory;
   };
 
+  // updates the project stats data
+  this.writeBatchStats = function(project, cb) {
+    var _this = this;
+    var mainProjectPath = fileDirPrefix + 'projects.json';
+    var projectPath = paths.projects + '/' + project.id + '.json';
+    var mainProjects = getJsonFile(mainProjectPath, []);
+
+    // update only the needed data in main projects
+    mainProjects.map(function(obj, idx) {
+      if (obj.id === project.id) {
+        mainProjects[idx].totals.success = _this.batchStats[_this.currentBatch].success;
+        mainProjects[idx].totals.warning = _this.batchStats[_this.currentBatch].warning;
+        mainProjects[idx].totals.error = _this.batchStats[_this.currentBatch].error;
+        mainProjects[idx].totals.views = _this.loadedHistory.length;
+      }
+    });
+    console.log('this.batchStats', JSON.stringify(this.batchStats));
+
+    // Write the updated history to file
+    fs.writeFile(projectPath, JSON.stringify(project), function(err) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      // Write the updated history to file
+      fs.writeFile(mainProjectPath, JSON.stringify(mainProjects), function(err) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+
+        // success
+        if (cb) {
+          cb();
+        }
+      });
+    });
+  };
+
   // updates the history data
   this.writeDiffHistory = function(project, cb) {
+    var _this = this;
     var historyPath = paths.projects + '/' + project.id + '_history.json';
 
     // Write the updated history to file
@@ -66,10 +109,7 @@ function compare() {
         return;
       }
 
-      // success
-      if (cb) {
-        cb();
-      }
+      _this.writeBatchStats(project, cb);
     });
   };
 
@@ -77,6 +117,7 @@ function compare() {
   this.cacheDiffHistory = function(diffData, compare, cb) {
     var status = this.getStatus(diffData);
 
+    // update the history file
     this.loadedHistory.map(function(item, i) {
       if (item.source === compare.source) {
         this.loadedHistory[i].timestamp = (+new Date);
@@ -84,10 +125,19 @@ function compare() {
         this.loadedHistory[i].report = {
           analysis: diffData.analysisTime,
           sameSize: diffData.isSameDimensions,
-          diff: diffData.misMatchPercentage
+          diff: diffData.misMatchPercentage,
         };
       }
     });
+
+    // Store stats as they come in
+    if (status === 'passed') {
+      this.batchStats[this.currentBatch].success += 1;
+    } else if (status === 'warning') {
+      this.batchStats[this.currentBatch].warning += 1;
+    } else {
+      this.batchStats[this.currentBatch].error += 1;
+    }
 
     // success
     if (cb) {
@@ -129,6 +179,10 @@ function compare() {
     var compareBatch = this.extractCurrentBatch(project.id, project.currentBatch);
 
     // reset, so we have a clean start
+    this.currentBatch = project.currentBatch || 0;
+    this.batchStats = [];
+    this.batchStats = project.batchHistory;
+    this.batchStats[this.currentBatch] = { success: 0, warning: 0, error: 0 };
     this.loadedHistory = [];
     this.loadedHistory = getJsonFile(historyPath, []);
 

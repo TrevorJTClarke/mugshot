@@ -198,6 +198,46 @@ function($q) {
       });
 
       return dfd.promise;
+    },
+
+    /**
+     * removes all stored history for a project
+     */
+    clearHistory: function(project) {
+      var dfd = $q.defer();
+      var mainProjects = getJsonFile(projectsPath, []);
+
+      // update the current project to have no batchHistory
+      mainProjects.map(function(obj, idx) {
+        if (obj.id === project.id) {
+          mainProjects[idx].totals.success = 0;
+          mainProjects[idx].totals.warning = 0;
+          mainProjects[idx].totals.error = 0;
+          mainProjects[idx].totals.views = 0;
+          console.log('mainProjects[idx]', JSON.stringify(mainProjects[idx]));
+        }
+      });
+
+      // save the data to the projects list
+      fs.writeFile(projectFilesPath + project.id + '_history.json', JSON.stringify([]), function(err) {
+        if (err) {
+          dfd.reject(err);
+          return;
+        }
+
+        // update the data on the projects list
+        fs.writeFile(projectsPath, JSON.stringify(mainProjects), function(err) {
+          if (err) {
+            dfd.reject(err);
+            return;
+          }
+
+          // redirect user to the settings page
+          dfd.resolve();
+        });
+      });
+
+      return dfd.promise;
     }
   };
 }]);

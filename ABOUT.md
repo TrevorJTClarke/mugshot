@@ -51,7 +51,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * fix broken links
     * Settings Save Validation
     * image overflow problems
-    * clear history
+    * sidebar sort by timestamp
 
 
 #### Wishlist

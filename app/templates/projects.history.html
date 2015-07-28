@@ -43,7 +43,7 @@
   <div class="row default-state" ng-if="historyItems.length < 1">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <p>No history yet! Click below to get started!</p>
-      <button class="btn btn-reference">Start Runner</button>
+      <button class="btn btn-reference" ui-sref="projects.runner({ id: project.id })">Start Runner</button>
     </div>
   </div>
 

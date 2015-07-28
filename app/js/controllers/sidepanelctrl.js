@@ -21,7 +21,13 @@ function($rootScope, $scope, $state, Projects) {
 
     $scope.projects.map(function(obj, idx) {
       if (obj.id === args.id) {
-        $scope.projects[idx] = args;
+        $scope.projects[idx].title = args.title;
+        $scope.projects[idx].timestamp = args.timestamp;
+
+        if (args.batchHistory[args.currentBatch]) {
+          // only update totals if we have them
+          $scope.projects[idx].totals = args.batchHistory[args.currentBatch];
+        }
       }
     });
   });
