@@ -6,8 +6,8 @@
  * <modal></modal>
  */
 MUG.directive('modal',
-['$timeout', '$compile', '$rootScope', 'Compare',
-function($timeout, $compile, $rootScope, Compare) {
+['$timeout', '$compile', '$rootScope',
+function($timeout, $compile, $rootScope) {
   return {
     restrict: 'E',
     replace: true,
@@ -17,15 +17,15 @@ function($timeout, $compile, $rootScope, Compare) {
       var modalActive = 'modal-open';
       var modalVisible = 'modal-visible';
 
-      // $scope.activeOption = 'overlay';
       $scope.project = angular.copy($rootScope.project);
       $scope.activeOption = 'sides';
       $scope.opacityRange = {};
       $scope.currentIndex = 0;
       $scope.activeItem = {};
       $scope.compareItem = {
-        b: {},
-        c: {}
+        a: '',
+        b: '',
+        c: ''
       };
       $scope.viewer = {
         items: []
@@ -44,27 +44,11 @@ function($timeout, $compile, $rootScope, Compare) {
         $scope.opacityRange.percent = Math.round(nv * 100) + '%';
       });
 
-      function compareSingle(a) {
-        //TODO:removethis
-        var b = 'screens/compare/body_tablet_projectIdRandum_0.png';
-
-        // var b = 'screens/compare/body_phone_projectIdRandum_0.png';
-
-        Compare.runSingle(a, b).then(function(res) {
-          console.log('res', res);
-
-          // update view with processed image
-          $scope.compareItem.b.src = b;
-          $scope.compareItem.c = res;
-
-          // update the activeItem with the processed values
-          $scope.activeItem.analysis = res.report.analysisTime;
-          $scope.activeItem.status = Compare.getStatus(res.report);
-        },
-
-        function(err) {
-          console.log('err', err);
-        });
+      // set the active item with correct paths
+      function setActiveItem(data) {
+        $scope.compareItem.a = 'screens/reference/' + $rootScope.project.id + '/' + data.source.replace($rootScope.project.currentBatch + '.png', $rootScope.project.currentReference + '.png');
+        $scope.compareItem.b = 'screens/compare/' + $rootScope.project.id + '/' + data.source;
+        $scope.compareItem.c = 'screens/compare/' + $rootScope.project.id + '/' + data.source.replace('.png', '_diff.png');
       }
 
       // Choose the viewer layout
@@ -81,12 +65,14 @@ function($timeout, $compile, $rootScope, Compare) {
 
         // Make sure to reset current Index
         $scope.currentIndex = 0;
+        $scope.project = angular.copy($rootScope.project);
 
         // Show a single item
         if (args.type === 'preview') {
           $scope.activeItem = args.item;
           $scope.viewer = args.project || {};
           $scope.viewer.items = null;
+          $scope.compareItem.a = 'screens/' + $scope.activeItem.type + '/' + $rootScope.project.id + '/' + $scope.activeItem.source;
         }
 
         // Show multiple items
@@ -94,9 +80,7 @@ function($timeout, $compile, $rootScope, Compare) {
           $scope.activeItem = args.items[$scope.currentIndex];
           $scope.viewer = args.project || {};
           $scope.viewer.items = args.items;
-
-          // TODO: remove!
-          compareSingle($scope.activeItem.source);
+          setActiveItem($scope.activeItem);
         }
 
         // make the modal active with data
@@ -130,9 +114,7 @@ function($timeout, $compile, $rootScope, Compare) {
 
         $scope.activeItem = $scope.viewer.items[nextIdx];
         $scope.currentIndex = nextIdx;
-
-        // TODO: remove!
-        compareSingle($scope.activeItem.source);
+        setActiveItem($scope.activeItem);
       };
 
       // Go directly to an item
@@ -141,9 +123,7 @@ function($timeout, $compile, $rootScope, Compare) {
 
         $scope.activeItem = $scope.viewer.items[idx];
         $scope.currentIndex = idx;
-
-        // TODO: remove!
-        compareSingle($scope.activeItem.source);
+        setActiveItem($scope.activeItem);
       };
 
     }

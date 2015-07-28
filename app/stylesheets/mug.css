@@ -1368,6 +1368,12 @@ input,
     background: #FBFBFB;
     border-right: 2px solid #46685B; }
 
+.list-group-item-heading {
+  width: 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 /**
  * Container Header
  */
@@ -1390,6 +1396,10 @@ input,
   .header h5 {
     color: #a8afb0;
     margin: 8px 0 0;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 14px;
     font-weight: 400; }
 
@@ -1617,7 +1627,11 @@ input,
     font-weight: 400; }
   .banner-item h2 {
     margin: 5px 0;
-    font-size: 21px; }
+    font-size: 21px;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .banner-item p {
     color: rgba(0, 0, 0, 0.5);
     margin: 0;
@@ -1652,8 +1666,9 @@ input,
       opacity: 0;
       transition: opacity 220ms ease-in-out; }
     .banner-item .banner-preview img {
-      width: 100%;
-      height: auto; }
+      min-width: 100%;
+      min-height: 100%;
+      max-height: 100%; }
     .banner-item .banner-preview:hover:after {
       opacity: 1; }
   .banner-item .meta-status {
@@ -1719,11 +1734,14 @@ input,
   display: inline-block;
   list-style: none;
   height: 70px;
-  width: auto;
+  max-width: 160px;
+  overflow: hidden;
   margin: 0 10px 0 0;
   position: relative; }
   .film-thumb img {
-    height: 100%; }
+    min-height: 100%;
+    max-height: 100%;
+    min-width: 60px; }
 
 input[type=range] {
   -webkit-appearance: none;
@@ -1910,11 +1928,14 @@ input[type=range] {
       display: inline-block;
       list-style: none;
       height: 70px;
-      width: auto;
+      max-width: 160px;
       margin: 0 10px 0 0;
-      position: relative; }
+      position: relative;
+      overflow: hidden; }
       .modal-footer .modal-carousel .carousel-thumb img {
-        height: 100%; }
+        min-height: 100%;
+        max-height: 100%;
+        min-width: 60px; }
       .modal-footer .modal-carousel .carousel-thumb i {
         position: absolute;
         right: -4px;
@@ -1971,6 +1992,8 @@ a {
  */
 .project-settings {
   margin: 20px 0 0; }
+  .project-settings .full-label {
+    width: 100%; }
   .project-settings .row {
     margin-left: 0;
     margin-right: 0; }
@@ -2112,6 +2135,8 @@ a {
     height: 100%;
     display: flex;
     flex-direction: column; }
+    .project-runner .runner-section .btn-section-offset {
+      right: 140px; }
 
 .intro-static {
   text-align: center;
@@ -2159,7 +2184,7 @@ a {
       border-bottom-color: #ff7362; }
 
 .runner-loader {
-  width: 275px;
+  width: 350px;
   margin: auto;
   position: relative; }
   .runner-loader .preloader {

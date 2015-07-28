@@ -21,7 +21,27 @@ function($rootScope, $scope, $state, Projects) {
 
     $scope.projects.map(function(obj, idx) {
       if (obj.id === args.id) {
-        $scope.projects[idx] = args;
+        $scope.projects[idx].title = args.title;
+        $scope.projects[idx].timestamp = args.timestamp;
+
+        if (args.batchHistory[args.currentBatch]) {
+          // only update totals if we have them
+          if (args.batchHistory[args.currentBatch].success) {
+            $scope.projects[idx].totals.success = args.batchHistory[args.currentBatch].success;
+          }
+
+          if (args.batchHistory[args.currentBatch].warning) {
+            $scope.projects[idx].totals.warning = args.batchHistory[args.currentBatch].warning;
+          }
+
+          if (args.batchHistory[args.currentBatch].error) {
+            $scope.projects[idx].totals.error = args.batchHistory[args.currentBatch].error;
+          }
+
+          if (args.batchHistory[args.currentBatch].views) {
+            $scope.projects[idx].totals.views = args.batchHistory[args.currentBatch].views;
+          }
+        }
       }
     });
   });

@@ -8,6 +8,9 @@ var casper = require('casper').create({
   // http://casperjs.readthedocs.org/en/latest/modules/casper.html#index-1
 });
 
+// viewport map
+var viewportMap = ['Desktop', 'Tablet', 'Mobile'];
+
 function Generator() {
 
   this.activeSelectors = [];
@@ -35,7 +38,14 @@ function Generator() {
    */
   this.captureMetaData = function(name, query, width, height, batch) {
     var shortName = name.split('_')[0];
-    var viewport = 'Tablet'; // TODO: finishs
+    var viewport;
+
+    // set viewport norm, based on width
+    if (width < 768) { viewport = viewportMap[2]; }
+
+    if (width >= 768 && width <= 1024) { viewport = viewportMap[1]; }
+
+    if (width > 1024) { viewport = viewportMap[0]; }
 
     // format the data for storing
     return {
@@ -46,7 +56,7 @@ function Generator() {
       type: dir.type,
       viewport: viewport,
       query: query,
-      meta: system.os
+      meta: system.os,
     };
   };
 
@@ -60,7 +70,7 @@ function Generator() {
         var bool = phantom.addCookie({
           name: cookies[i].name,
           value: cookies[i].value,
-          domain: cookies[i].path
+          domain: cookies[i].path,
         });
       }
     }
@@ -70,6 +80,9 @@ function Generator() {
   this.setSelectors = function() {
     var _this = this;
     if (!config.selectors) { return; }
+
+    // reset, so we dont multiply like cray cray
+    this.activeSelectors = [];
 
     function evalHideRemove(type, item) {
       casper.evaluate(function(item) {
@@ -113,6 +126,7 @@ function Generator() {
     var consoleBuffer = '';
     var scriptTimeout = 20000;
     var activeViewports = this.getViewports();
+    this.captureHistory = [];
 
     // Start with cookies first (yep, dessert before dinner)
     this.setCookies();
@@ -125,6 +139,7 @@ function Generator() {
 
     // load er up!
     casper.start();
+    console.log('PROGRESS:Opening Browser Session::1');
 
     // loop through all viewports
     casper.each(activeViewports, function(casper, vp, vIdx) {
@@ -178,17 +193,20 @@ function Generator() {
 
         // Process the active selector containers and Screenshot them!
         if (_this.activeSelectors.length > 0) {
-          _this.activeSelectors.map(function(query, i) {
+          _this.activeSelectors.forEach(function(query, i) {
+
             // get nice name
-            var name = _this.getNamingConvention(query, w, h, config.currentBatch);
+            batchId = (dir.type === 'reference') ? config.currentReference : config.currentBatch;
+            var name = _this.getNamingConvention(query, w, h, batchId);
             var filePath = paths[dir.type] + '/' + config.id + '/' + name;
 
             // store the meta data of the image
-            var fileData = _this.captureMetaData(name, query, w, h, config.currentBatch);
+            var fileData = _this.captureMetaData(name, query, w, h, batchId);
 
             // can cache this update locally, then save at the end of processing
             _this.captureHistory.unshift(fileData);
 
+            console.log('PROGRESS:Capturing Screens::1');
             casper.captureSelector(filePath, query);
           });
         }
@@ -225,7 +243,7 @@ function complete() {
 
   // save as an individual file
   fs.write(filePath, JSON.stringify(updatedHistory), 'w');
-  console.log('Updated Project History file.');
+  console.log('PROGRESS:Updated Project History::1');
 }
 
 // Add all config and FNs into casper

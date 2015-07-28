@@ -72,13 +72,6 @@
     border-radius: 3px 3px 0 0;
   }
 
-  // @for $i from 1 through 6 {
-  //   .slice:nth-child(#{$i}) {
-  //     transform: rotateZ(60 * $i + deg) rotateY(0deg) rotateX(0);
-  //     animation: .15s linear .9 - $i * .08s preload-hide-#{$i} both 1;
-  //   }
-  // }
-
   &.loading{
     animation: 2s preload-flip steps(2) infinite both;
     @for $i from 1 through 6 {

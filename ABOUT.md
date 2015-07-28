@@ -39,18 +39,14 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * Setup compare image capture
-    * Setup diff image processing
-      * setup resemble.js https://www.npmjs.com/package/node-resemble-js
-      * update batchHistory
+    *
 
   * UI
     * Setup tooltips
-    * Setup Runner
-      * dynamic image sets
+    * Finish Runner
+      * post reference/pre compare view
     * Finish Modal
       * Compare stats in title
-    * Settings Save Validation
 
 
 #### Wishlist
@@ -61,6 +57,8 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * Run a repo
       * Choose branches to run between
   * Submit Jira ticket
+    * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
+        /jira-rest-api-tutorials/jira-rest-api-example-create-issue
   * Local no-server testing
   * Record User Actions
 

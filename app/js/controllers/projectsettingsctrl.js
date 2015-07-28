@@ -71,10 +71,15 @@ function($rootScope, $scope, $state, Projects) {
           $state.go('main');
           $rootScope.project = {};
           $scope.hasChanges = false;
+          $rootScope.$broadcast('ALERT:FIRE', { title: "Project Removed Successfully", dur: 5, type: "success" });
         },
 
         function(err) {
           console.log('err', err);
+          $rootScope.$emit('SIDEPANEL:REMOVE', { id: projectID });
+          $state.go('main');
+          $rootScope.project = {};
+          $scope.hasChanges = false;
         });
     }
   }
@@ -128,6 +133,18 @@ function($rootScope, $scope, $state, Projects) {
 
     // save the file for convenience
     $scope.save();
+  };
+
+  // Removes all history data
+  $scope.clearHistory = function() {
+    Projects.clearHistory($rootScope.project)
+      .then(function(res) {
+        $rootScope.$broadcast('ALERT:FIRE', { title: "Cleared All History!", dur: 5, type: "success", icon: "history" });
+      }
+
+      , function(err) {
+        $rootScope.$broadcast('ALERT:FIRE', { title: "Error Occurred! Please try again.", dur: 5, type: "error", icon: "stop" });
+      });
   };
 
 }]);

@@ -12,6 +12,10 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    .btn-section-offset {
+      right: 140px;
+    }
   }
 }
 
@@ -86,7 +90,7 @@
 }
 
 .runner-loader {
-  width: 275px;
+  width: 350px;
   margin: auto;
   position: relative;
 

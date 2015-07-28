@@ -61,7 +61,7 @@
 
       <div class="panel-projects">
         <ul class="list-group" ng-cloak>
-          <li class="list-group-item" ng-class="{'list-item-active': project.id == currentProjectId }" ng-repeat="project in projects track by $index" ng-click="goToProject(project.id)">
+          <li class="list-group-item" ng-class="{'list-item-active': project.id == currentProjectId }" ng-repeat="project in projects" ng-click="goToProject(project.id)">
             <h4 class="list-group-item-heading">{{project.title}}</h4>
             <p class="list-group-item-text" ng-show="project.totals.success || project.totals.warning || project.totals.error || project.totals.views">
               <span class="label label-success" ng-if="project.totals.success"><i class="octicon octicon-diff-added"></i> {{project.totals.success}}</span>

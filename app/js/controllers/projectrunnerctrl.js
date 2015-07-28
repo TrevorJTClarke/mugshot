@@ -1,19 +1,20 @@
+var ipc = require('ipc');
+
 MUG.controller('ProjectRunnerCtrl',
 ['$rootScope', '$scope', '$timeout', '$stateParams', 'Projects',
 function($rootScope, $scope, $timeout, $stateParams, Projects) {
   $scope.processing = false;
-  $scope.hasSettings = true; // TODO: make this real
-  $scope.hasReference = true; // TODO: make this real
-  $scope.activeFilter = 'All';
+  $scope.hasSettings = false;
+  $scope.hasReference = false;
+  $scope.hasCompare = false;
+  $scope.runningType = 'reference';
   $scope.batchItems = [];
   $scope.activeData = {};
   $scope.currentBatch = $rootScope.project.currentBatch || 0;
   $scope.progress = {
-    percent: 0
+    percent: 0,
+    title: 'Starting'
   };
-
-  // Set the active data based on currentBatch
-  $scope.activeData = ($rootScope.project && $rootScope.project.batchHistory) ? $rootScope.project.batchHistory[$scope.currentBatch] : null;
 
   // Puts data into sorted sections
   function processBatch(allData) {
@@ -22,6 +23,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
       return [];
     }
 
+    // reset just the stats
+    $scope.activeData = {};
+    $scope.activeData.success = 0;
+    $scope.activeData.warning = 0;
+    $scope.activeData.error = 0;
     var formatted = [{ type: 'success', items: []}, { type: 'warning', items: []}, { type: 'error', items: []}];
 
     function placeItem(item) {
@@ -40,6 +46,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
         }
 
         formatted[target].items.unshift(item);
+        $scope.activeData[formatted[target].type] = $scope.activeData[formatted[target].type] + 1;
       }
     }
 
@@ -49,60 +56,115 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
       }
     });
 
+    $scope.hasReference = true;
+    $scope.hasCompare = (formatted.length > 0);
     return formatted;
   }
 
-  // TODO:
-  // * Progress Bar
-  //   * Listen to Progress event
-  // * Intro
-  //   * see last run (if any)
-  //   * start new run
-  //   * start reference
-  // * Stats (pass/fail)
+  function setupCurrentBatch() {
+    if ($rootScope.project.currentBatch === null) {return;}
 
-  $scope.changeFilter = function(type) {
-    $scope.activeFilter = type;
-  };
+    // grab all the runner test data
+    var id = (typeof $rootScope.project.currentBatch !== undefined) ? $rootScope.project.currentBatch : 0;
+    var historyData = Projects.getTypeById($stateParams.id, 'history');
 
-  // grab all the runner test data
-  var historyData = Projects.getTypeById($stateParams.id, 'history');
+    // Store the processed data into the batch data
+    $scope.batchItems = processBatch(historyData);
+  }
 
-  // Store the processed data into the batch data
-  $scope.batchItems = processBatch(historyData);
+  // validation of project
+  function validateProject() {
+    // verify if its valid
+    var isValid = Projects.validate($rootScope.project);
+
+    // alert of invalidity
+    if (!isValid) {
+      $rootScope.$broadcast('ALERT:FIRE', { title: 'Please finish configuring settings!', dur: 5, type: 'error', icon: 'stop' });
+    }
+
+    return isValid;
+  }
+
+  // checks for changes and updates UI accourdingly
+  function checkState() {
+    $scope.hasSettings = validateProject();
+    $scope.hasReference = ($rootScope.project.currentReference !== null);
+    $scope.currentBatch = $rootScope.project.currentBatch;
+
+    if ($scope.runningType === 'reference') {
+      $scope.hasCompare = false;
+    } else {
+      $scope.hasCompare = ($rootScope.project.currentBatch !== null && $rootScope.project.currentBatch !== 0);
+    }
+  }
+
+  // grab the latest data for the project
+  function grabLatestData() {
+    $rootScope.project = Projects.getById($rootScope.project.id, 'history');
+
+    // Set the active data based on currentBatch
+    $scope.activeData = ($rootScope.project && $rootScope.project.batchHistory) ? $rootScope.project.batchHistory[$scope.currentBatch] : null;
+
+    $rootScope.$emit('SIDEPANEL:UPDATE', $rootScope.project);
+  }
+
+  grabLatestData();
+  checkState();
+  setupCurrentBatch();
 
   // Fire off the viewer
   $scope.previewBatch = function(items) {
     $rootScope.$emit('MODAL:OPEN', { type: 'batch', items: items, project: $rootScope.project });
   };
 
-  // TODO: finish
   // Fire off a new test!!
-  $scope.runNewTest = function() {
+  $scope.newCompare = function() {
+    var valid = validateProject();
+
+    // validation pause
+    if (!valid) {return;}
+
+    $scope.runningType = 'compare';
     $scope.processing = true;
-
-    $timeout(function() {
-      $scope.progress.percent = 12;
-    }, 200);
-
-    $timeout(function() {
-      $scope.progress.percent = 56;
-    }, 700);
-
-    $timeout(function() {
-      $scope.progress.percent = 93;
-    }, 1800);
-
-    $timeout(function() {
-      $scope.processing = false;
-    }, 2000);
+    ipc.send('RUNNER:FIRE', { type: 'compare', projectId: $rootScope.project.id });
   };
 
-  $rootScope.$on('RUNNER:PROGRESS:UPDATE', function(e, args) {
-    if (!args) {return;}
+  // setup new reference
+  $scope.newReference = function() {
+    var valid = validateProject();
 
-    // update the progress!
+    // validation pause
+    if (!valid) {return;}
+
+    $scope.processing = true;
+    $scope.runningType = 'reference';
+    $scope.hasCompare = false;
+    ipc.send('RUNNER:FIRE', { type: 'reference', projectId: $rootScope.project.id });
+  };
+
+  function runnerEvents(args) {
+    if (!args || !args.msg || !args.percent) {return;}
+
+    // Write the progress to UI
     $scope.progress.percent = parseInt(args.percent, 10);
-  });
+    $scope.progress.title = (args.msg) ? args.msg : $scope.progress.title;
+  }
+
+  // TODO: signal UI of changes
+  function runnerComplete() {
+    grabLatestData();
+    checkState();
+    setupCurrentBatch();
+    $scope.processing = false;
+  }
+
+  function runnerFailed(reason) {
+    console.log('RUNNER:FAILED reason', reason);
+    $scope.processing = false;
+  }
+
+  ipc.on('RUNNER:PROGRESS', runnerEvents);
+  ipc.on('RUNNER:COMPLETE', runnerComplete);
+  ipc.on('RUNNER:FAILED', runnerFailed);
 
 }]);
