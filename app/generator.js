@@ -56,7 +56,7 @@ function Generator() {
       type: dir.type,
       viewport: viewport,
       query: query,
-      meta: system.os
+      meta: system.os,
     };
   };
 
@@ -70,7 +70,7 @@ function Generator() {
         var bool = phantom.addCookie({
           name: cookies[i].name,
           value: cookies[i].value,
-          domain: cookies[i].path
+          domain: cookies[i].path,
         });
       }
     }
@@ -196,17 +196,18 @@ function Generator() {
           _this.activeSelectors.forEach(function(query, i) {
 
             // get nice name
-            var name = _this.getNamingConvention(query, w, h, config.currentBatch);
+            batchId = (dir.type === 'reference') ? config.currentReference : config.currentBatch;
+            var name = _this.getNamingConvention(query, w, h, batchId);
             var filePath = paths[dir.type] + '/' + config.id + '/' + name;
 
             // store the meta data of the image
-            var fileData = _this.captureMetaData(name, query, w, h, config.currentBatch);
+            var fileData = _this.captureMetaData(name, query, w, h, batchId);
 
             // can cache this update locally, then save at the end of processing
             _this.captureHistory.unshift(fileData);
 
-            casper.captureSelector(filePath, query);
             console.log('PROGRESS:Capturing Screens::1');
+            casper.captureSelector(filePath, query);
           });
         }
 

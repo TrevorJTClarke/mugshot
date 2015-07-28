@@ -71,10 +71,15 @@ function($rootScope, $scope, $state, Projects) {
           $state.go('main');
           $rootScope.project = {};
           $scope.hasChanges = false;
+          $rootScope.$broadcast('ALERT:FIRE', { title: "Project Removed Successfully", dur: 5, type: "success" });
         },
 
         function(err) {
           console.log('err', err);
+          $rootScope.$emit('SIDEPANEL:REMOVE', { id: projectID });
+          $state.go('main');
+          $rootScope.project = {};
+          $scope.hasChanges = false;
         });
     }
   }

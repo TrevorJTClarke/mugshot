@@ -23,7 +23,7 @@ var mainWindow;
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
   width: 900,
-  height: 575
+  height: 575,
 });
 
 // wait for the runner events
@@ -67,7 +67,7 @@ app.on('ready', function() {
     'min-height': 450,
     'max-width': 1450,
     'max-height': 1000,
-    frame: false
+    frame: false,
   });
 
   if (mainWindowState.isMaximized) {
@@ -76,7 +76,7 @@ app.on('ready', function() {
 
   mainWindow.loadUrl('file://' + __dirname + '/app.html');
 
-  // mainWindow.openDevTools();
+  mainWindow.openDevTools();
 
   // TODO: env isnt loading the settings
   // if (env.name === 'development') {

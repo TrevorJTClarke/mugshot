@@ -42,6 +42,9 @@ function($q) {
   function createDummyProjectFile(options) {
     var projectId = createUUID(12);
     return {
+      batchHistory: {},
+      currentBatch: null,
+      currentReference: null,
       id: options.id,
       title: options.title,
       timestamp: options.timestamp,
@@ -90,6 +93,53 @@ function($q) {
     },
 
     /**
+     * validates the project, makes sure all settings are setup and valid
+     */
+    validate: function(project) {
+      var cookies = project.cookies;
+      var viewports = project.viewports;
+      var selectors = project.selectors;
+      var title = project.title;
+      var url = project.meta.url;
+      var bool = true;
+
+      // verify all defaults are setup
+      if (!viewports || !selectors || !title || !url || viewports.length < 1 || selectors.length < 1) {
+        return false;
+      }
+
+      // If we have viewports, verify they're setup right
+      if (viewports) {
+        viewports.map(function(obj, idx) {
+          if (!obj.width || !obj.height || !obj.name) {
+            bool = false;
+          }
+        });
+      }
+
+      // If we have selectors, verify they're setup right
+      if (selectors) {
+        selectors.map(function(obj, idx) {
+          if (!obj.query || !obj.type) {
+            bool = false;
+          }
+        });
+      }
+
+      // If we have cookies, verify they're setup right
+      if (cookies) {
+        cookies.map(function(obj, idx) {
+          if (!obj.name || !obj.path || !obj.value) {
+            bool = false;
+          }
+        });
+      }
+
+      // default to true
+      return bool;
+    },
+
+    /**
      * creates a new project, and returns the data in a promise
      */
     createNew: function() {
@@ -114,8 +164,16 @@ function($q) {
             return;
           }
 
-          // redirect user to the settings page
-          dfd.resolve(newProjectData);
+          // save as an individual file
+          fs.writeFile(projectFilesPath + newProjectData.id + '_history.json', JSON.stringify([]), function(err) {
+            if (err) {
+              dfd.reject(err);
+              return;
+            }
+
+            // redirect user to the settings page
+            dfd.resolve(newProjectData);
+          });
         });
       });
 
@@ -207,6 +265,11 @@ function($q) {
       var dfd = $q.defer();
       var mainProjects = getJsonFile(projectsPath, []);
 
+      // Update the project data to reflect no history
+      project.currentBatch = null;
+      project.currentReference = null;
+      project.batchHistory = {};
+
       // update the current project to have no batchHistory
       mainProjects.map(function(obj, idx) {
         if (obj.id === project.id) {
@@ -214,7 +277,6 @@ function($q) {
           mainProjects[idx].totals.warning = 0;
           mainProjects[idx].totals.error = 0;
           mainProjects[idx].totals.views = 0;
-          console.log('mainProjects[idx]', JSON.stringify(mainProjects[idx]));
         }
       });
 
@@ -225,15 +287,23 @@ function($q) {
           return;
         }
 
-        // update the data on the projects list
-        fs.writeFile(projectsPath, JSON.stringify(mainProjects), function(err) {
+        // save the data to the id project
+        fs.writeFile(projectFilesPath + project.id + '.json', JSON.stringify(project), function(err) {
           if (err) {
             dfd.reject(err);
             return;
           }
 
-          // redirect user to the settings page
-          dfd.resolve();
+          // update the data on the projects list
+          fs.writeFile(projectsPath, JSON.stringify(mainProjects), function(err) {
+            if (err) {
+              dfd.reject(err);
+              return;
+            }
+
+            // redirect user to the settings page
+            dfd.resolve();
+          });
         });
       });
 

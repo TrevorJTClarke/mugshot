@@ -15,8 +15,7 @@ function screenCap() {
     var currentProject = projects.getById(projectId);
 
     // quick minor updates
-    currentProject.currentBatch = (typeof currentProject.currentBatch === undefined || currentProject.currentBatch === null) ? 0 : parseInt(currentProject.currentBatch, 10) + 1;
-    currentProject.currentReference = currentProject.currentBatch;
+    currentProject.currentReference = (currentProject.currentBatch > 0 && currentProject.currentBatch > currentProject.currentReference) ? currentProject.currentBatch + 1 : (typeof currentProject.currentReference !== undefined || currentProject.currentReference === null) ? 0 : currentProject.currentReference + 1;
 
     this.captureSetup(currentProject);
   };
@@ -27,7 +26,7 @@ function screenCap() {
     var currentProject = projects.getById(projectId);
 
     // quick minor updates
-    currentProject.currentBatch = (currentProject.currentBatch) ? currentProject.currentBatch + 1 : 0;
+    currentProject.currentBatch = (currentProject.currentBatch > 0 && currentProject.currentBatch > currentProject.currentReference) ? currentProject.currentBatch + 1 : currentProject.currentReference + 1;
 
     this.captureSetup(currentProject);
   };

@@ -73,7 +73,6 @@ function compare() {
         mainProjects[idx].totals.views = _this.loadedHistory.length;
       }
     });
-    console.log('this.batchStats', JSON.stringify(this.batchStats));
 
     // Write the updated history to file
     fs.writeFile(projectPath, JSON.stringify(project), function(err) {
@@ -90,6 +89,7 @@ function compare() {
         }
 
         // success
+        console.log('Finished Compare');
         if (cb) {
           cb();
         }

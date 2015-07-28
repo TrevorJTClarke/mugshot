@@ -12,7 +12,7 @@
 
   <div class="banner-items" ng-if="historyItems.length > 0">
 
-    <div class="row banner-item" ng-repeat="item in historyItems | filter:activeFilterQuery" ng-class="{'banner-info': item.type == 'reference', 'banner-success': item.status == 'passed', 'banner-warning': item.status == 'warning', 'banner-error': item.status == 'failed'}">
+    <div class="row banner-item" ng-repeat="item in historyItems | filter:activeFilterQuery" ng-class="{'banner-info': item.type == 'reference', 'banner-success': item.status == 'passed' && item.type != 'reference', 'banner-warning': item.status == 'warning' && item.type != 'reference', 'banner-error': item.status == 'failed' && item.type != 'reference'}">
       <div class="banner-status">
         <i class="octicon" ng-class="{'octicon-tag': item.type == 'reference', 'octicon-check': item.status == 'passed', 'octicon-alert': item.status == 'warning', 'octicon-stop': item.status == 'failed'}"></i>
       </div>

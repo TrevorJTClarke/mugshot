@@ -39,7 +39,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * update batchHistory
+    * Process history is reading references :/
 
   * UI
     * Setup tooltips
@@ -49,9 +49,9 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * Finish Modal
       * Compare stats in title
       * fix broken links
-    * Settings Save Validation
     * image overflow problems
-    * sidebar sort by timestamp
+    * fix runner View switch
+    * fix current batch problem
 
 
 #### Wishlist
