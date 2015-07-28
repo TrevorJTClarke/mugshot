@@ -157,6 +157,7 @@ function($q) {
       return dfd.promise;
     },
 
+    // TODO: should remove images upon delete?
     // Removes a single project by ID
     remove: function(id) {
       var dfd = $q.defer();
@@ -176,15 +177,23 @@ function($q) {
           return;
         }
 
-        // update the listing data
-        fs.writeFile(projectsPath, JSON.stringify(allProjects), function(err) {
+        // Remove the project history file
+        fs.unlink(projectFilesPath + id + '_history.json', function(err) {
           if (err) {
             dfd.reject(err);
             return;
           }
 
-          // return
-          dfd.resolve();
+          // update the listing data
+          fs.writeFile(projectsPath, JSON.stringify(allProjects), function(err) {
+            if (err) {
+              dfd.reject(err);
+              return;
+            }
+
+            // return
+            dfd.resolve();
+          });
         });
       });
 

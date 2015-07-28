@@ -40,7 +40,7 @@ function getJsonFile(path, type) {
 
 function compare() {
 
-  this.diffHistory = [];
+  this.loadedHistory = [];
 
   this.extractCurrentBatch = function(projectId, batchId) {
     var allHistory = getJsonFile(paths.projects + '/' + projectId + '_history.json', []);
@@ -56,25 +56,11 @@ function compare() {
   };
 
   // updates the history data
-  this.writeDiffHistory = function(diffData, compare, project, cb) {
+  this.writeDiffHistory = function(project, cb) {
     var historyPath = paths.projects + '/' + project.id + '_history.json';
-    var allHistory = getJsonFile(historyPath, []);
-    var status = this.getStatus(diffData);
-
-    allHistory.map(function(item, i) {
-      if (item.source === compare.source) {
-        allHistory[i].timestamp = (+new Date);
-        allHistory[i].status = status;
-        allHistory[i].report = {
-          analysis: diffData.analysisTime,
-          sameSize: diffData.isSameDimensions,
-          diff: diffData.misMatchPercentage
-        };
-      }
-    });
 
     // Write the updated history to file
-    fs.writeFile(historyPath, JSON.stringify(allHistory), function(err) {
+    fs.writeFile(historyPath, JSON.stringify(this.loadedHistory), function(err) {
       if (err) {
         console.log(err);
         return;
@@ -85,6 +71,28 @@ function compare() {
         cb();
       }
     });
+  };
+
+  // updates the history data
+  this.cacheDiffHistory = function(diffData, compare, cb) {
+    var status = this.getStatus(diffData);
+
+    this.loadedHistory.map(function(item, i) {
+      if (item.source === compare.source) {
+        this.loadedHistory[i].timestamp = (+new Date);
+        this.loadedHistory[i].status = status;
+        this.loadedHistory[i].report = {
+          analysis: diffData.analysisTime,
+          sameSize: diffData.isSameDimensions,
+          diff: diffData.misMatchPercentage
+        };
+      }
+    });
+
+    // success
+    if (cb) {
+      cb();
+    }
   };
 
   // compares a single image with its reference
@@ -109,18 +117,20 @@ function compare() {
 
         progress.emit('Comparing Capture Data', 1);
 
-        // update the history
-        _this.writeDiffHistory(diffData, compareData, projectData, callback);
+        // update the history cache
+        _this.cacheDiffHistory(diffData, compareData, callback);
       });
   };
 
   // loop through current batch and compare against currentReference
   this.runBatch = function(project, done) {
     var _this = this;
+    var historyPath = paths.projects + '/' + project.id + '_history.json';
     var compareBatch = this.extractCurrentBatch(project.id, project.currentBatch);
 
     // reset, so we have a clean start
-    this.diffHistory = [];
+    this.loadedHistory = [];
+    this.loadedHistory = getJsonFile(historyPath, []);
 
     // Run through the current batch
     async.each(compareBatch, function(obj, callback) {
@@ -134,10 +144,7 @@ function compare() {
       }
 
       console.log('Finished Batch');
-
-      if (done) {
-        done();
-      }
+      _this.writeDiffHistory(project, done);
     });
   };
 

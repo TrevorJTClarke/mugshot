@@ -44,12 +44,14 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * UI
     * Setup tooltips
     * Finish Runner
-      * dynamic image sets
+      * post reference/pre compare view
+      * update view after complete
     * Finish Modal
       * Compare stats in title
       * fix broken links
     * Settings Save Validation
-    * Delete project should remove history
+    * image overflow problems
+    * clear history
 
 
 #### Wishlist
@@ -60,6 +62,8 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * Run a repo
       * Choose branches to run between
   * Submit Jira ticket
+    * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
+        /jira-rest-api-tutorials/jira-rest-api-example-create-issue
   * Local no-server testing
   * Record User Actions
 
