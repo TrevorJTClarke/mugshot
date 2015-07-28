@@ -39,19 +39,15 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * Process history is reading references :/
+    * 
 
   * UI
     * Setup tooltips
     * Finish Runner
       * post reference/pre compare view
-      * update view after complete
     * Finish Modal
       * Compare stats in title
-      * fix broken links
     * image overflow problems
-    * fix runner View switch
-    * fix current batch problem
 
 
 #### Wishlist

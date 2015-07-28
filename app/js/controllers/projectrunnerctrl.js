@@ -13,7 +13,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   $scope.currentBatch = $rootScope.project.currentBatch || 0;
   $scope.progress = {
     percent: 0,
-    title: 'Starting',
+    title: 'Starting'
   };
 
   // Puts data into sorted sections
@@ -85,14 +85,17 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     return isValid;
   }
 
-  // TODO:
-  // - update UI after runner progress
   // checks for changes and updates UI accourdingly
   function checkState() {
     $scope.hasSettings = validateProject();
     $scope.hasReference = ($rootScope.project.currentReference !== null);
-    $scope.hasCompare = ($rootScope.project.currentBatch !== null && $rootScope.project.currentBatch !== 0);
     $scope.currentBatch = $rootScope.project.currentBatch;
+
+    if ($scope.runningType === 'reference') {
+      $scope.hasCompare = false;
+    } else {
+      $scope.hasCompare = ($rootScope.project.currentBatch !== null && $rootScope.project.currentBatch !== 0);
+    }
   }
 
   // grab the latest data for the project
@@ -101,6 +104,8 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
     // Set the active data based on currentBatch
     $scope.activeData = ($rootScope.project && $rootScope.project.batchHistory) ? $rootScope.project.batchHistory[$scope.currentBatch] : null;
+
+    $rootScope.$emit('SIDEPANEL:UPDATE', $rootScope.project);
   }
 
   grabLatestData();

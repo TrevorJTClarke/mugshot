@@ -26,7 +26,21 @@ function($rootScope, $scope, $state, Projects) {
 
         if (args.batchHistory[args.currentBatch]) {
           // only update totals if we have them
-          $scope.projects[idx].totals = args.batchHistory[args.currentBatch];
+          if (args.batchHistory[args.currentBatch].success) {
+            $scope.projects[idx].totals.success = args.batchHistory[args.currentBatch].success;
+          }
+
+          if (args.batchHistory[args.currentBatch].warning) {
+            $scope.projects[idx].totals.warning = args.batchHistory[args.currentBatch].warning;
+          }
+
+          if (args.batchHistory[args.currentBatch].error) {
+            $scope.projects[idx].totals.error = args.batchHistory[args.currentBatch].error;
+          }
+
+          if (args.batchHistory[args.currentBatch].views) {
+            $scope.projects[idx].totals.views = args.batchHistory[args.currentBatch].views;
+          }
         }
       }
     });

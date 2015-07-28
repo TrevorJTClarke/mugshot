@@ -60,7 +60,7 @@ function compare() {
   // updates the project stats data
   this.writeBatchStats = function(project, cb) {
     var _this = this;
-    var mainProjectPath = fileDirPrefix + 'projects.json';
+    var mainProjectPath = fileDirPrefix + '../projects.json';
     var projectPath = paths.projects + '/' + project.id + '.json';
     var mainProjects = getJsonFile(mainProjectPath, []);
 

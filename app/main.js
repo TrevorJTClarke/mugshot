@@ -76,7 +76,7 @@ app.on('ready', function() {
 
   mainWindow.loadUrl('file://' + __dirname + '/app.html');
 
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
 
   // TODO: env isnt loading the settings
   // if (env.name === 'development') {
