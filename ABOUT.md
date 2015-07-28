@@ -39,7 +39,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * 
+    *
 
   * UI
     * Setup tooltips
@@ -47,7 +47,6 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * post reference/pre compare view
     * Finish Modal
       * Compare stats in title
-    * image overflow problems
 
 
 #### Wishlist
