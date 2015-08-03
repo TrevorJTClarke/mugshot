@@ -18,6 +18,10 @@ function($stateProvider, $urlRouterProvider) {
     url: '/',
     templateUrl: 'main.html'
   })
+  .state('preferences', {
+    url: '/preferences',
+    templateUrl: 'preferences.html'
+  })
 
   /**
    * Project Routes
@@ -63,4 +67,5 @@ function($stateProvider, $urlRouterProvider) {
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
+
 }]);
