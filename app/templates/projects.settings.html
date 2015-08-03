@@ -26,13 +26,36 @@
       <input type="text" class="form-control" ng-model="project.meta.delay" placeholder="Default: 500">
     </div>
     <div class="form-group">
-      <label class="control-label">Diff Threshold (Percentage)</label>
+      <label class="control-label">Diff Threshold
+          <i class="octicon octicon-question tp-tooltip">
+          <div class="tooltip bottom">
+            <div class="tooltip-title">
+              Threshold Setting
+            </div>
+            <div class="tooltip-body">
+              Define the amount of difference that is acceptable for the project.<br><br><strong>Note:</strong> The default warning difference is between 0.05 and 2.05.
+            </div>
+          </div>
+        </i>
+      </label>
       <input type="text" class="form-control" ng-model="project.meta.misMatchThreshold" placeholder="Default: 0.1">
     </div>
   </div>
 </div>
 
-<h3 class="section-title">View Sizes <button class="btn btn-right btn-section-header" ng-click="addViewport()">Add New</button></h3>
+<h3 class="section-title">View Sizes
+  <i class="octicon octicon-question tp-tooltip">
+    <div class="tooltip bottom">
+      <div class="tooltip-title">
+        Viewport Screen Sizes
+      </div>
+      <div class="tooltip-body">
+        Define the height and width of the screens to capture.<br><br><strong>Note:</strong> Each size will capture all of the container selectors below.
+      </div>
+    </div>
+  </i>
+  <button class="btn btn-right btn-section-header" ng-click="addViewport()">Add New</button>
+</h3>
 <div class="row setting-item setting-title" ng-if="project.viewports.length > 0">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <label for="projectTitle" class="col-sm-2 control-label">View Title</label>
@@ -70,7 +93,19 @@
   </div>
 </div>
 
-<h3 class="section-title">Selectors <button class="btn btn-right btn-section-header" ng-click="addSelector()">Add New</button></h3>
+<h3 class="section-title">Selectors
+  <i class="octicon octicon-question tp-tooltip">
+    <div class="tooltip bottom">
+      <div class="tooltip-title">
+        Capture Selectors
+      </div>
+      <div class="tooltip-body">
+        Define the area to capture based on DOM selection strings, similar to jQuery selectors.<br>Options:<br><strong>Container, Hide, Remove</strong><br><br> Example:<br><strong>"body .menu #menu-item-1"</strong>
+      </div>
+    </div>
+  </i>
+  <button class="btn btn-right btn-section-header" ng-click="addSelector()">Add New</button>
+</h3>
 <div class="row" ng-if="project.selectors.length > 0">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <label for="projectTitle" class="col-sm-2 control-label">Query String</label>
@@ -102,7 +137,16 @@
   </div>
 </div>
 
-<h3 class="section-title">Cookies <button class="btn btn-right btn-section-header" ng-click="addCookie()">Add New</button></h3>
+<h3 class="section-title">Cookies
+  <i class="octicon octicon-question tp-tooltip">
+    <div class="tooltip bottom">
+      <div class="tooltip-body">
+        All cookies will be stored before screens captured.
+      </div>
+    </div>
+  </i>
+  <button class="btn btn-right btn-section-header" ng-click="addCookie()">Add New</button>
+</h3>
 <div class="row" ng-if="project.cookies.length > 0">
   <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <label for="projectTitle" class="col-sm-2 control-label">Name</label>

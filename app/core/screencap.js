@@ -1,4 +1,5 @@
 var fs    = require('fs');
+var BW = require('browser-window');
 var spawn = require('child_process').spawn;
 var paths = require('./paths')(__dirname);
 var projects = require('./projects');
