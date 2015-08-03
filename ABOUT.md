@@ -39,7 +39,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    *
+    * use diff threshold from settings
 
   * UI
     * Setup tooltips
@@ -52,6 +52,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### Wishlist
 
   * AWS S3 Integration
+    * Upload, Sync, Load/Save projects
   * Github Integration
     * Project/User sharing (Auth + Sessions)
     * Run a repo
