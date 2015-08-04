@@ -20,7 +20,8 @@ function($stateProvider, $urlRouterProvider) {
   })
   .state('preferences', {
     url: '/preferences',
-    templateUrl: 'preferences.html'
+    templateUrl: 'preferences.html',
+    controller: 'PreferencesCtrl'
   })
 
   /**

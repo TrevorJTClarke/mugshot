@@ -48,9 +48,6 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * Finish Modal
       * Compare stats in title
 
-
-#### Wishlist
-
   * AWS S3 Integration
     * Upload, Sync, Load/Save projects
   * Settings:
@@ -62,6 +59,10 @@ This app is focussed on delivering a simple UI to visual regression testing.
         * region
         * bucket
         * Auto-sync
+
+
+#### Wishlist
+
   * Github Integration
     * Project/User sharing (Auth + Sessions)
     * Run a repo

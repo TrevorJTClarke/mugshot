@@ -2,7 +2,7 @@
 
   <div class="header">
     <h1>Preferences</h1>
-    <button class="btn btn-right" ng-click="">Save</button>
+    <button class="btn btn-right" ng-click="save()">Save</button>
   </div>
 
   <div class="settings-section">
@@ -11,14 +11,14 @@
       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
         <div class="form-group">
           <label class="control-label">Access Key ID</label>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" ng-model="awsConfig.accessKeyId">
         </div>
         <div class="form-group">
           <label class="control-label">Secret Access Key</label>
-          <input type="password" class="form-control">
+          <input type="password" class="form-control" ng-model="awsConfig.secretAccessKey">
         </div>
         <div class="form-group checkbox">
-          <input type="checkbox" class="form-control">
+          <input type="checkbox" class="form-control" ng-model="awsConfig.autosync">
           <label class="control-label">Auto-Sync Projects</label>
         </div>
       </div>
