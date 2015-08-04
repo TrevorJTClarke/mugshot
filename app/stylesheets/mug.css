@@ -2037,6 +2037,30 @@ a {
       border-color: #213435;
       color: #213435; }
 
+.preferences .header {
+  height: 28px;
+  min-height: 28px;
+  position: relative; }
+  .preferences .header .btn-right {
+    top: 0;
+    right: 0;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 5px 14px 6px; }
+
+.preferences .row {
+  margin-left: 0;
+  margin-right: 0; }
+
+.preferences .settings-section {
+  margin: 40px 0 20px; }
+  .preferences .settings-section h4 {
+    margin-bottom: 15px; }
+  .preferences .settings-section .checkbox input[type='checkbox'] {
+    margin: -8px 0 0 -2px; }
+  .preferences .settings-section .checkbox label {
+    font-weight: 700; }
+
 /**
  * Settings Pages
  */

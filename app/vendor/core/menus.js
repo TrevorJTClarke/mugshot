@@ -35,7 +35,7 @@ var mainMenu = [{
 }, {
   label: 'View',
   submenu: [
-    { label: 'Reload', click: function() { console.log('TODO: Reload View') }, accelerator: 'Command+R' },
+    // { label: 'Reload', click: function() { console.log('TODO: Reload View') }, accelerator: 'Command+R' },
     { label: 'Toggle Full Screen', click: function() { console.log('TODO: Toggle Full Screen') }, accelerator: 'Command+Control+F' }
   ]
 }, {
