@@ -106,8 +106,8 @@ var transpileTask = function() {
   .pipe(gulp.dest(destDir.path()));
 };
 
-gulp.task('transpile', ['clean'], transpileTask);
-gulp.task('transpile-watch', transpileTask);
+// gulp.task('transpile', ['clean'], transpileTask);
+// gulp.task('transpile-watch', transpileTask);
 
 gulp.task('sass', function() {
   gulp.src('./app/stylesheets/**/*.scss')
@@ -151,6 +151,6 @@ gulp.task('watch', function() {
   gulp.watch('app/stylesheets/**/*.scss', ['sass']);
 });
 
-gulp.task('build', ['transpile', 'sass', 'copy', 'finalize']);
+gulp.task('build', ['sass', 'copy', 'finalize']);
 
 gulp.task('dev', ['sass', 'uglify', 'templates', 'watch']);

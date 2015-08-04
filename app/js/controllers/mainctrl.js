@@ -17,7 +17,10 @@ function($rootScope, $scope, $state, Config, Projects) {
   };
 
   ipc.on('NAVIGATE:TO', function(args) {
+    if (!args || !args.location) {return;}
+
     console.log('NAVIGATE:TO', args);
+    $state.go(args.location);
   });
 
 }]);
