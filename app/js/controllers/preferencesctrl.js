@@ -20,7 +20,7 @@ function($rootScope, $scope, $state, Projects) {
   };
 
   $scope.syncNow = function() {
-    Projects.syncProject();
+    Projects.syncProject($rootScope.project.id);
   };
 
 }]);

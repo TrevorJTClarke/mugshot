@@ -50,30 +50,26 @@ var AwsProto = function() {
 
   /**
    * pass in current batch of files to upload
-   * TODO: setup array uploads
    */
-  this.upload = function(folder, files) {
-    if (!folder || !files) { throw new Error('Folder Name and File required!'); }
+  this.upload = function(files, folder) {
+    if (!files) { throw new Error('Files required!'); }
 
     var _this = this;
 
     function createFileUpload(file) {
       var dfd = q.defer();
       var params = {};
-      var fileName = file.split('/');
 
       // setup base params
       params.ACL = 'public-read';
       params.Bucket = _this.config.bucket;
-      params.Key = folder + '/' + fileName[fileName.length - 1];
-      params.Body = fs.createReadStream(file);
+      params.Key = (folder) ? folder + '/' + file.key : file.key;
+      params.Body = fs.createReadStream(file.path);
 
       _this.instance.upload(params, function(err, data) {
         if (err) {
-          console.log('Error uploading data: ', err);
           dfd.reject(err);
         } else {
-          console.log('Successfully uploaded ', data);
           dfd.resolve(data.Location);
         }
       });
@@ -90,10 +86,6 @@ var AwsProto = function() {
 
     // process all the files, then return the upload refs
     return q.all(promiseFiles);
-
-    // .spread(function() {
-    //   return arguments; // is this needed?
-    // });
   };
 };
 

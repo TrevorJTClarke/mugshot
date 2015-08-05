@@ -315,15 +315,40 @@ function($q) {
      * pass in a projectId, then it will read the project and its current batch of files to upload
      * once complete, it will clean out any local screens and replace with aws resources
      */
-    syncProject: function() {
+    syncProject: function(id) {
+      if (!id) {return;}
+
+      var project = this.getById(id);
+      var projectFiles = this.getTypeById(id, 'history');
+      var readyFiles = [];
+      console.log('starting sync', id);
+
+      // pull out files that are already inside aws, prep for upload
+      for (var i = 0; i < projectFiles.length; i++) {
+        var tmpFile = projectFiles[i];
+        if (tmpFile.source.search('amazon') === -1) {
+          var src = tmpFile.source;
+          var type = tmpFile.type;
+          var path = __dirname + '/screens/' + type + '/' + project.id + '/' + src;
+          readyFiles.push({ key: type + '/' + src, path: path });
+        }
+      }
+
+      console.log('readyFiles', readyFiles);
+
+      // upload files
+      AWS.init()
+        .upload(readyFiles, project.id)
+        .then(function(res) {
+          console.log('AWS:res', res);
+        }, function(err) {
+          console.log('AWS:err', err);
+        });
+
       // TODO:
-      // - get aws config
-      // - read project files
-      // - initalize
-      // - **create project bucket if no bucket
-      // - upload files
       // - upload project files
-      // - clean working directory, and update UI with aws resources
+      // - clean local images
+      // - update UI with aws resources
     }
 
   };
