@@ -48,19 +48,20 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * Compare stats in title
     * Status Center (show syncing, paused, progress)
 
-  * AWS Load/Save projects
-  * Project AWS Auto-sync
+  * update all image refs
+  * Project Setting AWS Auto-sync
 
 
 #### Wishlist
 
+  * Submit Jira ticket
+    * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
+      /jira-rest-api-tutorials/jira-rest-api-example-create-issue
+  * Amplitude Integration
   * Github Integration
     * Project/User sharing (Auth + Sessions)
     * Run a repo
       * Choose branches to run between
-  * Submit Jira ticket
-    * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
-        /jira-rest-api-tutorials/jira-rest-api-example-create-issue
   * Local no-server testing
   * Record User Actions
 
