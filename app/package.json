@@ -1,8 +1,8 @@
 {
-  "name": "mug",
-  "productName": "Mug",
+  "name": "mugshot",
+  "productName": "Mugshot",
   "identifier": "com.sum37apps.mug",
-  "description": "Mug (short for mugshot), a simple app for visual regression testing",
+  "description": "Mugshot, a simple app for visual regression testing",
   "version": "0.1.0",
   "author": "Trevor Clarke @trevorjtclarke",
   "main": "main.js",

@@ -46,9 +46,10 @@ function($timeout, $compile, $rootScope) {
 
       // set the active item with correct paths
       function setActiveItem(data) {
-        $scope.compareItem.a = 'screens/reference/' + $rootScope.project.id + '/' + data.source.replace($rootScope.project.currentBatch + '.png', $rootScope.project.currentReference + '.png');
-        $scope.compareItem.b = 'screens/compare/' + $rootScope.project.id + '/' + data.source;
-        $scope.compareItem.c = 'screens/compare/' + $rootScope.project.id + '/' + data.source.replace('.png', '_diff.png');
+        var imageSrc = (!data.remoteSource) ? data.source : data.remoteSource;
+        $scope.compareItem.a = (!data.remoteSource) ? 'screens/reference/' + $rootScope.project.id + '/' + imageSrc.replace($rootScope.project.currentBatch + '.png', $rootScope.project.currentReference + '.png') : imageSrc;
+        $scope.compareItem.b = (!data.remoteSource) ? 'screens/compare/' + $rootScope.project.id + '/' + imageSrc : imageSrc;
+        $scope.compareItem.c = (!data.remoteSource) ? 'screens/compare/' + $rootScope.project.id + '/' + imageSrc.replace('.png', '_diff.png') : imageSrc;
       }
 
       // Choose the viewer layout

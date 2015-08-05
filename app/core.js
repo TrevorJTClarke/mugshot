@@ -1,6 +1,6 @@
 var remote = require('remote');
 var ipc = require('ipc');
-var window = remote.getCurrentWindow();
+var w = remote.getCurrentWindow();
 
 /**
  * Quick Frame Buttons
@@ -13,7 +13,7 @@ var window = remote.getCurrentWindow();
 
     btn.addEventListener('click', function(e) {
       var btnArg = e.currentTarget.attributes['core-frame'].value;
-      window[btnArg]();
+      w[btnArg]();
     }, false);
   }
 })();

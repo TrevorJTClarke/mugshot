@@ -1,3 +1,5 @@
+var ipc = require('ipc');
+
 MUG.controller('MainCtrl',
 ['$rootScope', '$scope', '$state', 'Config', 'Projects',
 function($rootScope, $scope, $state, Config, Projects) {
@@ -14,10 +16,11 @@ function($rootScope, $scope, $state, Config, Projects) {
     });
   };
 
-  // $rootScope.$emit('ALERT:FIRE', {  title: 'Hey there, Im an alert!!', dur: 5, type: 'success' });
-  //
-  // setTimeout(function() {
-  //   $rootScope.$emit('ALERT:FIRE', {  title: 'Hey there, Im an error!!', dur: 5, type: 'error', icon: 'stop' });
-  // }, 3000);
+  ipc.on('NAVIGATE:TO', function(args) {
+    if (!args || !args.location) {return;}
+
+    console.log('NAVIGATE:TO', args);
+    $state.go(args.location);
+  });
 
 }]);

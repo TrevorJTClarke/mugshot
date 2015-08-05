@@ -55,7 +55,8 @@
       <ul class="modal-carousel" style="width: {{((viewer.items.length + 1) * 160) + 'px' || '100%'}} !important;">
         <li class="carousel-thumb" ng-repeat="item in viewer.items" ng-class="{ active: activeItem.id == item.id }" ng-click="goToIndex($index)">
           <i class="octicon" ng-class="{'octicon-tag': item.type == 'reference', 'octicon-check thumb-success': item.status == 'passed', 'octicon-alert thumb-warning': item.status == 'warning', 'octicon-stop thumb-error': item.status == 'failed'}"></i>
-          <img ng-src="screens/compare/{{project.id}}/{{item.source}}" src="images/broken.png">
+          <img ng-if="!item.remoteSource" ng-src="screens/compare/{{project.id}}/{{item.source}}" src="images/broken.png">
+          <img ng-if="item.remoteSource" ng-src="{{item.remoteSource}}" src="images/broken.png">
         </li>
       </ul>
     </div>

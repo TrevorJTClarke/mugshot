@@ -42,7 +42,8 @@
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <ul class="film-strip">
               <li class="film-thumb" ng-repeat="item in batch.items">
-                <img ng-src="screens/compare/{{project.id}}/{{item.source}}" src="images/broken.png">
+                <img ng-if="!item.remoteSource" ng-src="screens/compare/{{project.id}}/{{item.source}}" src="images/broken.png">
+                <img ng-if="item.remoteSource" ng-src="{{item.remoteSource}}" src="images/broken.png">
               </li>
             </ul>
           </div>

@@ -49,6 +49,21 @@ function($rootScope, $scope, $state, Projects) {
     }, 200);
   };
 
+  // sync this project to AWS
+  $scope.syncNow = function() {
+    $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Starting', dur: 5, type: 'info' });
+
+    Projects.sync($rootScope.project.id)
+      .then(function(res) {
+        $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Complete', dur: 5, type: 'success', icon: 'check' });
+      }
+
+      , function(err) {
+        console.log('syncNow err', err);
+        $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Failed', dur: 5, type: 'error', icon: 'stope' });
+      });
+  };
+
   // revert the current project
   $scope.cancelSave = function() {
     var sure = confirm('Are you sure you want to clear all your changes?');
@@ -71,7 +86,7 @@ function($rootScope, $scope, $state, Projects) {
           $state.go('main');
           $rootScope.project = {};
           $scope.hasChanges = false;
-          $rootScope.$broadcast('ALERT:FIRE', { title: "Project Removed Successfully", dur: 5, type: "success" });
+          $rootScope.$broadcast('ALERT:FIRE', { title: 'Project Removed Successfully', dur: 5, type: 'success' });
         },
 
         function(err) {
@@ -139,11 +154,11 @@ function($rootScope, $scope, $state, Projects) {
   $scope.clearHistory = function() {
     Projects.clearHistory($rootScope.project)
       .then(function(res) {
-        $rootScope.$broadcast('ALERT:FIRE', { title: "Cleared All History!", dur: 5, type: "success", icon: "history" });
+        $rootScope.$broadcast('ALERT:FIRE', { title: 'Cleared All History!', dur: 5, type: 'success', icon: 'history' });
       }
 
       , function(err) {
-        $rootScope.$broadcast('ALERT:FIRE', { title: "Error Occurred! Please try again.", dur: 5, type: "error", icon: "stop" });
+        $rootScope.$broadcast('ALERT:FIRE', { title: 'Error Occurred! Please try again.', dur: 5, type: 'error', icon: 'stop' });
       });
   };
 

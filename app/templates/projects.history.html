@@ -33,7 +33,8 @@
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
         <div class="banner-preview" ng-click="previewItem(item)">
-          <img ng-src="screens/{{item.type}}/{{project.id}}/{{item.source}}" title="screens/{{item.type}}/{{project.id}}/{{item.source}}" src="images/broken.png">
+          <img ng-if="!item.remoteSource" ng-src="screens/{{item.type}}/{{project.id}}/{{item.source}}" title="screens/{{item.type}}/{{project.id}}/{{item.source}}" src="images/broken.png">
+          <img ng-if="item.remoteSource" ng-src="{{item.remoteSource}}" title="{{item.remoteSource}}" src="images/broken.png">
         </div>
       </div>
     </div>

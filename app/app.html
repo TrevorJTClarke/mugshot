@@ -3,7 +3,7 @@
 <head>
 <base href="">
 <meta charset="utf-8">
-<title>Mug</title>
+<title>Mugshot</title>
 
 <link href="stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="stylesheets/mug.css" rel="stylesheet" type="text/css">
@@ -11,7 +11,6 @@
 <script src="vendor/angular-ui-router.min.js"></script>
 <script src="vendor/resemble.js"></script>
 
-<!-- <script src="vendor/electron_boilerplate/env_config.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/context_menu.js"></script> -->
 <!-- <script src="vendor/electron_boilerplate/external_links.js"></script> -->
 
@@ -67,7 +66,7 @@
               <span class="label label-success" ng-if="project.totals.success"><i class="octicon octicon-diff-added"></i> {{project.totals.success}}</span>
               <span class="label label-warning" ng-if="project.totals.warning"><i class="octicon octicon-diff-ignored"></i> {{project.totals.warning}}</span>
               <span class="label label-error" ng-if="project.totals.error"><i class="octicon octicon-diff-removed"></i> {{project.totals.error}}</span>
-              <span class="label" ng-if="project.totals.views"><i class="octicon octicon-eye"></i> {{project.totals.views}} Views</span>
+              <span class="label" ng-if="project.totals.views"><i class="octicon octicon-eye"></i> {{project.totals.views}}</span>
             </p>
             <p class="list-group-item-text" ng-hide="project.totals.success || project.totals.warning || project.totals.error || project.totals.views">
               <span class="label"><i class="octicon octicon-checklist"></i> Ready to test!</span>
@@ -86,5 +85,17 @@
 <script src="core.js"></script>
 <script src="dist/js/templates.js"></script>
 <script src="dist/js/mug.js"></script>
+
+<script type="text/javascript">
+  (function(e,t){var r=e.amplitude||{};var n=t.createElement("script");n.type="text/javascript";
+  n.async=true;n.src="https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-2.2.0-min.gz.js";
+  var s=t.getElementsByTagName("script")[0];s.parentNode.insertBefore(n,s);r._q=[];
+  function a(e){r[e]=function(){r._q.push([e].concat(Array.prototype.slice.call(arguments,0)));
+  }}var i=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties"];
+  for(var o=0;o<i.length;o++){a(i[o])}e.amplitude=r})(window,document);
+
+  amplitude.init("b886346cf8ea47b90ed8149be68eb075");
+  amplitude.logEvent("MS:Initialized");
+</script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 var fs = require('fs');
+var AWS = require('./vendor/core/aws');
 
 MUG.factory('Projects',
 ['$q',
@@ -76,6 +77,37 @@ function($q) {
     }
 
     return JSON.parse(file);
+  }
+
+  // sets up a promise driven file write
+  function promiseWrite(filePath, data) {
+    var _q = $q.defer();
+
+    fs.writeFile(filePath, JSON.stringify(data), function(err) {
+      if (err) {
+        _q.reject(err);
+        return;
+      }
+      _q.resolve();
+    });
+
+    return _q.promise;
+  }
+
+  // sets up a promise driven file delete
+  function promiseRemove(path) {
+    var _z = $q.defer();
+
+    // fs.unlink
+    fs.unlink(path, function(err) {
+      if (err) {
+        _z.reject(err);
+        return;
+      }
+      _z.resolve();
+    });
+
+    return _z.promise;
   }
 
   return {
@@ -308,6 +340,104 @@ function($q) {
       });
 
       return dfd.promise;
+    },
+
+    /**
+     * pass in a projectId, then it will read the project and its current batch of files to upload
+     * once complete, it will clean out any local screens and replace with aws resources
+     */
+    sync: function(id) {
+      if (!id) {return;}
+
+      var _this = this;
+      var d = $q.defer();
+      var project = this.getById(id);
+      var projectFiles = this.getTypeById(id, 'history');
+      var readyFiles = [];
+
+      // pull out files that are already inside aws, prep for upload
+      for (var i = 0; i < projectFiles.length; i++) {
+        var tmpFile = projectFiles[i];
+        if (tmpFile.source.search('amazon') === -1) {
+          var src = tmpFile.source;
+          var type = tmpFile.type;
+          var path = __dirname + '/screens/' + type + '/' + project.id + '/' + src;
+          readyFiles.push({ key: type + '/' + src, path: path });
+        }
+      }
+
+      // upload files
+      AWS.init()
+        .upload(readyFiles, project.id)
+        .then(function(res) {
+
+          // do post-process action
+          _this.cleanAfterSync(project, res).then(d.resolve, d.reject);
+        }, function(err) {
+          d.reject(err);
+        });
+
+      return d.promise;
+    },
+
+    /**
+     * clean local images, update history with aws resources, returns the updates
+     */
+    cleanAfterSync: function (project, newRefs) {
+      var dfdd = $q.defer();
+      var historyData = getJsonFile(projectFilesPath + project.id + '_history.json', []);
+      var updatedRemoteFiles = [];
+      var queuePromises = [];
+      project.updatedAt = (+new Date());
+
+      // loop through new files
+      for (var i = 0; i < newRefs.length; i++) {
+        var tmpSrc = newRefs[i];
+        var tmpRef = tmpSrc.split('/');
+        var tmpType = tmpRef[tmpRef.length - 2];
+        var tmpAlias = tmpRef[tmpRef.length - 1];
+
+        historyData.map(function(item, idx) {
+
+          // update history ref
+          if (item.source === tmpAlias) {
+            delete historyData[idx].source;
+            historyData[idx].remoteSource = newRefs[i];
+
+            var remRefPath = __dirname + '/screens/' + tmpType + '/' + project.id + '/' + tmpAlias;
+            var remRef = promiseRemove(remRefPath);
+            queuePromises.push(remRef);
+
+            // make sure to remove the diff also
+            if (tmpType === 'compare') {
+              var remRefDiff = promiseRemove(remRefPath.replace('.', '_diff.'));
+              queuePromises.push(remRefDiff);
+            }
+          }
+        });
+      }
+
+      // save history & project
+      var projectFile = __dirname + '/projects/' + project.id + '.json';
+      var projectHistoryFile = projectFile.replace('.json', '_history.json');
+      var projectWrite = promiseWrite(projectFile, project);
+      var projectHistoryWrite = promiseWrite(projectHistoryFile, historyData);
+      queuePromises.unshift(projectWrite);
+      queuePromises.unshift(projectHistoryWrite);
+
+      // add project files to the upload readiness
+      updatedRemoteFiles.push({ key: project.id, path: projectFile });
+      updatedRemoteFiles.push({ key: project.id + '_history', path: projectHistoryFile });
+
+      // upload updated history & project
+      var awsUpload = AWS.init().upload(updatedRemoteFiles, project.id);
+      queuePromises.unshift(awsUpload);
+
+      // do all promise operations
+      $q.all(queuePromises).then(dfdd.resolve, dfdd.reject);
+
+      return dfdd.promise;
     }
+
   };
 }]);

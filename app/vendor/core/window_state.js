@@ -1,7 +1,3 @@
-// Simple module to help you remember the size and position of windows.
-// Can be used for more than one window, just construct many
-// instances of it and give each different name.
-
 'use strict';
 
 var app = require('app');
@@ -10,7 +6,7 @@ var jetpack = require('fs-jetpack');
 module.exports = function(name, defaults) {
 
   var userDataDir = jetpack.cwd(app.getPath('userData'));
-  var stateStoreFile = 'window-state-' + name +'.json'
+  var stateStoreFile = 'window-state-' + name +'.json';
 
   var state = userDataDir.read(stateStoreFile, 'json') || {
     width: defaults.width,

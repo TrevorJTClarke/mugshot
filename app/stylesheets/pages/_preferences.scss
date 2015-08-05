@@ -1,0 +1,39 @@
+.preferences {
+
+  .header {
+    height: 28px;
+    min-height: 28px;
+    position: relative;
+
+    .btn-right {
+      top: 0;
+      right: 0;
+      font-size: 16px;
+      line-height: 16px;
+      padding: 5px 14px 6px;
+    }
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .settings-section {
+    margin: 40px 0 20px;
+
+    h4 {
+      margin-bottom: 15px;
+    }
+
+    .checkbox {
+      input[type='checkbox'] {
+          margin: -8px 0 0 -2px;
+      }
+
+      label {
+        font-weight: 700;
+      }
+    }
+  }
+}

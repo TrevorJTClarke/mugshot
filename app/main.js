@@ -8,7 +8,8 @@ var BrowserWindow = require('browser-window');
 var paths = require('../app/core/paths')(__dirname);
 var screener = require('../app/core/screencap');
 var compare = require('../app/core/compare');
-var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
+var windowStateKeeper = require('./vendor/core/window_state');
+var windowMenus = require('./vendor/core/menus');
 
 // adds gulp tasks available
 require('require-dir')(paths.core, { recurse: true }); //paths.core
@@ -74,6 +75,7 @@ app.on('ready', function() {
     mainWindow.maximize();
   }
 
+  windowMenus.setMainMenu();
   mainWindow.loadUrl('file://' + __dirname + '/app.html');
 
   mainWindow.openDevTools();
@@ -86,6 +88,10 @@ app.on('ready', function() {
 
   mainWindow.on('close', function() {
     mainWindowState.saveState(mainWindow);
+  });
+
+  mainWindow.on('show-settings', function(e, cmd) {
+    console.log('application:show-settings', cmd);
   });
 
 });
