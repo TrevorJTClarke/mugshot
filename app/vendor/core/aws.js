@@ -1,6 +1,7 @@
 /**
  * AWS Module for project sync
  */
+var q = require('q');
 var fs = require('fs');
 var AWS = require('aws-sdk');
 var awsConfigPath = __dirname + '/config/aws.json';
@@ -24,8 +25,8 @@ function getJsonFile(path, type) {
 
 var AwsProto = function() {
 
+  this.instance = {};
   this.config = {};
-  this.projectConfig = {};
 
   /**
    * store the AWS credentials for later use
@@ -38,43 +39,61 @@ var AwsProto = function() {
   /**
    * initialize S3 obj with config
    */
-  this.initialize = function() {
+  this.init = function() {
     var config = this.getConfig();
-    var bucketData = this.projectConfig;
 
-    // Setup the merged config
-    config.region = bucketData.region || config.region;
+    // store the instance
+    this.instance = new AWS.S3(config);
 
-    return new AWS.S3(config);
+    return this;
   };
 
   /**
-   * clean working directory, and update UI with aws resources
+   * pass in current batch of files to upload
+   * TODO: setup array uploads
    */
-  this.cleanup = function() {
-    // TODO:
-  };
+  this.upload = function(folder, files) {
+    if (!folder || !files) { throw new Error('Folder Name and File required!'); }
 
-  /**
-   * read project files and its current batch of files
-   */
-  this.getProjectFiles = function(projectId) {
-    // TODO:
-  };
+    var _this = this;
 
-  /**
-   * pass in a projectId, then it will read the project and its current batch of files to upload
-   * once complete, it will clean out any local screens and replace with aws resources
-   */
-  this.upload = function(projectId) {
-    // TODO:
-    // - get aws config
-    // - read project files
-    // - initalize
-    // - **create project bucket if no bucket
-    // - upload files
-    // - upload project files
-    // - clean working directory, and update UI with aws resources
+    function createFileUpload(file) {
+      var dfd = q.defer();
+      var params = {};
+      var fileName = file.split('/');
+
+      // setup base params
+      params.ACL = 'public-read';
+      params.Bucket = _this.config.bucket;
+      params.Key = folder + '/' + fileName[fileName.length - 1];
+      params.Body = fs.createReadStream(file);
+
+      _this.instance.upload(params, function(err, data) {
+        if (err) {
+          console.log('Error uploading data: ', err);
+          dfd.reject(err);
+        } else {
+          console.log('Successfully uploaded ', data);
+          dfd.resolve(data.Location);
+        }
+      });
+
+      return dfd.promise;
+    }
+
+    // Setup files into promises
+    var promiseFiles = [];
+    files.map(function(file, idx) {
+      var promFile = createFileUpload(file);
+      promiseFiles.push(promFile);
+    });
+
+    // process all the files, then return the upload refs
+    return q.all(promiseFiles);
+
+    // .spread(function() {
+    //   return arguments; // is this needed?
+    // });
   };
 };
 
@@ -100,9 +119,9 @@ var AwsPublicProto = function() {
   };
 };
 
-AwsPublicProto.prototype.upload = function(projectId) {
+AwsPublicProto.prototype.init = function() {
   var s3Temp = new AwsProto();
-  return s3Temp.upload(projectId);
+  return s3Temp.init();
 };
 
 module.exports = new AwsPublicProto();

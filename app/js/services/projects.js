@@ -1,4 +1,5 @@
 var fs = require('fs');
+var AWS = require('./vendor/core/aws');
 
 MUG.factory('Projects',
 ['$q',
@@ -308,6 +309,26 @@ function($q) {
       });
 
       return dfd.promise;
+    },
+
+    /**
+     * pass in a projectId, then it will read the project and its current batch of files to upload
+     * once complete, it will clean out any local screens and replace with aws resources
+     */
+    syncProject: function() {
+      // TODO:
+      // - get aws config
+      // - read project files
+      // - initalize
+      // - **create project bucket if no bucket
+      // - upload files
+      // - upload project files
+      // - clean working directory, and update UI with aws resources
     }
+
   };
 }]);
+
+// var file = __dirname + '/screens/compare/1KNspdPuCeJm/detailwrapper_1440-1224_1_diff.png';
+// console.log('filessss', file);
+// AWS.init().upload('1KNspdPuCeJm/compare', file);
