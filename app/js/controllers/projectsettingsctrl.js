@@ -49,6 +49,11 @@ function($rootScope, $scope, $state, Projects) {
     }, 200);
   };
 
+  // sync this project to AWS
+  $scope.syncNow = function() {
+    Projects.syncProject($rootScope.project.id);
+  };
+
   // revert the current project
   $scope.cancelSave = function() {
     var sure = confirm('Are you sure you want to clear all your changes?');

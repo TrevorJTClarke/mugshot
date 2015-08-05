@@ -315,13 +315,14 @@ function($q) {
      * pass in a projectId, then it will read the project and its current batch of files to upload
      * once complete, it will clean out any local screens and replace with aws resources
      */
-    syncProject: function(id) {
+    sync: function(id) {
       if (!id) {return;}
 
+      var _this = this;
+      var d = $q.defer();
       var project = this.getById(id);
       var projectFiles = this.getTypeById(id, 'history');
       var readyFiles = [];
-      console.log('starting sync', id);
 
       // pull out files that are already inside aws, prep for upload
       for (var i = 0; i < projectFiles.length; i++) {
@@ -334,21 +335,39 @@ function($q) {
         }
       }
 
-      console.log('readyFiles', readyFiles);
-
       // upload files
       AWS.init()
         .upload(readyFiles, project.id)
         .then(function(res) {
           console.log('AWS:res', res);
+
+          // do post-process action
+          _this.cleanAfterSync(project, res).then(d.resolve, d.reject);
         }, function(err) {
-          console.log('AWS:err', err);
+          d.reject(err);
         });
 
+      return d.promise;
+    },
+
+    /**
+     * clean local images, update history with aws resources, returns the updates
+     */
+    cleanAfterSync: function (project, newRefs) {
+      console.log('starting cleanAfterSync', project.id);
+
       // TODO:
-      // - upload project files
-      // - clean local images
-      // - update UI with aws resources
+      // loop through new files
+      //    update history ref
+      //    remove local file
+      // save history & project
+      // upload updated history & project
+      // return
+
+      // add project files to the upload readiness
+      // readyFiles.push({ key: project.id, path: __dirname + '/projects/' + project.id + '.json' });
+      // readyFiles.push({ key: project.id + '_history', path: __dirname + '/projects/' + project.id + '_history.json' });
+
     }
 
   };

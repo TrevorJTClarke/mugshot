@@ -42,23 +42,14 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * use diff threshold from settings
 
   * UI
-    * Setup tooltips
     * Finish Runner
       * post reference/pre compare view
     * Finish Modal
       * Compare stats in title
+    * Status Center (show syncing, paused, progress)
 
-  * AWS S3 Integration
-    * Upload, Sync, Load/Save projects
-  * Settings:
-    * AWS:
-      * KEY, Secret, region
-      * Auto-sync project
-    * Project
-      * AWS:
-        * region
-        * bucket
-        * Auto-sync
+  * AWS Load/Save projects
+  * Project AWS Auto-sync
 
 
 #### Wishlist
@@ -93,3 +84,6 @@ then I test the command
 then I know that the only way it could work is if its using my version
 
 __dirname+'/../node/bin'
+
+
+electron-packager . 'MyApp' --platform=darwin --arch=x64 --version=0.29.2 --ignore=node_modules/electron-* --ignore=node_modules/gulp* --ignore=bower_components --ignore=client && cp atom.icns 'MyApp-darwin-x64/MyApp.app/Contents/Resources/atom.icns'
