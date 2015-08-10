@@ -126,6 +126,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
     $scope.runningType = 'compare';
     $scope.processing = true;
+
+    setTimeout(function() {
+      $rootScope.$emit('PRELOADER:ON');
+    }, 10);
+
     ipc.send('RUNNER:FIRE', { type: 'compare', projectId: $rootScope.project.id });
   };
 
@@ -139,6 +144,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     $scope.processing = true;
     $scope.runningType = 'reference';
     $scope.hasCompare = false;
+
+    setTimeout(function() {
+      $rootScope.$emit('PRELOADER:ON');
+    }, 10);
+
     ipc.send('RUNNER:FIRE', { type: 'reference', projectId: $rootScope.project.id });
   };
 
@@ -148,9 +158,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     // Write the progress to UI
     $scope.progress.percent = parseInt(args.percent, 10);
     $scope.progress.title = (args.msg) ? args.msg : $scope.progress.title;
+
+    $rootScope.$emit('PRELOADER:UPDATE', args);
   }
 
-  // TODO: signal UI of changes
+  // signal UI of changes
   function runnerComplete() {
     grabLatestData();
     checkState();

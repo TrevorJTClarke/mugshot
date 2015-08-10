@@ -47,13 +47,12 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * Finish Modal
       * Compare stats in title
     * Status Center (show syncing, paused, progress)
-
-  * update all image refs
   * Project Setting AWS Auto-sync
 
 
 #### Wishlist
 
+  * Selenium webdriver (IE, FF, SF, CH)
   * Submit Jira ticket
     * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
       /jira-rest-api-tutorials/jira-rest-api-example-create-issue

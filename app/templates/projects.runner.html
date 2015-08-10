@@ -12,9 +12,7 @@
 
   <div class="runner-section" ng-if="processing">
     <div class="runner-loader">
-      <div class="preloader loading">
-        <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span> <span class="slice"></span>
-      </div>
+      <preloader></preloader>
       <div class="loader-title">
         <h2>{{progress.title}}</h2>
         <small>{{progress.percent | number:0}}% Complete</small>
