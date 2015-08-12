@@ -4,7 +4,6 @@
   color: $grey01;
   display: block;
   max-width: none;
-  width: 185px;
   opacity: 0;
   padding:8px 10px 10px;
   position: absolute;
@@ -12,7 +11,9 @@
   font: normal 12px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
   text-align: left;
   z-index: 1070;
-  transition: opacity 160ms ease-in-out;
+  // transition: opacity 160ms ease-in-out, height 10ms 190ms ease-in-out, width 10ms 190ms ease-in-out;
+  height: 0;
+  overflow: hidden;
 
   &.in {
     opacity: 1;
@@ -70,6 +71,9 @@
   &:hover {
     .tooltip {
       opacity: 1;
+      width: 185px;
+      height: auto;
+      overflow: visible;
     }
   }
 }

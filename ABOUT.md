@@ -48,6 +48,9 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * Compare stats in title
     * Status Center (show syncing, paused, progress)
   * Project Setting AWS Auto-sync
+  * AWS Project settings/history sync
+  * clear history images
+  * fix release dependencies
 
 
 #### Wishlist
@@ -63,6 +66,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * Choose branches to run between
   * Local no-server testing
   * Record User Actions
+  * Capture Console Logger
 
 
 #### Helpful

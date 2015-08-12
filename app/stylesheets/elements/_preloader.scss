@@ -1,0 +1,20 @@
+/**
+ * Preloader
+ */
+.preloader{
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  width: 150px;
+  height: auto;
+  margin-left: -75px;
+
+  &.loading{
+    display: block;
+  }
+
+  canvas {
+    width: 100%;
+  }
+
+}

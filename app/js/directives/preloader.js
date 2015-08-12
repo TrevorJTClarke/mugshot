@@ -23,6 +23,8 @@ function($rootScope, $timeout) {
       var B;
       var el;
       var timer;
+      var title;
+      var previousTitle;
       var duration = 5000;
       var loading = 'loading';
 
@@ -62,16 +64,38 @@ function($rootScope, $timeout) {
       // }
 
       function updatePreloader(e, args) {
-        if (!args || !args.title) { return; }
-        var title = args.title;
-        console.log('title', title);
+        if (!args || !args.msg) { return; }
 
-        // avoid the hide/show timeline
-        $timeout(function() {
+        title = args.msg;
+
+        var type;
+
+        switch (title) {
+          // case 'Starting compare capture':
+          //   type = 0;
+          //   break;
+          case 'Opening Browser Session':
+            type = 0;
+            break;
+          case 'Capturing Screens':
+            type = 1;
+            break;
+          // case 'Updated Project History':
+          //   type = 2;
+          //   break;
+          // case 'Comparing Capture Data':
+          //   type = 2;
+          //   break;
+        }
+
+        // check that the title has changed
+        if (title !== previousTitle && B && B.animate) {
 
           // Start animation
-          B.animate(0, 30);
-        }, 30);
+          B.animate(type, 30, function() {
+            previousTitle = title;
+          });
+        }
       }
 
       function resetPreloader() {
