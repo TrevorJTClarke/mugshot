@@ -57,7 +57,6 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     });
 
     $scope.hasReference = true;
-    $scope.hasCompare = (formatted.length > 0);
     return formatted;
   }
 
@@ -70,6 +69,9 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
     // Store the processed data into the batch data
     $scope.batchItems = processBatch(historyData);
+
+    // setup which view to show based on history
+    $scope.runningType = ($rootScope.project.currentReference >= $rootScope.project.currentBatch) ? 'reference' : 'compare';
   }
 
   // validation of project
@@ -95,6 +97,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
       $scope.hasCompare = false;
     } else {
       $scope.hasCompare = ($rootScope.project.currentBatch !== null && $rootScope.project.currentBatch !== 0);
+      $scope.hasCompare = ($rootScope.project.currentReference <= $rootScope.project.currentBatch);
     }
   }
 
@@ -109,8 +112,8 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   }
 
   grabLatestData();
-  checkState();
   setupCurrentBatch();
+  checkState();
 
   // Fire off the viewer
   $scope.previewBatch = function(items) {
@@ -165,8 +168,8 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   // signal UI of changes
   function runnerComplete() {
     grabLatestData();
-    checkState();
     setupCurrentBatch();
+    checkState();
     $scope.processing = false;
   }
 

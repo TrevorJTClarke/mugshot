@@ -42,8 +42,6 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * use diff threshold from settings
 
   * UI
-    * Finish Runner
-      * post reference/pre compare view
     * Finish Modal
       * Compare stats in title
     * Status Center (show syncing, paused, progress)
@@ -67,6 +65,8 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Local no-server testing
   * Record User Actions
   * Capture Console Logger
+  * Modal with device view
+  * go back in history and view batch
 
 
 #### Helpful

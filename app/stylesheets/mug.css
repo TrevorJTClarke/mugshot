@@ -1425,7 +1425,8 @@ input,
   width: 95%;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; }
+  text-overflow: ellipsis;
+  line-height: 21px; }
 
 /**
  * Container Header
