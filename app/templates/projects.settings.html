@@ -11,11 +11,10 @@
       <input type="text" class="form-control" ng-model="project.meta.url" id="projectUrl" placeholder="Project Url">
       <span id="helpBlock" class="help-block">Example: <em>https://google.com</em> or <em>http://localhost:3000/</em></span>
     </div>
-    <button class="btn" ng-click="syncNow()">Sync All</button>
   </div>
 </div>
 
-<h3 class="section-title">Page Details</h3>
+<h3 class="section-title">Details</h3>
 <div class="row">
   <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <div class="form-group">
@@ -40,6 +39,15 @@
         </i>
       </label>
       <input type="text" class="form-control" ng-model="project.meta.misMatchThreshold" placeholder="Default: 0.1">
+    </div>
+    <div class="form-group config-item">
+      <label class="control-label">AWS Backup</label>
+      <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': true }" ng-click="">
+        <i class="octicon octicon-check"></i> Auto-Sync
+      </button>
+      <button class="btn btn-sync" ng-click="syncNow()">
+        Sync Now <i class="octicon octicon-sync"></i>
+      </button>
     </div>
   </div>
 </div>

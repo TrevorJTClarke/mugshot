@@ -1952,6 +1952,40 @@ a {
         color: #dfdfdf; }
         .project-settings .setting-item .btn.btn-used.btn-used-active {
           color: #45b04e; }
+  .project-settings .config-item {
+    width: 100%;
+    margin: 2px 0 0 0; }
+    .project-settings .config-item .control-label {
+      width: 100%; }
+    .project-settings .config-item.setting-title {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      margin: 0; }
+    .project-settings .config-item .setting-edit {
+      display: flex; }
+    .project-settings .config-item .btn {
+      background: transparent;
+      border-color: #7f8687;
+      box-shadow: 0 0 0;
+      color: #dfdfdf;
+      padding: 6px 0;
+      outline: 0;
+      width: auto;
+      padding: 6px 12px; }
+      .project-settings .config-item .btn.btn-used {
+        background: #a8afb0; }
+        .project-settings .config-item .btn.btn-used.btn-used-active {
+          background: #45b04e;
+          border-color: #45b04e;
+          color: #FFFFFF; }
+      .project-settings .config-item .btn.btn-sync {
+        box-shadow: 0 0 0;
+        color: #dfdfdf; }
+        .project-settings .config-item .btn.btn-sync.btn-sync-active {
+          background: #45b04e;
+          border-color: #45b04e;
+          color: #FFFFFF; }
   .project-settings .section-finish {
     margin: 40px 0 60px; }
   .project-settings .btn-finish {

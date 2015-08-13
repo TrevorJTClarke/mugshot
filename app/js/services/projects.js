@@ -91,7 +91,6 @@ function($q) {
         var filePath = path.join(dirPath, files[i]);
 
         if (fs.statSync(filePath).isFile()) {
-          console.log('REMOVING:', filePath);
           fs.unlinkSync(filePath);
         } else {
           rmDir(filePath);

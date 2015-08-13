@@ -44,9 +44,10 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * fix release dependencies (for packaging)
 
   * UI
-    * clear history images
+    * Update the runner with the most recent data after compare
     * change projects methods to async promise all structure
     * Project Setting AWS Auto-sync
+    * show the active project upon startup (sidepanel)
     * Finish Modal
       * Compare stats in title
     * Status Center (show syncing, paused, progress)

@@ -90,6 +90,58 @@
     }
   }
 
+  .config-item {
+    width: 100%;
+    margin: 2px 0 0 0;
+
+    .control-label {
+      width: 100%;
+    }
+
+    &.setting-title {
+      background: transparent;
+      border:0;
+      border-radius: 0;
+      margin:0;
+    }
+
+    .setting-edit {
+      display: flex;
+    }
+
+    .btn {
+      background: transparent;
+      border-color: $grey05;
+      box-shadow: 0 0 0;
+      color: $grey03;
+      padding: 6px 0;
+      outline: 0;
+      width: auto;
+      padding: 6px 12px;
+
+      &.btn-used {
+        background: $grey04;
+
+        &.btn-used-active {
+          background: $successdark;
+          border-color: $successdark;
+          color: $white;
+        }
+      }
+
+      &.btn-sync {
+        box-shadow: 0 0 0;
+        color: $grey03;
+
+        &.btn-sync-active {
+          background: $successdark;
+          border-color: $successdark;
+          color: $white;
+        }
+      }
+    }
+  }
+
   .section-finish {
     margin: 40px 0 60px;
   }
