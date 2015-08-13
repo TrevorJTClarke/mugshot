@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var AWS = require('./vendor/core/aws');
 
 MUG.factory('Projects',
@@ -79,6 +80,24 @@ function($q) {
     return JSON.parse(file);
   }
 
+  // remove all files in directory
+  function removeAllInDirectory(dirPath) {
+    try {
+      var files = fs.readdirSync(dirPath);
+    } catch (e) { return; }
+
+    if (files.length > 0)
+      for (var i = 0; i < files.length; i++) {
+        var filePath = path.join(dirPath, files[i]);
+
+        if (fs.statSync(filePath).isFile()) {
+          fs.unlinkSync(filePath);
+        } else {
+          rmDir(filePath);
+        }
+      }
+  };
+
   // sets up a promise driven file write
   function promiseWrite(filePath, data) {
     var _q = $q.defer();
@@ -111,6 +130,10 @@ function($q) {
   }
 
   return {
+
+    get: function(path, type) {
+      return getJsonFile(__dirname + path, type);
+    },
 
     getAll: function() {
       return getJsonFile(projectsPath, []);
@@ -312,6 +335,9 @@ function($q) {
         }
       });
 
+      // remove all local images
+      this.cleanImageFiles(project);
+
       // save the data to the projects list
       fs.writeFile(projectFilesPath + project.id + '_history.json', JSON.stringify([]), function(err) {
         if (err) {
@@ -400,19 +426,19 @@ function($q) {
         historyData.map(function(item, idx) {
 
           // update history ref
-          if (item.source === tmpAlias) {
+          if (item.source === tmpAlias && tmpType === 'compare') {
+            // make sure to remove the diff also
+            var remRefPath = __dirname + '/screens/' + tmpType + '/' + project.id + '/' + tmpAlias;
+            var remRef = promiseRemove(remRefPath);
+            var remRefDiff = promiseRemove(remRefPath.replace('.', '_diff.'));
+
+            // update history
             delete historyData[idx].source;
             historyData[idx].remoteSource = newRefs[i];
 
-            var remRefPath = __dirname + '/screens/' + tmpType + '/' + project.id + '/' + tmpAlias;
-            var remRef = promiseRemove(remRefPath);
+            // add to promise list
             queuePromises.push(remRef);
-
-            // make sure to remove the diff also
-            if (tmpType === 'compare') {
-              var remRefDiff = promiseRemove(remRefPath.replace('.', '_diff.'));
-              queuePromises.push(remRefDiff);
-            }
+            queuePromises.push(remRefDiff);
           }
         });
       }
@@ -437,6 +463,18 @@ function($q) {
       $q.all(queuePromises).then(dfdd.resolve, dfdd.reject);
 
       return dfdd.promise;
+    },
+
+    /**
+     * clean local images, update history with aws resources, returns the updates
+     */
+    cleanImageFiles: function (project) {
+      var base = __dirname + '/screens/BASE/' + project.id;
+      var comps = base.replace('BASE', 'compare');
+      var refs = base.replace('BASE', 'reference');
+
+      removeAllInDirectory(comps);
+      removeAllInDirectory(refs);
     }
 
   };

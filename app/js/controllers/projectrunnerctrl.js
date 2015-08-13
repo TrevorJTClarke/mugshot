@@ -57,7 +57,6 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     });
 
     $scope.hasReference = true;
-    $scope.hasCompare = (formatted.length > 0);
     return formatted;
   }
 
@@ -70,6 +69,9 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
     // Store the processed data into the batch data
     $scope.batchItems = processBatch(historyData);
+
+    // setup which view to show based on history
+    $scope.runningType = ($rootScope.project.currentReference >= $rootScope.project.currentBatch) ? 'reference' : 'compare';
   }
 
   // validation of project
@@ -95,6 +97,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
       $scope.hasCompare = false;
     } else {
       $scope.hasCompare = ($rootScope.project.currentBatch !== null && $rootScope.project.currentBatch !== 0);
+      $scope.hasCompare = ($rootScope.project.currentReference <= $rootScope.project.currentBatch);
     }
   }
 
@@ -108,9 +111,26 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     $rootScope.$emit('SIDEPANEL:UPDATE', $rootScope.project);
   }
 
+  // sync all project files and settings to AWS
+  function syncProject() {
+    if (typeof $rootScope.project.meta.autoSyncAws !== undefined && $rootScope.project.meta.autoSyncAws === true) {
+      $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Starting', dur: 3, type: 'info' });
+
+      Projects.sync($rootScope.project.id)
+        .then(function(res) {
+          $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Complete', dur: 3, type: 'success', icon: 'check' });
+        }
+
+        , function(err) {
+          console.log('syncNow err', err);
+          $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Failed', dur: 5, type: 'error', icon: 'stope' });
+        });
+    }
+  }
+
   grabLatestData();
-  checkState();
   setupCurrentBatch();
+  checkState();
 
   // Fire off the viewer
   $scope.previewBatch = function(items) {
@@ -126,6 +146,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
     $scope.runningType = 'compare';
     $scope.processing = true;
+
+    setTimeout(function() {
+      $rootScope.$emit('PRELOADER:ON');
+    }, 10);
+
     ipc.send('RUNNER:FIRE', { type: 'compare', projectId: $rootScope.project.id });
   };
 
@@ -139,6 +164,11 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     $scope.processing = true;
     $scope.runningType = 'reference';
     $scope.hasCompare = false;
+
+    setTimeout(function() {
+      $rootScope.$emit('PRELOADER:ON');
+    }, 10);
+
     ipc.send('RUNNER:FIRE', { type: 'reference', projectId: $rootScope.project.id });
   };
 
@@ -148,13 +178,16 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     // Write the progress to UI
     $scope.progress.percent = parseInt(args.percent, 10);
     $scope.progress.title = (args.msg) ? args.msg : $scope.progress.title;
+
+    $rootScope.$emit('PRELOADER:UPDATE', args);
   }
 
-  // TODO: signal UI of changes
+  // signal UI of changes
   function runnerComplete() {
     grabLatestData();
-    checkState();
     setupCurrentBatch();
+    checkState();
+    syncProject();
     $scope.processing = false;
   }
 

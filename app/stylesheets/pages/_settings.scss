@@ -90,6 +90,77 @@
     }
   }
 
+  .config-item {
+    width: 100%;
+    margin: 2px 0 0 0;
+
+    .control-label {
+      width: 100%;
+    }
+
+    &.setting-title {
+      background: transparent;
+      border:0;
+      border-radius: 0;
+      margin:0;
+    }
+
+    .setting-edit {
+      display: flex;
+    }
+
+    .btn {
+      background: transparent;
+      border-color: $grey05;
+      box-shadow: 0 0 0;
+      color: $grey03;
+      padding: 6px 0;
+      outline: 0;
+      width: auto;
+      padding: 6px 12px;
+
+      &.btn-used {
+        border-color: $grey04;
+        color: $grey04;
+        margin-right: 10px;
+
+        &.btn-used-active {
+          background: $successdark;
+          border-color: $successdark;
+          color: $white;
+        }
+      }
+
+      &.btn-sync {
+        background: $grey04;
+        border-color: $grey04;
+        box-shadow: 0 0 0;
+        color: $white;
+
+        .octicon-sync {
+          display: none;
+        }
+
+        &:hover {
+          background: $info;
+          border-color: $info;
+        }
+
+        &.btn-sync-active {
+          background: $info;
+          border-color: $info;
+
+          .octicon-sync {
+            display: inline-block;
+            -webkit-animation: rotate 0.5s infinite linear both;
+            -moz-animation: rotate 0.5s infinite linear both;
+            animation: rotate 0.5s infinite linear both;
+          }
+        }
+      }
+    }
+  }
+
   .section-finish {
     margin: 40px 0 60px;
   }

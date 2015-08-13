@@ -39,21 +39,23 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
+    * AWS Project settings/history sync
     * use diff threshold from settings
+    * fix release dependencies (for packaging)
 
   * UI
-    * Finish Runner
-      * post reference/pre compare view
+    * Project Setting AWS Auto-sync
+    * FIX: The first time running a null reference on new project
+    * FIX: the runner with the most recent data after compare
+    * change projects methods to async promise all structure
+    * show the active project upon startup (sidepanel)
     * Finish Modal
       * Compare stats in title
-    * Status Center (show syncing, paused, progress)
-
-  * update all image refs
-  * Project Setting AWS Auto-sync
 
 
 #### Wishlist
 
+  * Selenium webdriver (IE, FF, SF, CH)
   * Submit Jira ticket
     * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
       /jira-rest-api-tutorials/jira-rest-api-example-create-issue
@@ -64,6 +66,9 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * Choose branches to run between
   * Local no-server testing
   * Record User Actions
+  * Capture Console Logger
+  * Modal with device view
+  * go back in history and view batch
 
 
 #### Helpful
