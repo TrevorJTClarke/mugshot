@@ -1,16 +1,34 @@
+var fs = require('fs');
+
 MUG.controller('ProjectSettingsCtrl',
 ['$rootScope', '$scope', '$state', 'Projects',
 function($rootScope, $scope, $state, Projects) {
   var saveTimer;
 
+  $scope.syncing = false;
   $scope.selectorTypes = ['container', 'hide', 'remove'];
   $scope.hasChanges = false;
+  $scope.hasAwsSettings = false;
   $scope.master = {};
   angular.copy($rootScope.project, $scope.master);
 
   function addNewType(type, data) {
     $rootScope.project[type].push(data);
   }
+
+  function checkAwsSettings() {
+    // read if aws settings and if they are correct
+    var file = Projects.get('/config/aws.json', {});
+
+    if (!file || !file.bucket || !file.accessKeyId || !file.secretAccessKey) {
+      return false;
+    }
+
+    return true;
+  }
+
+  // initial aws cred check
+  $scope.hasAwsSettings = checkAwsSettings();
 
   // Watch for changes, so we can save
   $scope.$watch('project', function(nV, oV) {
@@ -51,14 +69,17 @@ function($rootScope, $scope, $state, Projects) {
 
   // sync this project to AWS
   $scope.syncNow = function() {
+    $scope.syncing = true;
     $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Starting', dur: 5, type: 'info' });
 
     Projects.sync($rootScope.project.id)
       .then(function(res) {
+        $scope.syncing = false;
         $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Complete', dur: 5, type: 'success', icon: 'check' });
       }
 
       , function(err) {
+        $scope.syncing = false;
         console.log('syncNow err', err);
         $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Failed', dur: 5, type: 'error', icon: 'stope' });
       });

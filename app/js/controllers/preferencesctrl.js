@@ -5,7 +5,6 @@ MUG.controller('PreferencesCtrl',
 ['$rootScope', '$scope', '$state',
 function($rootScope, $scope, $state) {
   $scope.awsConfig = {
-    autosync: true,
     bucket: '',
     accessKeyId: '',
     secretAccessKey: ''
