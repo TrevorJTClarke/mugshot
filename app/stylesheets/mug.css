@@ -1140,6 +1140,27 @@ input,
     text-transform: uppercase;
     padding: 7px 14px; }
 
+/**
+ * Animations
+ */
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@-moz-keyframes rotate {
+  0% {
+    -moz-transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(360deg); } }
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
 .frame {
   background: linear-gradient(to bottom, #f0f0f0, #e9e9e9);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -1974,18 +1995,31 @@ a {
       width: auto;
       padding: 6px 12px; }
       .project-settings .config-item .btn.btn-used {
-        background: #a8afb0; }
+        border-color: #a8afb0;
+        color: #a8afb0;
+        margin-right: 10px; }
         .project-settings .config-item .btn.btn-used.btn-used-active {
           background: #45b04e;
           border-color: #45b04e;
           color: #FFFFFF; }
       .project-settings .config-item .btn.btn-sync {
+        background: #a8afb0;
+        border-color: #a8afb0;
         box-shadow: 0 0 0;
-        color: #dfdfdf; }
+        color: #FFFFFF; }
+        .project-settings .config-item .btn.btn-sync .octicon-sync {
+          display: none; }
+        .project-settings .config-item .btn.btn-sync:hover {
+          background: #3b4655;
+          border-color: #3b4655; }
         .project-settings .config-item .btn.btn-sync.btn-sync-active {
-          background: #45b04e;
-          border-color: #45b04e;
-          color: #FFFFFF; }
+          background: #3b4655;
+          border-color: #3b4655; }
+          .project-settings .config-item .btn.btn-sync.btn-sync-active .octicon-sync {
+            display: inline-block;
+            -webkit-animation: rotate 0.5s infinite linear both;
+            -moz-animation: rotate 0.5s infinite linear both;
+            animation: rotate 0.5s infinite linear both; }
   .project-settings .section-finish {
     margin: 40px 0 60px; }
   .project-settings .btn-finish {

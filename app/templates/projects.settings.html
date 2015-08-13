@@ -1,5 +1,5 @@
 <div class="project-settings">
-<h3>General</h3>
+<h3>General Configuration</h3>
 <div class="row">
   <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <div class="form-group">
@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<h3 class="section-title">Details</h3>
+<h3 class="section-title">Optional Details</h3>
 <div class="row">
   <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <div class="form-group">
@@ -42,12 +42,13 @@
     </div>
     <div class="form-group config-item">
       <label class="control-label">AWS Backup</label>
-      <button type="submit" class="btn btn-used" ng-class="{'btn-used-active': true }" ng-click="">
+      <button type="submit" class="btn btn-used" ng-if="hasAwsSettings" ng-class="{'btn-used-active': project.meta.autoSyncAws == true }" ng-click="project.meta.autoSyncAws = !project.meta.autoSyncAws">
         <i class="octicon octicon-check"></i> Auto-Sync
       </button>
-      <button class="btn btn-sync" ng-click="syncNow()">
+      <button class="btn btn-sync" ng-if="hasAwsSettings" ng-click="syncNow()" ng-class="{'btn-sync-active': syncing == true }">
         Sync Now <i class="octicon octicon-sync"></i>
       </button>
+      <button class="btn btn-sync" ng-if="!hasAwsSettings" ui-sref="preferences" ng-class="{'btn-sync-active': true }">Configure your AWS Settings</button>
     </div>
   </div>
 </div>

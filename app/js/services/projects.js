@@ -131,6 +131,10 @@ function($q) {
 
   return {
 
+    get: function(path, type) {
+      return getJsonFile(__dirname + path, type);
+    },
+
     getAll: function() {
       return getJsonFile(projectsPath, []);
     },

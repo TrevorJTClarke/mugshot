@@ -120,7 +120,9 @@
       padding: 6px 12px;
 
       &.btn-used {
-        background: $grey04;
+        border-color: $grey04;
+        color: $grey04;
+        margin-right: 10px;
 
         &.btn-used-active {
           background: $successdark;
@@ -130,13 +132,30 @@
       }
 
       &.btn-sync {
+        background: $grey04;
+        border-color: $grey04;
         box-shadow: 0 0 0;
-        color: $grey03;
+        color: $white;
+
+        .octicon-sync {
+          display: none;
+        }
+
+        &:hover {
+          background: $info;
+          border-color: $info;
+        }
 
         &.btn-sync-active {
-          background: $successdark;
-          border-color: $successdark;
-          color: $white;
+          background: $info;
+          border-color: $info;
+
+          .octicon-sync {
+            display: inline-block;
+            -webkit-animation: rotate 0.5s infinite linear both;
+            -moz-animation: rotate 0.5s infinite linear both;
+            animation: rotate 0.5s infinite linear both;
+          }
         }
       }
     }
