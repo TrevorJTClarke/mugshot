@@ -111,6 +111,23 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     $rootScope.$emit('SIDEPANEL:UPDATE', $rootScope.project);
   }
 
+  // sync all project files and settings to AWS
+  function syncProject() {
+    if (typeof $rootScope.project.meta.autoSyncAws !== undefined && $rootScope.project.meta.autoSyncAws === true) {
+      $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Starting', dur: 3, type: 'info' });
+
+      Projects.sync($rootScope.project.id)
+        .then(function(res) {
+          $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Complete', dur: 3, type: 'success', icon: 'check' });
+        }
+
+        , function(err) {
+          console.log('syncNow err', err);
+          $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Failed', dur: 5, type: 'error', icon: 'stope' });
+        });
+    }
+  }
+
   grabLatestData();
   setupCurrentBatch();
   checkState();
@@ -170,6 +187,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     grabLatestData();
     setupCurrentBatch();
     checkState();
+    syncProject();
     $scope.processing = false;
   }
 

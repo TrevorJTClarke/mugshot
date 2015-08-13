@@ -426,19 +426,19 @@ function($q) {
         historyData.map(function(item, idx) {
 
           // update history ref
-          if (item.source === tmpAlias) {
+          if (item.source === tmpAlias && tmpType === 'compare') {
+            // make sure to remove the diff also
+            var remRefPath = __dirname + '/screens/' + tmpType + '/' + project.id + '/' + tmpAlias;
+            var remRef = promiseRemove(remRefPath);
+            var remRefDiff = promiseRemove(remRefPath.replace('.', '_diff.'));
+
+            // update history
             delete historyData[idx].source;
             historyData[idx].remoteSource = newRefs[i];
 
-            var remRefPath = __dirname + '/screens/' + tmpType + '/' + project.id + '/' + tmpAlias;
-            var remRef = promiseRemove(remRefPath);
+            // add to promise list
             queuePromises.push(remRef);
-
-            // make sure to remove the diff also
-            if (tmpType === 'compare') {
-              var remRefDiff = promiseRemove(remRefPath.replace('.', '_diff.'));
-              queuePromises.push(remRefDiff);
-            }
+            queuePromises.push(remRefDiff);
           }
         });
       }
