@@ -1416,14 +1416,19 @@ input,
  */
 .side-panel {
   overflow-x: hidden;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+  position: relative; }
 
 .panel-nav {
   background: #FBFBFB;
-  border-bottom: 1px solid #f9f9f9;
+  border-right: 1px solid #f2f0f0;
+  border-bottom: 1px solid #f2f0f0;
   padding: 10px 15px;
   min-height: 60px;
-  position: relative; }
+  width: 25%;
+  min-width: 220px;
+  position: fixed;
+  z-index: 99; }
   .panel-nav h3 {
     display: inline-block;
     margin: 0;
@@ -1431,6 +1436,11 @@ input,
     line-height: 40px;
     font-size: 21px;
     font-weight: 300; }
+
+.panel-projects {
+  margin-top: 60px;
+  position: relative;
+  z-index: 9; }
 
 .list-group-item {
   border-right: 2px solid transparent;
