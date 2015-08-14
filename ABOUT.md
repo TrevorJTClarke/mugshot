@@ -39,14 +39,11 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * AWS Project settings/history sync
     * use diff threshold from settings
     * fix release dependencies (for packaging)
 
   * UI
-    * Project Setting AWS Auto-sync
-    * FIX: The first time running a null reference on new project
-    * FIX: the runner with the most recent data after compare
+    * FIX: the preloader allows multiple overwrites
     * change projects methods to async promise all structure
     * show the active project upon startup (sidepanel)
     * Finish Modal

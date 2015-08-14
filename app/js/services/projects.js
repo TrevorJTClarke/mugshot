@@ -144,7 +144,8 @@ function($q) {
     },
 
     getTypeById: function(id, type) {
-      return getJsonFile(projectFilesPath + id + '_' + type + '.json', []);
+      var addition = (type) ? '_' + type : '';
+      return getJsonFile(projectFilesPath + id + addition + '.json', []);
     },
 
     /**
@@ -384,7 +385,7 @@ function($q) {
       // pull out files that are already inside aws, prep for upload
       for (var i = 0; i < projectFiles.length; i++) {
         var tmpFile = projectFiles[i];
-        if (tmpFile.source.search('amazon') === -1) {
+        if (tmpFile.source && tmpFile.source.search('amazon') === -1) {
           var src = tmpFile.source;
           var type = tmpFile.type;
           var path = __dirname + '/screens/' + type + '/' + project.id + '/' + src;
