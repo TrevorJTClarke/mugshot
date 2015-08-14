@@ -31,11 +31,27 @@
     cursor: pointer;
     position: absolute;
     padding: 10px 15px;
-    right: 0px;
+    right: 5px;
     top: 0px;
 
     i {
       font-size: 24px;
+    }
+  }
+
+  .modal-title {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 50%;
+    padding: 10px 0 8px;
+    margin: 0 0 0 -25%;
+    text-align: center;
+
+    strong {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 26px;
     }
   }
 }
@@ -198,7 +214,7 @@
   .modal-carousel-wrap {
     position: relative;
     width: 100%;
-    padding: 10px 40px 4px;
+    padding: 10px 41px 4px;
     overflow: scroll;
     z-index: 9;
   }
@@ -209,7 +225,7 @@
     padding:0;
 
     .carousel-thumb {
-      border: 2px solid transparent;
+      border: 3px double transparent;
       border-radius: 2px;
       cursor: pointer;
       display: inline-block;
@@ -245,11 +261,11 @@
       }
 
       &:hover {
-        border-color: $darksecond;
+        border-color: $grey04;
       }
 
       &.active {
-        border-color: $second;
+        border-color: $white;
       }
     }
   }

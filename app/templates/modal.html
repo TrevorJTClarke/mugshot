@@ -3,6 +3,9 @@
     <!-- <i class="octicon octicon-alert"></i> -->
     <!-- <strong>Warning!</strong> 0.72% Diff Found in <strong>Project 1</strong> -->
     <strong>{{viewer.title}}</strong>
+    <div class="modal-title">
+      <strong>{{activeItem.query}}</strong>
+    </div>
     <div class="closer" ng-click="close()"><i class="octicon octicon-x"></i></div>
   </div>
   <div class="modal-viewer" ng-class="{'modal-singleton': !viewer.items }">
@@ -32,6 +35,9 @@
       </div>
       <div class="meta-title">{{activeItem.name}}</div>
       <div class="meta-subtitle" ng-if="activeItem.query || activeItem.analysis">
+        <div class="label label-warning" ng-if="activeItem.report.diff">
+          <i class="octicon octicon-versions"></i> {{activeItem.report.diff}}% diff
+        </div>
         <div class="label label-success" ng-if="activeItem.report.analysis">
           <i class="octicon octicon-clock"></i> {{activeItem.report.analysis}}ms
         </div>
@@ -40,6 +46,9 @@
         </div>
         <div class="label label-default" ng-if="activeItem.query">
           <i class="octicon octicon-code"></i> {{activeItem.query}}
+        </div>
+        <div class="label label-default" ng-if="activeItem.viewport">
+          <i class="octicon" ng-class="{ 'octicon-device-desktop': activeItem.viewport == 'Desktop', 'octicon-color-mode': activeItem.viewport == 'Tablet', 'octicon-device-mobile': activeItem.viewport == 'Mobile' }"></i> {{activeItem.viewport}}
         </div>
       </div>
     </div>
@@ -53,8 +62,8 @@
     </div>
     <div class="modal-carousel-wrap">
       <ul class="modal-carousel" style="width: {{((viewer.items.length + 1) * 160) + 'px' || '100%'}} !important;">
-        <li class="carousel-thumb" ng-repeat="item in viewer.items" ng-class="{ active: activeItem.id == item.id }" ng-click="goToIndex($index)">
-          <i class="octicon" ng-class="{'octicon-tag': item.type == 'reference', 'octicon-check thumb-success': item.status == 'passed', 'octicon-alert thumb-warning': item.status == 'warning', 'octicon-stop thumb-error': item.status == 'failed'}"></i>
+        <li class="carousel-thumb" ng-repeat="item in viewer.items" ng-class="{ active: currentIndex == $index }" ng-click="goToIndex($index)">
+          <!-- <i class="octicon" ng-class="{'octicon-tag': item.type == 'reference', 'octicon-check thumb-success': item.status == 'passed', 'octicon-alert thumb-warning': item.status == 'warning', 'octicon-stop thumb-error': item.status == 'failed'}"></i> -->
           <img ng-if="!item.remoteSource" ng-src="screens/compare/{{project.id}}/{{item.source}}" src="images/broken.png">
           <img ng-if="item.remoteSource" ng-src="{{item.remoteSource}}" src="images/broken.png">
         </li>
