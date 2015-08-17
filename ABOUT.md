@@ -45,8 +45,6 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * UI
     * FIX: the preloader allows multiple overwrites
     * change projects methods to async promise all structure
-    * Finish Modal
-      * Compare stats in title
 
 
 #### Wishlist
