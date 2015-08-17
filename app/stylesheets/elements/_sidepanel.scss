@@ -4,15 +4,19 @@
 .side-panel {
   overflow-x: hidden;
   overflow-y: scroll;
-
+  position: relative;
 }
 
 .panel-nav {
   background: #FBFBFB;
-  border-bottom: 1px solid $grey01;
+  border-right: 1px solid $grey02;
+  border-bottom: 1px solid $grey02;
   padding: 10px 15px;
   min-height: 60px;
-  position: relative;
+  width: 25%;
+  min-width: 220px;
+  position: fixed;
+  z-index: 99;
 
   h3 {
     display: inline-block;
@@ -24,6 +28,12 @@
       weight: 300;
     }
   }
+}
+
+.panel-projects {
+  margin-top: 60px;
+  position: relative;
+  z-index: 9;
 }
 
 .list-group-item {

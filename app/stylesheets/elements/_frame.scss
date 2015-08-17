@@ -9,7 +9,8 @@
   -webkit-user-select: none;
   -webkit-app-region: drag;
 
-  .top-nav {
+  .action-nav {
+    flex: 1;
 
     svg {
       display: none;
@@ -21,11 +22,12 @@
   }
 
   .logo {
+    color: rgba(0,0,0,0.7);
     cursor: default;
-    position: absolute;
-    right: 12px;
-    top: 0px;
-    font-size: 34px;
+    font: 500 16px/18px "Helvetica Neue", Helvetica, Arial;
+    margin: 13px 0 0;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
   }
 }
 
@@ -62,5 +64,36 @@
 
   &.maximize {
     background: #16cc37;
+  }
+}
+
+.left-nav {
+  flex: 1;
+}
+
+.middle-nav {
+  flex: 2;
+}
+
+.right-nav {
+  display: flex;
+  flex: 2;
+  justify-content: flex-end;
+
+  .btn-frame {
+    background: transparent;
+    color: rgba(0,0,0,0.6);
+    cursor: pointer;
+    padding: 11px 5px;
+    -webkit-app-region: no-drag;
+
+    .octicon {
+      font-size: 21px;
+    }
+
+    &:hover {
+      color: rgba(0,0,0,0.8);
+      cursor: pointer;
+    }
   }
 }

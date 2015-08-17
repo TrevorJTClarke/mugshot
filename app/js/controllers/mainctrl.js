@@ -23,4 +23,15 @@ function($rootScope, $scope, $state, Config, Projects) {
     $state.go(args.location);
   });
 
+  // USE THIS instead of $scope.$apply(); It will make the $digest errors not happen.
+  $rootScope.SafeApply = function(scope, fn) {
+    if (scope.$$phase || scope.$root.$$phase) {
+      if (typeof fn !== 'undefined') {
+        fn();
+      }
+    } else {
+      scope.$apply(fn);
+    }
+  };
+
 }]);

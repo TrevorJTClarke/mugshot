@@ -107,6 +107,7 @@ function($q) {
         _q.reject(err);
         return;
       }
+
       _q.resolve();
     });
 
@@ -123,6 +124,7 @@ function($q) {
         _z.reject(err);
         return;
       }
+
       _z.resolve();
     });
 
@@ -144,7 +146,8 @@ function($q) {
     },
 
     getTypeById: function(id, type) {
-      return getJsonFile(projectFilesPath + id + '_' + type + '.json', []);
+      var addition = (type) ? '_' + type : '';
+      return getJsonFile(projectFilesPath + id + addition + '.json', []);
     },
 
     /**
@@ -198,7 +201,8 @@ function($q) {
      * creates a new project, and returns the data in a promise
      */
     createNew: function() {
-      var dfd = $q.defer();
+      var dfdd = $q.defer();
+      var queuePromises = [];
       var allProjects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
       var newProjectData = createDummyProject(allProjects.length);
       var newProjectFile = createDummyProjectFile(newProjectData);
@@ -206,39 +210,26 @@ function($q) {
       allProjects.unshift(newProjectData);
 
       // save the data to the projects list
-      fs.writeFile(projectsPath, JSON.stringify(allProjects), function(err) {
-        if (err) {
-          dfd.reject(err);
-          return;
-        }
+      var projectAllData = promiseWrite(projectsPath, allProjects);
+      var projectData = promiseWrite(projectFilesPath + newProjectData.id + '.json', newProjectFile);
+      var projectHistoryData = promiseWrite(projectFilesPath + newProjectData.id + '_history.json', []);
+      queuePromises.push(projectAllData);
+      queuePromises.push(projectData);
+      queuePromises.push(projectHistoryData);
 
-        // save as an individual file
-        fs.writeFile(projectFilesPath + newProjectData.id + '.json', JSON.stringify(newProjectFile), function(err) {
-          if (err) {
-            dfd.reject(err);
-            return;
-          }
+      // do all promise operations
+      $q.all(queuePromises).then(function() {
+        dfdd.resolve(newProjectData);
+      }, dfdd.reject);
 
-          // save as an individual file
-          fs.writeFile(projectFilesPath + newProjectData.id + '_history.json', JSON.stringify([]), function(err) {
-            if (err) {
-              dfd.reject(err);
-              return;
-            }
-
-            // redirect user to the settings page
-            dfd.resolve(newProjectData);
-          });
-        });
-      });
-
-      return dfd.promise;
+      return dfdd.promise;
     },
 
     // save to file and lists, return list data
     save: function(projectData) {
-      var dfd = $q.defer();
-      var allProjects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
+      var dfdd = $q.defer();
+      var queuePromises = [];
+      var allProjects = getJsonFile(projectsPath, []);
 
       // Update the listing data
       allProjects.map(function(obj, idx) {
@@ -248,32 +239,24 @@ function($q) {
         }
       });
 
-      // save as an individual file
-      fs.writeFile(projectFilesPath + projectData.id + '.json', JSON.stringify(projectData), function(err) {
-        if (err) {
-          dfd.reject(err);
-          return;
-        }
+      // save the data to the projects list
+      var projectTempData = promiseWrite(projectFilesPath + projectData.id + '.json', projectData);
+      var projectAllData = promiseWrite(projectsPath, allProjects);
+      queuePromises.push(projectTempData);
+      queuePromises.push(projectAllData);
 
-        // update the listing data
-        fs.writeFile(projectsPath, JSON.stringify(allProjects), function(err) {
-          if (err) {
-            dfd.reject(err);
-            return;
-          }
+      // do all promise operations
+      $q.all(queuePromises).then(function() {
+        dfdd.resolve(projectData);
+      }, dfdd.reject);
 
-          // return the listing data, so we can update the sidepanel
-          dfd.resolve(projectData);
-        });
-      });
-
-      return dfd.promise;
+      return dfdd.promise;
     },
 
-    // TODO: should remove images upon delete?
     // Removes a single project by ID
     remove: function(id) {
-      var dfd = $q.defer();
+      var dfdd = $q.defer();
+      var queuePromises = [];
       var allProjects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
 
       // Update the listing data
@@ -283,41 +266,29 @@ function($q) {
         }
       });
 
-      // Remove the project file
-      fs.unlink(projectFilesPath + id + '.json', function(err) {
-        if (err) {
-          dfd.reject(err);
-          return;
-        }
+      // remove all local images
+      this.cleanImageFiles(id);
 
-        // Remove the project history file
-        fs.unlink(projectFilesPath + id + '_history.json', function(err) {
-          if (err) {
-            dfd.reject(err);
-            return;
-          }
+      // save the data to the projects list
+      var projectData = promiseRemove(projectFilesPath + id + '.json');
+      var projectHistoryData = promiseRemove(projectFilesPath + id + '_history.json');
+      var projectAllData = promiseWrite(projectsPath, allProjects);
+      queuePromises.push(projectData);
+      queuePromises.push(projectHistoryData);
+      queuePromises.push(projectAllData);
 
-          // update the listing data
-          fs.writeFile(projectsPath, JSON.stringify(allProjects), function(err) {
-            if (err) {
-              dfd.reject(err);
-              return;
-            }
+      // do all promise operations
+      $q.all(queuePromises).then(dfdd.resolve, dfdd.reject);
 
-            // return
-            dfd.resolve();
-          });
-        });
-      });
-
-      return dfd.promise;
+      return dfdd.promise;
     },
 
     /**
      * removes all stored history for a project
      */
     clearHistory: function(project) {
-      var dfd = $q.defer();
+      var dfdd = $q.defer();
+      var queuePromises = [];
       var mainProjects = getJsonFile(projectsPath, []);
 
       // Update the project data to reflect no history
@@ -336,36 +307,20 @@ function($q) {
       });
 
       // remove all local images
-      this.cleanImageFiles(project);
+      this.cleanImageFiles(project.id);
 
       // save the data to the projects list
-      fs.writeFile(projectFilesPath + project.id + '_history.json', JSON.stringify([]), function(err) {
-        if (err) {
-          dfd.reject(err);
-          return;
-        }
+      var projectHistoryData = promiseWrite(projectFilesPath + project.id + '_history.json', []);
+      var projectData = promiseWrite(projectFilesPath + project.id + '.json', project);
+      var projectAllData = promiseWrite(projectsPath, mainProjects);
+      queuePromises.push(projectHistoryData);
+      queuePromises.push(projectData);
+      queuePromises.push(projectAllData);
 
-        // save the data to the id project
-        fs.writeFile(projectFilesPath + project.id + '.json', JSON.stringify(project), function(err) {
-          if (err) {
-            dfd.reject(err);
-            return;
-          }
+      // do all promise operations
+      $q.all(queuePromises).then(dfdd.resolve, dfdd.reject);
 
-          // update the data on the projects list
-          fs.writeFile(projectsPath, JSON.stringify(mainProjects), function(err) {
-            if (err) {
-              dfd.reject(err);
-              return;
-            }
-
-            // redirect user to the settings page
-            dfd.resolve();
-          });
-        });
-      });
-
-      return dfd.promise;
+      return dfdd.promise;
     },
 
     /**
@@ -384,7 +339,7 @@ function($q) {
       // pull out files that are already inside aws, prep for upload
       for (var i = 0; i < projectFiles.length; i++) {
         var tmpFile = projectFiles[i];
-        if (tmpFile.source.search('amazon') === -1) {
+        if (tmpFile.source && tmpFile.source.search('amazon') === -1) {
           var src = tmpFile.source;
           var type = tmpFile.type;
           var path = __dirname + '/screens/' + type + '/' + project.id + '/' + src;
@@ -399,7 +354,9 @@ function($q) {
 
           // do post-process action
           _this.cleanAfterSync(project, res).then(d.resolve, d.reject);
-        }, function(err) {
+        },
+
+        function(err) {
           d.reject(err);
         });
 
@@ -409,7 +366,7 @@ function($q) {
     /**
      * clean local images, update history with aws resources, returns the updates
      */
-    cleanAfterSync: function (project, newRefs) {
+    cleanAfterSync: function(project, newRefs) {
       var dfdd = $q.defer();
       var historyData = getJsonFile(projectFilesPath + project.id + '_history.json', []);
       var updatedRemoteFiles = [];
@@ -468,8 +425,8 @@ function($q) {
     /**
      * clean local images, update history with aws resources, returns the updates
      */
-    cleanImageFiles: function (project) {
-      var base = __dirname + '/screens/BASE/' + project.id;
+    cleanImageFiles: function(projectId) {
+      var base = __dirname + '/screens/BASE/' + projectId;
       var comps = base.replace('BASE', 'compare');
       var refs = base.replace('BASE', 'reference');
 

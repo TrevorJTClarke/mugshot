@@ -66,8 +66,8 @@ app.on('ready', function() {
     height: mainWindowState.height,
     'min-width': 745,
     'min-height': 450,
-    'max-width': 1450,
-    'max-height': 1000,
+    'max-width': 2550,
+    'max-height': 1500,
     frame: false,
   });
 

@@ -3,9 +3,9 @@
  */
 .alert-parent {
   position: absolute;
-  right: 0;
+  right: 45px;
   top: 0;
-  width: 50%;
+  width: 39%;
   height: 46px;
   overflow: hidden;
 }
@@ -14,35 +14,36 @@
   background: grey;
   border-radius: 3px;
   color: white;
+  display: flex;
+  flex-direction: row;
   position: absolute;
-  right: 7px;
+  right: 0;
   top: -10px;
   opacity: 0;
+  min-width: 140px;
   transform: translate3d(0,0,0);
   transition: opacity 160ms cubic-bezier(.56,.39,.73,1.24), top 160ms cubic-bezier(.56,.39,.73,1.24);
   -webkit-user-select: none;
   -webkit-app-region: no-drag;
 
-  &.has-icon {
-    padding-left: 35px;
-  }
-  &.has-action {
-    padding-right: 35px;
-  }
+  // &.has-icon {
+  //   padding-left: 35px;
+  // }
+  // &.has-action {
+  //   padding-right: 35px;
+  // }
 
   .alert-icon,
   .alert-action {
     color: $white;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2.5em;
     height: 100%;
-    display: flex;
+    flex: 2 1;
+    padding: 6px 0;
+    min-width: 30px;
+    text-align: center;
 
     i {
       margin: auto;
-      flex: 1;
       text-align: center;
       font-size: 18px;
     }
@@ -62,11 +63,17 @@
   }
 
   .alert-title {
-    padding: 8px 12px 7px;
     font: {
       size: 12px;
       weight: 400;
     }
+    flex: 5 4;
+    min-width: 110px;
+    padding: 8px 12px 7px;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    overflow:hidden;
   }
 
   &.alert-info {

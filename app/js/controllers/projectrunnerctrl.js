@@ -3,12 +3,14 @@ var ipc = require('ipc');
 MUG.controller('ProjectRunnerCtrl',
 ['$rootScope', '$scope', '$timeout', '$stateParams', 'Projects',
 function($rootScope, $scope, $timeout, $stateParams, Projects) {
+  var defaultFormat = [{ type: 'success', items: []}, { type: 'warning', items: []}, { type: 'error', items: []}];
+
   $scope.processing = false;
   $scope.hasSettings = false;
   $scope.hasReference = false;
   $scope.hasCompare = false;
   $scope.runningType = 'reference';
-  $scope.batchItems = [];
+  $scope.batchItems = defaultFormat;
   $scope.activeData = {};
   $scope.currentBatch = $rootScope.project.currentBatch || 0;
   $scope.progress = {
@@ -64,8 +66,7 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     if ($rootScope.project.currentBatch === null) {return;}
 
     // grab all the runner test data
-    var id = (typeof $rootScope.project.currentBatch !== undefined) ? $rootScope.project.currentBatch : 0;
-    var historyData = Projects.getTypeById($stateParams.id, 'history');
+    var historyData = Projects.getTypeById($rootScope.project.id, 'history');
 
     // Store the processed data into the batch data
     $scope.batchItems = processBatch(historyData);
@@ -91,7 +92,6 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   function checkState() {
     $scope.hasSettings = validateProject();
     $scope.hasReference = ($rootScope.project.currentReference !== null);
-    $scope.currentBatch = $rootScope.project.currentBatch;
 
     if ($scope.runningType === 'reference') {
       $scope.hasCompare = false;
@@ -103,7 +103,8 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
 
   // grab the latest data for the project
   function grabLatestData() {
-    $rootScope.project = Projects.getById($rootScope.project.id, 'history');
+    $rootScope.project = Projects.getById($rootScope.project.id);
+    $scope.currentBatch = $rootScope.project.currentBatch;
 
     // Set the active data based on currentBatch
     $scope.activeData = ($rootScope.project && $rootScope.project.batchHistory) ? $rootScope.project.batchHistory[$scope.currentBatch] : null;
@@ -112,17 +113,22 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
   }
 
   // sync all project files and settings to AWS
+  var syncing = false;
+
   function syncProject() {
-    if (typeof $rootScope.project.meta.autoSyncAws !== undefined && $rootScope.project.meta.autoSyncAws === true) {
+    if (typeof $rootScope.project.meta.autoSyncAws !== undefined && $rootScope.project.meta.autoSyncAws === true && !syncing) {
       $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Starting', dur: 3, type: 'info' });
+      syncing = true;
 
       Projects.sync($rootScope.project.id)
         .then(function(res) {
+          syncing = false;
           $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Complete', dur: 3, type: 'success', icon: 'check' });
         }
 
         , function(err) {
           console.log('syncNow err', err);
+          syncing = false;
           $rootScope.$broadcast('ALERT:FIRE', { title: 'Sync Failed', dur: 5, type: 'error', icon: 'stope' });
         });
     }
@@ -179,16 +185,20 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     $scope.progress.percent = parseInt(args.percent, 10);
     $scope.progress.title = (args.msg) ? args.msg : $scope.progress.title;
 
-    $rootScope.$emit('PRELOADER:UPDATE', args);
+    var preArgs = args;
+    preArgs.project = $rootScope.project;
+    $rootScope.$emit('PRELOADER:UPDATE', preArgs);
   }
 
   // signal UI of changes
   function runnerComplete() {
-    grabLatestData();
-    setupCurrentBatch();
-    checkState();
-    syncProject();
-    $scope.processing = false;
+    $timeout(function() {
+      grabLatestData();
+      setupCurrentBatch();
+      checkState();
+      syncProject();
+      $scope.processing = false;
+    }, 3);
   }
 
   function runnerFailed(reason) {
