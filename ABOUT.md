@@ -43,7 +43,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * fix release dependencies (for packaging)
 
   * UI
-    * 
+    *
 
 
 #### Wishlist
@@ -62,6 +62,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Capture Console Logger
   * Modal with device view
   * go back in history and view batch
+  * see results with historical graphs
 
 
 #### Helpful
