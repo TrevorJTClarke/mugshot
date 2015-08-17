@@ -5,7 +5,7 @@
  * USE:
  * <preloader></preloader>
  *
- * $rootScope.$broadcast('PRELOADER:ON');
+ * $rootScope.$broadcast('PRELOADER:UPDATE', { msg: 'Opening Browser Session', percent: 37 });
  * $rootScope.$broadcast('PRELOADER:OFF');
  *
  */
@@ -14,6 +14,37 @@ var P = require('./vendor/core/preloader');
 MUG.directive('preloader',
 ['$rootScope', '$timeout',
 function($rootScope, $timeout) {
+  var totalIncrement = 30;
+
+  function calculateIncrements(project) {
+    var delay = 0;
+    var viewports = 0;
+    var selectors = 0;
+    var increment = 12;
+
+    // get all container selectors total
+    if (project.selectors && project.selectors.length > 0) {
+      for (var i = 0; i < project.selectors.length; i++) {
+        if (project.selectors[i] && project.selectors[i].type === 'container') {
+          selectors = selectors + 1;
+        }
+      }
+    }
+
+    // get the viewports
+    if (project.viewports && project.viewports.length > 0) {
+      viewports = project.viewports.length;
+    }
+
+    // see if there is a delay
+    if (project.meta && project.meta.delay) {
+      delay = parseInt(project.meta.delay, 10);
+    }
+
+    // calculate a reasonable increment for the animation
+    totalIncrement = (increment * (viewports * selectors)) + 30; // + delay
+  }
+
   return {
     replace: true,
     restrict: 'E',
@@ -27,9 +58,10 @@ function($rootScope, $timeout) {
       var previousTitle;
       var duration = 5000;
       var loading = 'loading';
+      var isAnimating = false;
 
       // INIT!
-      // avoid the hide/show timeline
+      // avoid the ng-cloak timeline
       $timeout(function() {
         B = new P.Browser();
         B.init();
@@ -42,29 +74,22 @@ function($rootScope, $timeout) {
         B.drawBrowser();
       }, 30);
 
-      // function showPreloader() {
-      //
-      //   // avoid the hide/show timeline
-      //   $timeout(function() {
-      //
-      //     // Start animation
-      //     B.animate(0, 30);
-      //   }, 30);
-      //
-      //   $timeout(function() {
-      //
-      //     // // draw browser
-      //     // B.drawBrowser();
-      //
-      //     // Start animation
-      //     B.animate(1, 150);
-      //
-      //     // el.addClass(loading);
-      //   }, 3000);
-      // }
-
       function updatePreloader(e, args) {
         if (!args || !args.msg) { return; }
+
+        if (args.project) {
+          calculateIncrements(args.project);
+        }
+
+        // make sure we dont animate over a previous animation
+        if (!isAnimating) {
+          isAnimating = true;
+          timer = setTimeout(function() {
+            isAnimating = false;
+          }, totalIncrement * 10);
+
+          return;
+        }
 
         title = args.msg;
 
@@ -80,6 +105,7 @@ function($rootScope, $timeout) {
           case 'Capturing Screens':
             type = 1;
             break;
+
           // case 'Updated Project History':
           //   type = 2;
           //   break;
@@ -92,14 +118,14 @@ function($rootScope, $timeout) {
         if (title !== previousTitle && B && B.animate) {
 
           // Start animation
-          B.animate(type, 30, function() {
+          B.animate(type, totalIncrement, function() {
             previousTitle = title;
           });
         }
       }
 
       function resetPreloader() {
-        el.addClass(loading);
+        B.resetBrowser();
       }
 
       // $rootScope.$on('PRELOADER:ON', showPreloader);

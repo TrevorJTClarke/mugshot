@@ -185,7 +185,9 @@ function($rootScope, $scope, $timeout, $stateParams, Projects) {
     $scope.progress.percent = parseInt(args.percent, 10);
     $scope.progress.title = (args.msg) ? args.msg : $scope.progress.title;
 
-    $rootScope.$emit('PRELOADER:UPDATE', args);
+    var preArgs = args;
+    preArgs.project = $rootScope.project;
+    $rootScope.$emit('PRELOADER:UPDATE', preArgs);
   }
 
   // signal UI of changes
