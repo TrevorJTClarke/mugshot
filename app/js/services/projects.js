@@ -218,7 +218,9 @@ function($q) {
       queuePromises.push(projectHistoryData);
 
       // do all promise operations
-      $q.all(queuePromises).then(dfdd.resolve, dfdd.reject);
+      $q.all(queuePromises).then(function() {
+        dfdd.resolve(newProjectData);
+      }, dfdd.reject);
 
       return dfdd.promise;
     },
@@ -238,13 +240,15 @@ function($q) {
       });
 
       // save the data to the projects list
-      var projectData = promiseWrite(projectFilesPath + projectData.id + '.json', projectData);
+      var projectTempData = promiseWrite(projectFilesPath + projectData.id + '.json', projectData);
       var projectAllData = promiseWrite(projectsPath, allProjects);
-      queuePromises.push(projectData);
+      queuePromises.push(projectTempData);
       queuePromises.push(projectAllData);
 
       // do all promise operations
-      $q.all(queuePromises).then(dfdd.resolve, dfdd.reject);
+      $q.all(queuePromises).then(function() {
+        dfdd.resolve(projectData);
+      }, dfdd.reject);
 
       return dfdd.promise;
     },

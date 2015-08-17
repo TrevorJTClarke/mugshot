@@ -43,7 +43,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * fix release dependencies (for packaging)
 
   * UI
-    * change projects methods to async promise all structure
+    * 
 
 
 #### Wishlist
