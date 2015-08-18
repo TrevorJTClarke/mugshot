@@ -46,7 +46,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * fix release dependencies (for packaging)
 
   * UI
-    * 
+    *
 
   * Auto Install Items
     * imagemagick
@@ -114,3 +114,6 @@ for (var i = 0; i < sheets.length; i++) {
     }
   }
 }
+
+
+window.devicePixelRatio

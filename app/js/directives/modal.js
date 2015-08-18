@@ -36,6 +36,21 @@ function($timeout, $compile, $rootScope) {
         percent: '80%'
       };
 
+      // window.ATL_JQ_PAGE_PROPS = {
+      //   triggerFunction: function(showCollectorDialog) {
+      //     //Requires that jQuery is available!
+      //     $("#funTicketTime").click(function(e) {
+      //       e.preventDefault();
+      //       showCollectorDialog();
+      //     });
+      //   },
+      //   fieldValues: {
+      //     summary: 'Visual Diff: ' + $scope.activeItem.status + ' for ' + $scope.activeItem.name,
+      //     description: 'Details:\n\n**Status:** Error',
+      //     priority: '2'
+      //   }
+      // };
+
       $scope.$watch('opacityRange.amount', function(nv, ov) {
         if (nv === ov) {return;}
 

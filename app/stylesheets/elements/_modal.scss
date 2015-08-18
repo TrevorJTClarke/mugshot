@@ -54,6 +54,23 @@
       line-height: 26px;
     }
   }
+
+  .btn.btn-create-ticket {
+    border: 1px solid $white;
+    color: $white;
+    padding: 1px 9px;
+    position: absolute;
+    right: 55px;
+    top: 9px;
+    opacity: 0.5;
+    transition: opacity 220ms ease-in-out;
+
+    &:hover {
+      border: 1px solid $white;
+      color: $white;
+      opacity: 1;
+    }
+  }
 }
 
 .modal-viewer {

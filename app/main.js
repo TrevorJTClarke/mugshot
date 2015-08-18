@@ -8,6 +8,7 @@ var BrowserWindow = require('browser-window');
 var paths = require('../app/core/paths')(__dirname);
 var screener = require('../app/core/screencap');
 var compare = require('../app/core/compare');
+var test = require('../app/core/selenium-test');
 var windowStateKeeper = require('./vendor/core/window_state');
 var windowMenus = require('./vendor/core/menus');
 
