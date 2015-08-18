@@ -39,30 +39,44 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
+    * Selenium webdriver (IE, FF, CH)
+      * get base Selenium running
+      * test different scenarios
     * use diff threshold from settings
     * fix release dependencies (for packaging)
 
   * UI
-    *
+    * 
 
+  * Auto Install Items
+    * imagemagick
+    * Selenium (and drivers)
+    * node dependencies?
 
 #### Wishlist
 
-  * Selenium webdriver (IE, FF, SF, CH)
-  * Submit Jira ticket
+  * (!!) Amplitude Integration
+  * (!!) Submit Jira ticket
     * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
       /jira-rest-api-tutorials/jira-rest-api-example-create-issue
-  * Amplitude Integration
-  * Github Integration
+  * (!!) go back in history and view batch
+  * (!!!) see results with historical graphs
+  * (!!!) Capture Console Logger
+  * (!!!) Github Integration
     * Project/User sharing (Auth + Sessions)
     * Run a repo
       * Choose branches to run between
-  * Local no-server testing
-  * Record User Actions
-  * Capture Console Logger
-  * Modal with device view
-  * go back in history and view batch
-  * see results with historical graphs
+  * (!!!!) Local no-server testing
+  * (!!!!) Record User Actions
+  * (!!!!) Modal with device view
+  * (!!!!) auto-detect media queries
+
+#### Jira Integration Notes
+
+  * Need to create:
+    * Login
+    * Find Project Id, issuetype Id
+    * Figure out how to attach screenshots hosted in S3
 
 
 #### Helpful
@@ -87,3 +101,16 @@ __dirname+'/../node/bin'
 
 
 electron-packager . 'MyApp' --platform=darwin --arch=x64 --version=0.29.2 --ignore=node_modules/electron-* --ignore=node_modules/gulp* --ignore=bower_components --ignore=client && cp atom.icns 'MyApp-darwin-x64/MyApp.app/Contents/Resources/atom.icns'
+
+
+var sheets = document.styleSheets;
+
+for (var i = 0; i < sheets.length; i++) {
+  var rules = sheets[i].cssRules;
+
+  for (var i = 0; i < rules.length; i++) {
+    if (rules[i].media) {
+      console.log('rules[i].media', rules[i].media);
+    }
+  }
+}
