@@ -2,6 +2,17 @@
  * Browser flow
  * the process of controlling the flow of automated browser, basically the meat of the selenium runner
  */
+var fs = require('fs');
+var Q = require('q');
+var webdriver = require('selenium-webdriver');
+var chrome = require('selenium-webdriver/chrome');
+var firefox = require('selenium-webdriver/firefox');
+var path = require('chromedriver').path;
+var until = require('selenium-webdriver').until;
+var By = require('selenium-webdriver').By;
+var Projects = require('../projects');
+var Browsers = require('./browsers');
+var Devices = require('./devices');
 
 var browserFlow = function() {
 
@@ -113,10 +124,51 @@ var browserFlow = function() {
   };
 
   /**
+   * the main instance of the selenium driver
+   */
+  this.driver = null;
+
+  /**
    * RUNNNNNNNNNNNNN
    */
   this.start = function() {
+    var _d = Q.defer();
 
+    var activeDevice = Devices.getDevice('mobile', 6);
+    activeDevice.ratio = 2;
+
+    var service = new chrome.ServiceBuilder(path).build();
+    chrome.setDefaultService(service);
+
+    this.driver = new webdriver.Builder()
+      .forBrowser(Browsers.chrome)
+      .setChromeOptions(new chrome.Options()
+        .setMobileEmulation({ deviceName: activeDevice.name })
+      )
+      .build();
+    this.driver.get('http://www.google.com');
+
+    var element = this.driver.findElement(webdriver.By.name('q'));
+    element.sendKeys('Cheese!');
+    element.submit();
+
+    this.driver.getTitle().then(function(title) {
+      console.log('Page title is: ' + title);
+    });
+
+    this.driver.wait(function() {
+      return this.driver.getTitle().then(function(title) {
+        return title.toLowerCase().lastIndexOf('cheese!', 0) === 0;
+      });
+    }, 3500);
+
+    this.finish();
+
+    return _d.promise;
+  };
+
+  this.finish = function() {
+    this.driver.quit();
   };
 
   return this;
