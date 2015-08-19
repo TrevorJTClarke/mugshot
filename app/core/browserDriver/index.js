@@ -25,10 +25,10 @@ var browserDriver = function() {
     return dfd.promise;
   };
 
-  this.run = function() {
+  this.run = function(cwd) {
     console.log('run time yo');
 
-    return browserFlow.start();
+    return browserFlow.start(cwd);
   };
 
   return this;

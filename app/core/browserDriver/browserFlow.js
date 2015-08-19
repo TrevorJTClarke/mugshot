@@ -5,9 +5,10 @@
 var fs = require('fs');
 var Q = require('q');
 var webdriver = require('selenium-webdriver');
+var SeleniumServer = require('selenium-webdriver/remote').SeleniumServer;
 var chrome = require('selenium-webdriver/chrome');
 var firefox = require('selenium-webdriver/firefox');
-var path = require('chromedriver').path;
+var chromepath = require('chromedriver').path;
 var until = require('selenium-webdriver').until;
 var By = require('selenium-webdriver').By;
 var Projects = require('../projects');
@@ -126,18 +127,29 @@ var browserFlow = function() {
   /**
    * the main instance of the selenium driver
    */
-  this.driver = null;
+  this.Stack = function () {
+
+    this.loopDevices = function() {
+
+    };
+
+    this.loopCookies = function() {
+
+    };
+
+    return this;
+  };
 
   /**
    * RUNNNNNNNNNNNNN
    */
-  this.start = function() {
+  this.start = function(cwd) {
     var _d = Q.defer();
 
     var activeDevice = Devices.getDevice('mobile', 6);
     activeDevice.ratio = 2;
 
-    var service = new chrome.ServiceBuilder(path).build();
+    var service = new chrome.ServiceBuilder(chromepath).build();
     chrome.setDefaultService(service);
 
     this.driver = new webdriver.Builder()

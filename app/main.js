@@ -27,10 +27,12 @@ var mainWindowState = windowState('main', {
 });
 
 console.log('-----------------------------\ntesting browserDriver module\n-----------------------------');
-browserDriver.init('reference', '1KNspdPuCeJm', process.cwd())
+
+var wd = process.cwd();
+browserDriver.init('reference', '1KNspdPuCeJm', wd)
   .then(function(res) {
     console.log('res', res);
-    browserDriver.run();
+    browserDriver.run(wd);
   },
 
   function(err) {
