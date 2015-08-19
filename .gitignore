@@ -2,3 +2,8 @@ node_modules
 build/*
 releases/*
 app/screens/reference/*
+newLog.log
+
+*.log
+
+app/data/*

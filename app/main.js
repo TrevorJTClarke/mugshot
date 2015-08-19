@@ -5,15 +5,13 @@ var app = require('app');
 var ipc = require('ipc');
 var gulp  = require('gulp');
 var BrowserWindow = require('browser-window');
-var paths = require('../app/core/paths')(__dirname);
-var screener = require('../app/core/screencap');
-var compare = require('../app/core/compare');
-var test = require('../app/core/selenium-test');
-var windowStateKeeper = require('./vendor/core/window_state');
-var windowMenus = require('./vendor/core/menus');
+var paths = require('./core/paths')(__dirname);
+var windowState = require('./core/window_state');
+var windowMenus = require('./core/menus');
+var browserDriver = require('./core/browserDriver/index');
 
 // adds gulp tasks available
-require('require-dir')(paths.core, { recurse: true }); //paths.core
+// require('require-dir')(paths.core, { recurse: true }); //paths.core
 
 // TODO: assess these
 // var env = require('./vendor/electron_boilerplate/env_config');
@@ -23,7 +21,7 @@ require('require-dir')(paths.core, { recurse: true }); //paths.core
 var mainWindow;
 
 // Preserver of the window size and position between app launches.
-var mainWindowState = windowStateKeeper('main', {
+var mainWindowState = windowState('main', {
   width: 900,
   height: 575,
 });
@@ -37,22 +35,22 @@ ipc.on('RUNNER:FIRE', function(e, args) {
   // Store the __dirname so the CHILDPROCESS can use
   fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: args.type }));
 
-  // start the Screenshot process
-  screener[method](args.projectId, function(err, res) {
-    if (err) {
-      console.log('err', err);
-      return;
-    }
-
-    if (args.type !== 'reference') {
-      console.log('Compare Diff Start', res.currentBatch);
-      compare.runBatch(res, function() {
-        mainWindow.webContents.send('RUNNER:COMPLETE');
-      });
-    } else {
-      mainWindow.webContents.send('RUNNER:COMPLETE');
-    }
-  });
+  // // start the Screenshot process
+  // screener[method](args.projectId, function(err, res) {
+  //   if (err) {
+  //     console.log('err', err);
+  //     return;
+  //   }
+  //
+  //   if (args.type !== 'reference') {
+  //     console.log('Compare Diff Start', res.currentBatch);
+  //     compare.runBatch(res, function() {
+  //       mainWindow.webContents.send('RUNNER:COMPLETE');
+  //     });
+  //   } else {
+  //     mainWindow.webContents.send('RUNNER:COMPLETE');
+  //   }
+  // });
 });
 
 /**
