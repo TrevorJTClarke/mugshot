@@ -39,10 +39,9 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
-    * Selenium webdriver (IE, FF, CH)
-      * get base Selenium running
-      * test different scenarios
-    * use diff threshold from settings
+    * build out Selenium within the browserDriver module
+      * use diff threshold from settings
+      * delete all $$hashKey references
     * fix release dependencies (for packaging)
 
   * UI

@@ -26,14 +26,25 @@ var mainWindowState = windowState('main', {
   height: 575,
 });
 
+console.log('-----------------------------\ntesting browserDriver module\n-----------------------------');
+browserDriver.init('reference', '1KNspdPuCeJm', process.cwd())
+  .then(function(res) {
+    console.log('res', res);
+    browserDriver.run();
+  },
+
+  function(err) {
+    console.log('browserDriver err', err);
+  });
+
 // wait for the runner events
 ipc.on('RUNNER:FIRE', function(e, args) {
   if (!args || !args.type) { return; }
 
-  var method = (args.type === 'reference') ? 'createReference' : 'createCompare';
-
-  // Store the __dirname so the CHILDPROCESS can use
-  fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: args.type }));
+  // var method = (args.type === 'reference') ? 'createReference' : 'createCompare';
+  //
+  // // Store the __dirname so the CHILDPROCESS can use
+  // fs.writeFile(paths.dirConfig, JSON.stringify({ dirname: paths.dirname, type: args.type }));
 
   // // start the Screenshot process
   // screener[method](args.projectId, function(err, res) {

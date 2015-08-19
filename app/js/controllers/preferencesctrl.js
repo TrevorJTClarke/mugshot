@@ -1,5 +1,5 @@
 var fs = require('fs');
-var AWS = require('./vendor/core/aws');
+var AWS = require('./core/aws');
 
 MUG.controller('PreferencesCtrl',
 ['$rootScope', '$scope', '$state',

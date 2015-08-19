@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-var AWS = require('./vendor/core/aws');
+var AWS = require('./core/aws');
 
 MUG.factory('Projects',
 ['$q',

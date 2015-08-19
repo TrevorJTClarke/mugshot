@@ -31,8 +31,9 @@ function pathsModule(_dirname) {
     return paths[type] + '/' + projectId;
   };
 
-  paths.getProjectConfig = function(projectId) {
-    return paths.projects + '/' + projectId + '.json';
+  paths.getProjectConfig = function(projectId, type) {
+    type = (type) ? '_' + type : '';
+    return _dirname.replace('/core', '') + '/data/projects/' + projectId + type + '.json';
   }
 
   return paths;

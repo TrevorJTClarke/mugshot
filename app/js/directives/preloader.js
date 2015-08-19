@@ -9,7 +9,7 @@
  * $rootScope.$broadcast('PRELOADER:OFF');
  *
  */
-var P = require('./vendor/core/preloader');
+var P = require('./core/preloader');
 
 MUG.directive('preloader',
 ['$rootScope', '$timeout',
