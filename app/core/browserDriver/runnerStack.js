@@ -25,7 +25,7 @@ var Browsers = require('./browsers');
  */
 var runnerStack = function() {
 
-  var driver = null;
+  this.driver = null;
   this.device = null;
   this.project = null;
   this.cwd = null;
@@ -43,6 +43,11 @@ var runnerStack = function() {
     this.type = options.type || null;
     console.log('HERE', device.name);
 
+    var flow = new webdriver.promise.ControlFlow()
+        .on('uncaughtException', function(e) {
+          console.log('uncaughtException in flow', e);
+        });
+
     // Only chrome needs this extra config
     if (browser === 'chrome') {
       service = new chrome.ServiceBuilder(chromepath).build();
@@ -51,16 +56,18 @@ var runnerStack = function() {
 
     // setup based on device
     if (_this.device.emulate === true) {
-      driver = new webdriver.Builder()
+      this.driver = new webdriver.Builder()
         .forBrowser('chrome')
         .setChromeOptions(
           new chrome.Options()
           .setMobileEmulation({ deviceName: _this.device.name })
         )
+        .setControlFlow(flow)
         .build();
     } else {
-      driver = new webdriver.Builder()
+      this.driver = new webdriver.Builder()
         .forBrowser(browser)
+        .setControlFlow(flow)
         .build();
     }
 
@@ -69,11 +76,15 @@ var runnerStack = function() {
     this.loadUrl();
     this.loadCookies();
 
+    // testing
     setTimeout(function() {
-      console.log('kill it', driver);
-      // _this.finish();
-      driver.quit();
-      __Z.resolve();
+      console.log('end it');
+      _this.driver.quit();
+
+      setTimeout(function() {
+        console.log('kill it');
+        __Z.resolve();
+      }, 2000);
     }, 4000);
 
     return __Z.promise;
@@ -82,26 +93,31 @@ var runnerStack = function() {
   this.loadWindowSize = function() {
     var _this = this;
     var offset = (_this.device.emulate === true) ? 150 : 0;
-    driver.manage().window().setSize(_this.device.width + offset, _this.device.height + offset);
+
+    // driver.manage().window().setPosition(300 * i, 400 * i);
+    this.driver.manage().window().setSize(_this.device.width + offset, _this.device.height + offset);
   };
 
   // NOTE: this may need to be extended to multiple urls
   this.loadUrl = function() {
     var _this = this;
-    driver.get(_this.project.meta.url);
+    this.driver.get(_this.project.meta.url);
   };
 
   this.loadCookies = function() {
+    var _this = this;
     var cookies = this.project.cookies || [];
 
     for (var i = 0; i < cookies.length; i++) {
       var cookie = cookies[i];
 
       if (cookie && cookie.active === true) {
-        driver.manage().addCookie(cookie.name, cookie.value);
+        _this.driver.manage().addCookie(cookie.name, cookie.value, null, cookie.path);
         console.log('COOKIE', cookie.name, cookie.active);
       }
     }
+
+    console.log('cookies', _this.driver.manage().getCookies());
   };
 
   this.loadSelectors = function() {
@@ -114,7 +130,7 @@ var runnerStack = function() {
   };
 
   this.finish = function() {
-    driver.quit();
+    this.driver.quit();
   };
 
   return this;
