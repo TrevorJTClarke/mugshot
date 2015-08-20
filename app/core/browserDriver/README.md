@@ -23,7 +23,7 @@
       * add selectors
       * add cookies
       * add urls (?)
-    * Capture/Reference Procedure
+    * Capture/Reference Procedure Loop
       1. Config browser, general settings, and device
       2. Open url
       3. Set Cookies

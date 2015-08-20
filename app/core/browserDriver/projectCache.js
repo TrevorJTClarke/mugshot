@@ -18,6 +18,10 @@ var projectCache = function() {
     var currentProject = Projects.getById(projectId);
     var projectPath = Projects.getPathForId(projectId);
 
+    if (!cwd) {
+      _d.reject("ouch");
+    }
+
     // quick minor updates, based on the type
     if (type === 'reference') {
       currentProject.currentReference = (currentProject.currentBatch > 0 && currentProject.currentBatch > currentProject.currentReference) ? currentProject.currentBatch + 1 : (typeof currentProject.currentReference !== undefined || currentProject.currentReference === null) ? 0 : currentProject.currentReference + 1;
@@ -28,11 +32,14 @@ var projectCache = function() {
     // final minor updates
     currentProject.timestamp = (+new Date);
 
+    var dirDataPath = cwd + dirConfigPath;
+    var activeDataPath = cwd + activeProjectPath;
+
     // save the dirConfig with type and cwd
-    fs.writeFile(cwd + dirConfigPath, JSON.stringify({ dirname: cwd, type: type }));
+    fs.writeFile(dirDataPath, JSON.stringify({ dirname: cwd, type: type }));
 
     // Save the current state, so generator can pick up needed data
-    fs.writeFile(cwd + activeProjectPath, JSON.stringify(currentProject), function(err) {
+    fs.writeFile(activeDataPath, JSON.stringify(currentProject), function(err) {
       if (err) {
         console.log('err', err);
         _d.reject(err);

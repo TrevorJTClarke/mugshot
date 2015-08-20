@@ -3,32 +3,27 @@ var Q = require('q');
 var ProjectCache = require('./projectCache');
 var browserFlow = require('./browserFlow');
 
-var browserDriver = function() {
+var ccwd;
 
-  this.project = {};
-  this.projectId = '';
-  this.runType = 'reference';
+var browserDriver = function() {
 
   this.init = function(type, projectId, cwd) {
     var dfd = Q.defer();
-    var _this = this;
+    ccwd = cwd || ccwd;
 
-    ProjectCache.setup(type, projectId, cwd)
+    ProjectCache.setup(type, projectId, ccwd)
       .then(function(projectData) {
-        _this.runType = type;
-        _this.project = projectData;
-        _this.projectId = projectData.id;
 
+        browserFlow.start({
+          cwd: ccwd,
+          type: type,
+          project: projectData,
+          projectId: projectData.id
+        });
         dfd.resolve();
       }, dfd.reject);
 
     return dfd.promise;
-  };
-
-  this.run = function(cwd) {
-    console.log('run time yo');
-
-    return browserFlow.start(cwd);
   };
 
   return this;
