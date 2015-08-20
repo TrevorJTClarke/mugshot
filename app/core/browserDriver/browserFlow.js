@@ -4,7 +4,7 @@
  */
 var fs = require('fs');
 var Q = require('q');
-var runnerStack = require('./runnerStack');
+var RunnerStack = require('./runnerStack');
 var Devices = require('./devices');
 
 var browserFlow = function() {
@@ -21,11 +21,16 @@ var browserFlow = function() {
     for (var i = 0; i < project.viewports.length; i++) {
       var view = project.viewports[i];
       var deviceData = Devices.getByName(view.name);
-      console.log('view.name', view.name, deviceData);
 
       // TODO: enqueue all the things
-      runnerStack().start({}, data);
+      var rn = new RunnerStack();
+      var runnerItem = rn.start('chrome', deviceData, data);
+      allPromises.push(runnerItem);
     }
+
+    // this is TEMP
+    Q.all(allPromises);
+
 
     // return Q.promise(function(resolve, reject, notify) {
     //

@@ -14,7 +14,6 @@ var By = require('selenium-webdriver').By;
 var Projects = require('../projects');
 var Browsers = require('./browsers');
 
-
 /**
  * the main instance of the selenium driver
  *
@@ -24,38 +23,88 @@ var Browsers = require('./browsers');
  * - capture selectors
  * - send progress
  */
-var runnerStack = function () {
+var runnerStack = function() {
 
-  this.driver = null;
-  this.options = null;
+  var driver = null;
+  this.device = null;
+  this.project = null;
+  this.cwd = null;
+  this.type = null;
+  var service = null;
 
   // Setup the device/browser and all base settings
-  this.start = function(device, options) {
-    this.options = options || null;
+  this.start = function(browser, device, options) {
+    var __Z = Q.defer();
+    var _this = this;
+    this.browser = browser || null;
+    this.device = device || null;
+    this.project = options.project || null;
+    this.cwd = options.cwd || null;
+    this.type = options.type || null;
+    console.log('HERE', device.name);
 
-    var service = new chrome.ServiceBuilder(chromepath).build();
-    chrome.setDefaultService(service);
+    // Only chrome needs this extra config
+    if (browser === 'chrome') {
+      service = new chrome.ServiceBuilder(chromepath).build();
+      chrome.setDefaultService(service);
+    }
 
-    this.driver = new webdriver.Builder()
-      .forBrowser('chrome')
-      .setChromeOptions(new chrome.Options()
-        .setMobileEmulation({ deviceName: 'Apple iPhone 5' })
-      )
-      .build();
+    // setup based on device
+    if (_this.device.emulate === true) {
+      driver = new webdriver.Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(
+          new chrome.Options()
+          .setMobileEmulation({ deviceName: _this.device.name })
+        )
+        .build();
+    } else {
+      driver = new webdriver.Builder()
+        .forBrowser(browser)
+        .build();
+    }
 
-    console.log('STCK INIT');
+    // Setup all params
+    this.loadWindowSize();
+    this.loadUrl();
+    this.loadCookies();
 
-    this.driver.manage().window().setSize(320, 620);
-    this.driver.get('http://www.google.com/ncr');
+    setTimeout(function() {
+      console.log('kill it', driver);
+      // _this.finish();
+      driver.quit();
+      __Z.resolve();
+    }, 4000);
 
-    this.finish();
+    return __Z.promise;
   };
 
-  this.loopCookies = function() {
-    this.driver.manage().addCookie(cookie1.name, cookie1.value);
+  this.loadWindowSize = function() {
+    var _this = this;
+    var offset = (_this.device.emulate === true) ? 150 : 0;
+    driver.manage().window().setSize(_this.device.width + offset, _this.device.height + offset);
   };
 
-  this.loopSelectors = function() {
+  // NOTE: this may need to be extended to multiple urls
+  this.loadUrl = function() {
+    var _this = this;
+    driver.get(_this.project.meta.url);
+  };
+
+  this.loadCookies = function() {
+    var cookies = this.project.cookies || [];
+
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+
+      if (cookie && cookie.active === true) {
+        driver.manage().addCookie(cookie.name, cookie.value);
+        console.log('COOKIE', cookie.name, cookie.active);
+      }
+    }
+  };
+
+  this.loadSelectors = function() {
     // driver.findElement(By.name('q')).sendKeys('webdriver');
     // driver.findElement(By.name('btnG')).click();
   };
@@ -65,7 +114,7 @@ var runnerStack = function () {
   };
 
   this.finish = function() {
-    this.driver.quit();
+    driver.quit();
   };
 
   return this;
