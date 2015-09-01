@@ -14,7 +14,7 @@ var browserDriver = function() {
     ProjectCache.setup(type, projectId, ccwd)
       .then(function(projectData) {
 
-        browserFlow.start({
+        browserFlow({
           cwd: ccwd,
           type: type,
           project: projectData,

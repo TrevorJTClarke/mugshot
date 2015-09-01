@@ -39,13 +39,30 @@ This app is focussed on delivering a simple UI to visual regression testing.
 #### TODO:
 
   * Backend
+    * Setup control flow:
+      * Get Webpage:
+        1. set all cookies
+        2. then refresh
+        3. resize to fit dimensions
+        4. take snapshot of whole page
+        5. get all element dimensions and positions
+        6. crop images to areas of elements
+        7. if more sizes, repeat 3 - 5
     * build out Selenium within the browserDriver module
       * use diff threshold from settings
       * delete all $$hashKey references
     * fix release dependencies (for packaging)
+    * Optimizations: pageLoadTimeout, setScriptTimeout
+    * For window sizing, getSize(), this will allow for pixel density calc
+    * webdriver.WebElement.prototype.getDriver
+    * webdriver.WebElement.prototype.getLocation
 
   * UI
     *
+
+    element.sendKeys("text was",
+      webdriver.Key.chord(webdriver.Key.CONTROL, "a"),
+      "now text is");
 
   * Auto Install Items
     * imagemagick
