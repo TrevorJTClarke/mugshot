@@ -52,13 +52,14 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * use diff threshold from settings
       * delete all $$hashKey references
     * fix release dependencies (for packaging)
+  * Methods Notes:  
     * Optimizations: pageLoadTimeout, setScriptTimeout
     * For window sizing, getSize(), this will allow for pixel density calc
     * webdriver.WebElement.prototype.getDriver
     * webdriver.WebElement.prototype.getLocation
 
   * UI
-    *
+    * Setup thumbnail for project main url (Sidepanel)
 
     element.sendKeys("text was",
       webdriver.Key.chord(webdriver.Key.CONTROL, "a"),
