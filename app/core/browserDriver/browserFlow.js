@@ -5,7 +5,8 @@
 var fs = require('fs');
 var Q = require('q');
 var SeleniumServer = require('selenium-webdriver/remote').SeleniumServer;
-var chrome = require('selenium-webdriver/chrome');
+
+// var chrome = require('selenium-webdriver/chrome');
 var chromepath = require('chromedriver').path;
 var firefox = require('selenium-webdriver/firefox');
 var webdriver = require('selenium-webdriver');
@@ -13,7 +14,6 @@ var until = webdriver.until;
 var By = webdriver.By;
 var RunnerStack = require('./runnerStack');
 var Devices = require('./devices');
-console.log('chrome, chromepath', chrome, chromepath);
 
 // Combines all browsers, viewport sizes, and urls into a singular list
 function formatProjectData(project) {
@@ -35,7 +35,7 @@ function formatProjectData(project) {
         var stratData = {
           browser: browser,
           device: device,
-          url: url
+          url: url,
         };
 
         strategies[tmpName] = stratData;
@@ -46,20 +46,18 @@ function formatProjectData(project) {
   // convert from obj to array
   var finalArray = [];
   for (var k in strategies) {
-      finalArray.push(strategies[k]);
+    finalArray.push(strategies[k]);
   }
 
   // let the module use a better formatted array
   return finalArray;
 }
 
-
 var browserFlow = function(data) {
   var _z = Q.defer();
 
   // TODO: goals:
-  // - set the device,browser,url,cookies
-  // - wait till all cookies are there, then refresh
+  // - Finish multi session with chrome
   // - queue the rest (window size, elements, etc)
   /**
    * RUNNNNNNNNNNNNN
@@ -70,7 +68,7 @@ var browserFlow = function(data) {
   var project = data.project;
 
   if (!project.urls || project.urls.length < 1) {
-    _z.reject("Please specify urls in project configuration!");
+    _z.reject('Please specify urls in project configuration!');
     return;
   }
 
@@ -81,15 +79,20 @@ var browserFlow = function(data) {
   }
 
   var captureSchema = formatProjectData(project);
-  console.log('captureSchema', captureSchema.length, '\n\n');
 
-  for (var i = 0; i < captureSchema.length; i++) {
+  // Loop through all schemas (schemi?)
+  for (var f = 0; f < captureSchema.length; f++) {
     (function(n) {
+      console.log('n', n);
+      var chrome = null;
       var service = null;
-      var driver;
+      var driver = null;
       var schema = captureSchema[n];
-  console.log('here', n, '\n', schema);
-      // if (schema.browser === 'chrome') { return; }
+
+      // if (schema.browser !== 'chrome') { return; }
+      if (!schema.device.emulate) { return; }
+
+      // console.log('schema.browser EMULATE', schema);
       var flow = new webdriver.promise.ControlFlow()
           .on('uncaughtException', function(e) {
             console.log('uncaughtException in flow %d: %s', n, e);
@@ -97,34 +100,34 @@ var browserFlow = function(data) {
 
       // Only chrome needs this extra config
       if (schema.browser && schema.browser === 'chrome') {
+        chrome = require('selenium-webdriver/chrome');
         service = new chrome.ServiceBuilder(chromepath).build();
         chrome.setDefaultService(service);
-        console.log('chrome');
       }
 
       // setup based on device
-      if (schema.device.emulate && schema.device.emulate === true) {
-        console.log('schema.browser EMULATE', schema.device.name);
+      if (schema.device.hasOwnProperty('emulate') && schema.device.emulate === true) {
+        console.log('schema.browser EMULATE', schema.device.name, schema.url);
+
         driver = new webdriver.Builder()
           .forBrowser(schema.browser)
           .setChromeOptions(
             new chrome.Options()
             .setMobileEmulation({
-              deviceName: schema.device.name
+              deviceName: schema.device.name,
             })
           )
           .setControlFlow(flow)
           .build();
       } else {
-        console.log('schema.browser', schema.browser);
         driver = new webdriver.Builder()
           .forBrowser(schema.browser)
           .setControlFlow(flow)
           .build();
       }
 
+      // Request initial session
       driver.get(schema.url);
-      driver.manage().window().setSize(schema.device.width, schema.device.height);
 
       // set all cookies
       var cookies = project.cookies || [];
@@ -138,9 +141,11 @@ var browserFlow = function(data) {
 
       // refresh with the cookies in place
       driver.get(schema.url);
+      driver.manage().window().setSize(schema.device.width, schema.device.height);
+      console.log('HERES');
 
       driver.quit();
-    })(i);
+    })(f);
   }
 
   return _z.promise;

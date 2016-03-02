@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "asar": "^0.6.1",
-    "electron-prebuilt": "^0.26.1",
+    "electron-prebuilt": "^0.36.9",
     "esperanto": "^0.6.17",
     "fs-jetpack": "^0.6.4",
     "gulp": "^3.8.8",
@@ -30,5 +30,8 @@
     "release": "./node_modules/.bin/gulp release --env=production",
     "start": "node ./tasks/start",
     "test": "node ./tasks/start --env=test"
+  },
+  "dependencies": {
+    "node-sass": "^3.4.2"
   }
 }

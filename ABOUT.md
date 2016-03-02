@@ -41,13 +41,13 @@ This app is focussed on delivering a simple UI to visual regression testing.
   * Backend
     * Setup control flow:
       * Get Webpage:
-        1. set all cookies
-        2. then refresh
-        3. resize to fit dimensions
-        4. take snapshot of whole page
-        5. get all element dimensions and positions
-        6. crop images to areas of elements
-        7. if more sizes, repeat 3 - 5
+        1. [x] set all cookies
+        2. [x] then refresh
+        3. [x] resize to fit dimensions
+        4. [ ] take snapshot of whole page
+        5. [ ] get all element dimensions and positions
+        6. [ ] crop images to areas of elements
+        7. [x] if more sizes, repeat 3 - 5
     * build out Selenium within the browserDriver module
       * use diff threshold from settings
       * delete all $$hashKey references
