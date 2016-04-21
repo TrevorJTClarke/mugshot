@@ -48,8 +48,7 @@ input,
   background: transparent;
   border: 0px;
   border-bottom: 1px solid #f2f0f0; }
-  .list-group-item:first-child,
-  .list-group-item:last-child {
+  .list-group-item:first-child, .list-group-item:last-child {
     border-radius: 0; }
   .list-group-item:last-child {
     border: 0; }
@@ -1279,8 +1278,7 @@ input,
     border-bottom: 2px solid transparent; }
     .tabs .btn-tab:hover {
       border-bottom-color: #f2f0f0; }
-    .tabs .btn-tab:active,
-    .tabs .btn-tab:focus {
+    .tabs .btn-tab:active, .tabs .btn-tab:focus {
       box-shadow: 0 0 0;
       outline: 0; }
     .tabs .btn-tab.tab-active {
@@ -1296,7 +1294,7 @@ input,
   background: transparent;
   border-radius: 4px;
   color: #3b4655;
-  padding: 0.1em 0.4em 0.2em;
+  padding: .1em .4em .2em;
   margin-right: 4px; }
   .label i {
     font-size: 11px; }
@@ -1396,7 +1394,7 @@ input,
   padding: 8px 10px 10px;
   position: absolute;
   left: -84px;
-  font: normal 12px/14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: normal 12px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
   text-align: left;
   z-index: 1070;
   height: 0;
@@ -1821,8 +1819,7 @@ input[type=range] {
     background: transparent;
     border-bottom: 2px solid transparent;
     border-radius: 2px; }
-    .modal-viewer .btn-option:hover,
-    .modal-viewer .btn-option:focus {
+    .modal-viewer .btn-option:hover, .modal-viewer .btn-option:focus {
       border-bottom: 2px solid #505859;
       color: #FFFFFF; }
     .modal-viewer .btn-option.btn-active {
