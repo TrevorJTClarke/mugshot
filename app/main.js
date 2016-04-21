@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var app = require('app');
-var ipc = require('ipc');
+var ipc = require('electron').ipcMain;
 var gulp  = require('gulp');
 var BrowserWindow = require('browser-window');
 var paths = require('./core/paths')(__dirname);

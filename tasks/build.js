@@ -79,7 +79,7 @@ gulp.task('templates', ['clean'], function() {
 // -------------------------------------
 
 gulp.task('clean', function(callback) {
-  return destDir.dirAsync('.', { empty: true });
+  // return destDir.dirAsync('.', { empty: true });
 });
 
 var copyTask = function() {
