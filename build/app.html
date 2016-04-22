@@ -1,0 +1,112 @@
+<!doctype html>
+<html ng-app="mugshot">
+<head>
+<base href="">
+<meta charset="utf-8">
+<title>Mugshot</title>
+
+<link href="stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/mug.css" rel="stylesheet" type="text/css">
+<script src="vendor/angular.min.js"></script>
+<script src="vendor/angular-ui-router.min.js"></script>
+
+<!-- <script src="vendor/electron_boilerplate/context_menu.js"></script> -->
+<!-- <script src="vendor/electron_boilerplate/external_links.js"></script> -->
+
+</head>
+<body>
+  <svg style="display:none;" svg-title="Frame Button Icons">
+    <symbol id="frame-close" viewBox="0 0 32 32">
+      <path fill="#333333" d="M18.333,16l8.891-8.891c0.645-0.645,0.645-1.689,0-2.333c-0.645-0.645-1.689-0.645-2.333,0L16,13.667L7.109,4.775 c-0.645-0.645-1.689-0.645-2.333,0c-0.645,0.644-0.645,1.689,0,2.333L13.667,16l-8.891,8.891c-0.645,0.644-0.645,1.689,0,2.333 c0.322,0.322,0.744,0.483,1.167,0.483s0.844-0.161,1.167-0.483L16,18.333l8.891,8.891c0.322,0.322,0.745,0.483,1.167,0.483 c0.422,0,0.845-0.161,1.167-0.483c0.645-0.644,0.645-1.689,0-2.333L18.333,16z"/>
+    </symbol>
+    <symbol id="frame-minimize" viewBox="0 0 32 32">
+      <path fill="#333333" d="M27.738,17.65H4.261c-0.742,0-1.345-0.739-1.345-1.65s0.603-1.65,1.345-1.65h23.477c0.743,0,1.345,0.739,1.345,1.65 S28.481,17.65,27.738,17.65z"/>
+    </symbol>
+    <symbol id="frame-maximize" viewBox="0 0 32 32">
+      <path fill="#333333" d="M4.525,24.657c0,1.849,0.702,2.805,2.805,2.805h13.517L4.525,10.121V24.657z"/>
+      <path fill="#333333" d="M24.67,4.537H11.153l16.322,17.342V7.343C27.476,5.494,26.774,4.537,24.67,4.537z"/>
+    </symbol>
+  </svg>
+
+  <div class="frame">
+    <div class="action-nav">
+      <div core-frame="close" class="dni exit">
+        <svg class="frame-close" viewBox="0 0 12 12">
+          <use xlink:href="#frame-close"></use>
+        <svg>
+      </div>
+      <div core-frame="minimize" class="dni minimize">
+        <svg class="frame-minimize" viewBox="0 0 12 12">
+          <use xlink:href="#frame-minimize"></use>
+        <svg>
+      </div>
+      <div core-frame="maximize" class="dni maximize">
+        <svg class="frame-maximize" viewBox="0 0 12 12">
+          <use xlink:href="#frame-maximize"></use>
+        <svg>
+      </div>
+    </div>
+    <div class="left-nav">
+
+    </div>
+    <div class="middle-nav">
+      <div class="logo">Mugshot</div>
+    </div>
+    <div class="right-nav">
+      <div class="btn btn-frame" ui-sref="preferences">
+        <i class="octicon octicon-gear"></i>
+      </div>
+    </div>
+    <alert></alert>
+  </div>
+  <div class="super" ng-controller="MainCtrl">
+
+    <div ng-controller="SidePanelCtrl" class="side-panel">
+
+      <div class="panel-nav">
+        <button class="btn btn-right" ng-click="createNewProject()">+</button>
+        <h3>Projects</h3>
+      </div>
+
+      <div class="panel-projects">
+        <ul class="list-group" ng-cloak>
+          <li class="list-group-item" ng-class="{'list-item-active': project.id == currentProjectId }" ng-repeat="project in projects" ng-click="goToProject(project.id)">
+            <h4 class="list-group-item-heading">{{project.title}}</h4>
+            <p class="list-group-item-text" ng-show="project.totals.success || project.totals.warning || project.totals.error || project.totals.views">
+              <span class="label label-success" ng-if="project.totals.success"><i class="octicon octicon-diff-added"></i> {{project.totals.success}}</span>
+              <span class="label label-warning" ng-if="project.totals.warning"><i class="octicon octicon-diff-ignored"></i> {{project.totals.warning}}</span>
+              <span class="label label-error" ng-if="project.totals.error"><i class="octicon octicon-diff-removed"></i> {{project.totals.error}}</span>
+              <span class="label" ng-if="project.totals.views"><i class="octicon octicon-eye"></i> {{project.totals.views}}</span>
+            </p>
+            <p class="list-group-item-text" ng-hide="project.totals.success || project.totals.warning || project.totals.error || project.totals.views">
+              <span class="label"><i class="octicon octicon-checklist"></i> Ready to test!</span>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="main-container" ui-view></div>
+
+  </div>
+
+  <modal></modal>
+
+<script src="core/frame.js"></script>
+<script src="dist/js/templates.js"></script>
+<script src="dist/js/mug.js"></script>
+<!-- <script type="text/javascript" src="https://billabong.atlassian.net/s/8944f99e8555cdbd89f0ae370902667a-T/en_US-mj92z8/70101/143/2.0.6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=ceaa063b"></script> -->
+
+<script type="text/javascript">
+  (function(e,t){var r=e.amplitude||{};var n=t.createElement("script");n.type="text/javascript";
+  n.async=true;n.src="https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-2.2.0-min.gz.js";
+  var s=t.getElementsByTagName("script")[0];s.parentNode.insertBefore(n,s);r._q=[];
+  function a(e){r[e]=function(){r._q.push([e].concat(Array.prototype.slice.call(arguments,0)));
+  }}var i=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties"];
+  for(var o=0;o<i.length;o++){a(i[o])}e.amplitude=r})(window,document);
+
+  amplitude.init("b886346cf8ea47b90ed8149be68eb075");
+  amplitude.logEvent("MS:Initialized");
+</script>
+</body>
+</html>

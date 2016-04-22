@@ -52,6 +52,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
       * use diff threshold from settings
       * delete all $$hashKey references
     * fix release dependencies (for packaging)
+    * [ ] Change to ES6
   * Methods Notes:  
     * Optimizations: pageLoadTimeout, setScriptTimeout
     * For window sizing, getSize(), this will allow for pixel density calc
@@ -59,7 +60,8 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * webdriver.WebElement.prototype.getLocation
 
   * UI
-    * Setup thumbnail for project main url (Sidepanel)
+    * [ ] Setup thumbnail for project main url (Sidepanel)
+    * [ ] Change to ES6
 
     element.sendKeys("text was",
       webdriver.Key.chord(webdriver.Key.CONTROL, "a"),
@@ -72,7 +74,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
 
 #### Wishlist
 
-  * (!!) Amplitude Integration
+  * (!!) Amplitude Integration (Currently pulled until further assesment)
   * (!!) Submit Jira ticket
     * https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis
       /jira-rest-api-tutorials/jira-rest-api-example-create-issue

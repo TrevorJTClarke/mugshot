@@ -1,0 +1,12 @@
+<div class="header" ng-cloak>
+  <div class="details">
+    <h1>{{project.title}}</h1>
+    <h5>{{project.meta.url || 'Please setup a url!'}}</h5>
+  </div>
+  <div class="tabs">
+    <button class="btn btn-tab" ui-sref-active='tab-active' ui-sref="projects.runner({ id: project.id })">Runner</button>
+    <button class="btn btn-tab" ui-sref-active='tab-active' ui-sref="projects.history({ id: project.id })">History</button>
+    <button class="btn btn-tab" ui-sref-active='tab-active' ui-sref="projects.settings({ id: project.id })">Settings</button>
+  </div>
+</div>
+<div class="sub-wrapper" ui-view></div>

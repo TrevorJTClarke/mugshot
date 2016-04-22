@@ -1,0 +1,220 @@
+<div class="project-settings">
+<h3>General Configuration</h3>
+<div class="row">
+  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <div class="form-group">
+      <label for="projectTitle" class="control-label">Title</label>
+      <input type="text" class="form-control" ng-model="project.title" id="projectTitle" placeholder="Project Title">
+    </div>
+    <div class="form-group">
+      <label for="projectUrl" class="control-label">Url</label>
+      <input type="text" class="form-control" ng-model="project.meta.url" id="projectUrl" placeholder="Project Url">
+      <span id="helpBlock" class="help-block">Example: <em>https://google.com</em> or <em>http://localhost:3000/</em></span>
+    </div>
+  </div>
+</div>
+
+<h3 class="section-title">Optional Details</h3>
+<div class="row">
+  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <div class="form-group">
+      <label class="control-label">Ready Event (Screens are taken after this event is fired)</label>
+      <input type="text" class="form-control" ng-model="project.meta.readyEvent" placeholder="Default: 'onload'">
+    </div>
+    <div class="form-group">
+      <label class="control-label">Delay Amount (In milliseconds)</label>
+      <input type="text" class="form-control" ng-model="project.meta.delay" placeholder="Default: 500">
+    </div>
+    <div class="form-group">
+      <label class="control-label">Diff Threshold
+          <i class="octicon octicon-question tp-tooltip">
+          <div class="tooltip bottom">
+            <div class="tooltip-title">
+              Threshold Setting
+            </div>
+            <div class="tooltip-body">
+              Define the maximum amount of difference that is acceptable for the project.<br><br><strong>Note:</strong> The default warning difference is between 0.05 and 2.05.
+            </div>
+          </div>
+        </i>
+      </label>
+      <input type="text" class="form-control" ng-model="project.meta.misMatchThreshold" placeholder="Default: 0.1">
+    </div>
+    <div class="form-group config-item">
+      <label class="control-label">AWS Backup</label>
+      <button type="submit" class="btn btn-used" ng-if="hasAwsSettings" ng-class="{'btn-used-active': project.meta.autoSyncAws == true }" ng-click="project.meta.autoSyncAws = !project.meta.autoSyncAws">
+        <i class="octicon octicon-check"></i> Auto-Sync
+      </button>
+      <button class="btn btn-sync" ng-if="hasAwsSettings" ng-click="syncNow()" ng-class="{'btn-sync-active': syncing == true }">
+        Sync Now <i class="octicon octicon-sync"></i>
+      </button>
+      <button class="btn btn-sync" ng-if="!hasAwsSettings" ui-sref="preferences" ng-class="{'btn-sync-active': true }">Configure your AWS Settings</button>
+    </div>
+  </div>
+</div>
+
+<h3 class="section-title">View Sizes
+  <i class="octicon octicon-question tp-tooltip">
+    <div class="tooltip bottom">
+      <div class="tooltip-title">
+        Viewport Screen Sizes
+      </div>
+      <div class="tooltip-body">
+        Define the height and width of the screens to capture.<br><br><strong>Note:</strong> Each size will capture all of the container selectors below.
+      </div>
+    </div>
+  </i>
+  <button class="btn btn-right btn-section-header" ng-click="addViewport()">Add New</button>
+</h3>
+<div class="row setting-item setting-title" ng-if="project.viewports.length > 0">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <label for="projectTitle" class="col-sm-2 control-label">View Title</label>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <label for="projectUrl" class="control-label">Screen Width</label>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <label for="projectUrl" class="control-label">Screen Height</label>
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
+</div>
+<div class="row setting-item" ng-repeat="viewport in project.viewports track by $index">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <input type="text" class="form-control" ng-model="viewport.name" placeholder="Tablet, or iPhone_5">
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <input type="text" class="form-control" ng-model="viewport.width" placeholder="320">
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <input type="text" class="form-control" ng-model="viewport.height" placeholder="480">
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
+    <button type="submit" class="btn btn-used" title="{{(viewport.active)?'Is Active':'Is Not Active'}}" ng-class="{'btn-used-active': viewport.active == true }" ng-click="activateType('viewports', $index)">
+      <i class="octicon octicon-check"></i>
+    </button>
+    <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('viewports', $index)">
+      <i class="octicon octicon-trashcan"></i>
+    </button>
+  </div>
+</div>
+<div class="row setting-item-null" ng-if="project.viewports.length < 1">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>No viewports specified yet! Click "Add New" to get started!</p>
+  </div>
+</div>
+
+<h3 class="section-title">Selectors
+  <i class="octicon octicon-question tp-tooltip">
+    <div class="tooltip bottom">
+      <div class="tooltip-title">
+        Capture Selectors
+      </div>
+      <div class="tooltip-body">
+        Define the area to capture based on DOM selection strings, similar to jQuery selectors.<br>Options:<br><strong>Container, Hide, Remove</strong><br><br> Example:<br><strong>"body .menu #menu-item-1"</strong>
+      </div>
+    </div>
+  </i>
+  <button class="btn btn-right btn-section-header" ng-click="addSelector()">Add New</button>
+</h3>
+<div class="row" ng-if="project.selectors.length > 0">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <label for="projectTitle" class="col-sm-2 control-label">Query String</label>
+  </div>
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <label for="projectUrl" class="control-label">Type</label>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">&nbsp;</div>
+</div>
+<div class="row setting-item" ng-repeat="selector in project.selectors track by $index">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <input type="text" class="form-control" ng-model="selector.query" placeholder="body header .menu_item_1">
+  </div>
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 select">
+    <select class="form-control" ng-model="selector.type" ng-options="option for option in selectorTypes"></select>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 setting-edit">
+    <button type="submit" class="btn btn-used" title="{{(selector.active)?'Is Active':'Is Not Active'}}" ng-class="{'btn-used-active': selector.active == true }" ng-click="activateType('selectors', $index)">
+      <i class="octicon octicon-check"></i>
+    </button>
+    <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('selectors', $index)">
+      <i class="octicon octicon-trashcan"></i>
+    </button>
+  </div>
+</div>
+<div class="row setting-item-null" ng-if="project.selectors.length < 1">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>No selectors specified yet! Click "Add New" to get started!</p>
+  </div>
+</div>
+
+<h3 class="section-title">Cookies
+  <i class="octicon octicon-question tp-tooltip">
+    <div class="tooltip bottom">
+      <div class="tooltip-body">
+        All cookies will be stored before screens captured.
+      </div>
+    </div>
+  </i>
+  <button class="btn btn-right btn-section-header" ng-click="addCookie()">Add New</button>
+</h3>
+<div class="row" ng-if="project.cookies.length > 0">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <label for="projectTitle" class="col-sm-2 control-label">Name</label>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <label for="projectUrl" class="control-label">Value</label>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <label for="projectUrl" class="control-label">Domain</label>
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
+</div>
+<div class="row setting-item" ng-repeat="cookie in project.cookies track by $index">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <input type="text" class="form-control" ng-model="cookie.name" placeholder="show_modal">
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <input type="text" class="form-control" ng-model="cookie.value" placeholder="true">
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <input type="text" class="form-control" ng-model="cookie.path" placeholder="sub.example.com">
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 setting-edit">
+    <button class="btn btn-used" title="{{(cookie.active)?'Is Active':'Is Not Active'}}" ng-class="{'btn-used-active': cookie.active == true, 'btn-used-inactive': cookie.active != true }" ng-click="activateType('cookies', $index)">
+      <i class="octicon octicon-check"></i>
+    </button>
+    <button type="submit" class="btn btn-trash" ng-click="deleteTypeItem('cookies', $index)">
+      <i class="octicon octicon-trashcan"></i>
+    </button>
+  </div>
+</div>
+<div class="row setting-item-null" ng-if="project.cookies.length < 1">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>No cookies specified yet! Click "Add New" to get started!</p>
+  </div>
+</div>
+
+<h3 class="section-title">History</h3>
+<div class="row">
+  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <div class="form-group">
+      <label class="control-label full-label">Remove all history data?</label>
+      <button class="btn btn-finish btn-remove" ng-click="clearHistory()">Clear History</button>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="section-finish col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <button type="submit" class="btn btn-finish btn-save" ng-click="save()">Save</button>
+    <button type="submit" class="btn btn-finish btn-cancel" ng-class="{'btn-active': hasChanges == true }" ng-click="cancelSave()">Cancel</button>
+</div> -->
+
+<!-- <hr> -->
+
+<div class="row project-remove">
+  <h5 class="project-remove-title">Would you like to remove this project completely?</h5>
+  <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <button type="submit" class="btn btn-finish btn-remove" ng-click="deleteProject()">Delete Project</button>
+  </div>
+</div>
+</div>
