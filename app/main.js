@@ -73,8 +73,8 @@ app.on('ready', function() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    'min-width': 745,
-    'min-height': 450,
+    minWidth: 745,
+    minHeight: 450,
     'max-width': 2550,
     'max-height': 1500,
     frame: false,
@@ -85,7 +85,7 @@ app.on('ready', function() {
   }
 
   windowMenus.setMainMenu();
-  mainWindow.loadUrl('file://' + __dirname + '/app.html');
+  mainWindow.loadURL('file://' + __dirname + '/app.html');
 
   mainWindow.openDevTools();
 

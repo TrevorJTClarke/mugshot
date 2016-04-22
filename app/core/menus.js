@@ -1,7 +1,7 @@
 'use strict';
 
 var app = require('app');
-var ipc = require('ipc');
+var ipc = require("electron").ipcRenderer;
 var Menu = require('menu');
 var BW = require('browser-window');
 

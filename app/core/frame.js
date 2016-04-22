@@ -1,5 +1,5 @@
 var remote = require('remote');
-var ipc = require('ipc');
+var ipc = require("electron").ipcRenderer;
 var w = remote.getCurrentWindow();
 
 /**
