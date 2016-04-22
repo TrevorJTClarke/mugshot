@@ -51,7 +51,7 @@ This app is focussed on delivering a simple UI to visual regression testing.
     * build out Selenium within the browserDriver module
       * use diff threshold from settings
       * delete all $$hashKey references
-    * fix release dependencies (for packaging)
+    * [ ] fix release dependencies (for packaging)
     * [ ] Change to ES6
   * Methods Notes:  
     * Optimizations: pageLoadTimeout, setScriptTimeout
